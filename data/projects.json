@@ -1,0 +1,30 @@
+[
+  {
+    "id": "human-activity-recognition",
+    "title": "Human Activity Recognition System Based on Hybrid Model",
+    "type": "Master Thesis",
+    "description": "Advanced deep learning system for recognizing human activities from sensor and video data using hybrid neural architectures.",
+    "technologies": [
+      "PyTorch",
+      "Python",
+      "Deep Learning",
+      "Computer Vision"
+    ],
+    "image": "activity-recognition.jpg",
+    "year": 2025
+  },
+  {
+    "id": "surgical-tool-detection",
+    "title": "YOLOv7-Based Multiple Surgical Tool Localization and Detection",
+    "type": "Bachelor Thesis",
+    "description": "Real-time detection of multiple surgical instruments in laparoscopic videos using advanced YOLO architecture with high accuracy.",
+    "technologies": [
+      "YOLOv7",
+      "OpenCV",
+      "PyTorch",
+      "Medical Imaging"
+    ],
+    "image": "surgical-detection.jpg",
+    "year": 2023
+  }
+]

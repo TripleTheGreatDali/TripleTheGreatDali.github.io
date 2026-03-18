@@ -1,0 +1,30 @@
+[
+  {
+    "institution": "Southwest University of Science and Technology, Mianyang, China",
+    "degree": "Master of Engineering in Software Engineering",
+    "period": "2023\u20132025",
+    "gpa": "88.60%",
+    "icon": "\ud83c\udf93"
+  },
+  {
+    "institution": "Southwest University of Science and Technology, Mianyang, China",
+    "degree": "Bachelor of Engineering in Computer Science and Technology",
+    "period": "2019\u20132023",
+    "gpa": "87.05%",
+    "icon": "\ud83c\udf93"
+  },
+  {
+    "institution": "Milestone College, Dhaka, Bangladesh",
+    "degree": "Higher Secondary Certificate (HSC) (Science)",
+    "period": "2015\u20132017",
+    "gpa": "5.00/5.00 (A+)",
+    "icon": "\ud83d\udcda"
+  },
+  {
+    "institution": "Kamarjuri Yousuf Ali High School, Gazipur, Bangladesh",
+    "degree": "Secondary School Certificate (SSC) (Science)",
+    "period": "2013\u20132015",
+    "gpa": "5.00/5.00 (Golden A+)",
+    "icon": "\ud83d\udcda"
+  }
+]

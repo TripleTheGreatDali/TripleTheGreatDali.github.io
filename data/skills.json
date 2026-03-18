@@ -1,0 +1,39 @@
+{
+  "AI/Computer Vision": [
+    "PyTorch",
+    "TensorFlow",
+    "OpenCV",
+    "YOLO Architectures"
+  ],
+  "Programming Languages": [
+    "Python3",
+    "Java",
+    "C",
+    "HTML",
+    "CSS"
+  ],
+  "Edge & IoT Tools": [
+    "ROS",
+    "Docker",
+    "Linux",
+    "Embedded Systems"
+  ],
+  "Software Engineering": [
+    "System Architecture",
+    "Performance Optimization",
+    "API Development",
+    "Flask",
+    "FastAPI"
+  ],
+  "Data Processing": [
+    "NumPy",
+    "Pandas",
+    "Scikit-learn",
+    "Real-time Streaming"
+  ],
+  "Languages": [
+    "English (Fluent)",
+    "Bengali (Native)",
+    "Chinese (HSK3 - Intermediate)"
+  ]
+}
