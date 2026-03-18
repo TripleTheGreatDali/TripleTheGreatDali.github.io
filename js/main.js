@@ -536,7 +536,7 @@ class StatsCounter {
         this.counters = {
             pubCount: { element: document.getElementById('pubCount'), target: 7 },
             projCount: { element: document.getElementById('projCount'), target: 10 },
-            citCount: { element: document.getElementById('citCount'), target: 50 }
+            citCount: { element: document.getElementById('citCount'), target: 12 }
         };
 
         this.hasAnimated = false;

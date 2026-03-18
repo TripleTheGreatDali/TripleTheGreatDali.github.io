@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
     
+    <!-- AOS Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,8 +26,13 @@
         <div class="container">
             <div class="nav-brand">
                 <span class="logo-text">MD FOYSAL AHMED</span>
-                <span class="logo-subtitle">AI Visionary</span>
+                <span class="logo-subtitle">AI Research & Innovation</span>
             </div>
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <div class="nav-menu" id="navMenu">
                 <a href="#home" class="nav-link active" data-section="home">Home</a>
                 <a href="#about" class="nav-link" data-section="about">About</a>
@@ -33,11 +41,6 @@
                 <a href="#projects" class="nav-link" data-section="projects">Projects</a>
                 <a href="#skills" class="nav-link" data-section="skills">Skills</a>
                 <a href="#contact" class="nav-link" data-section="contact">Contact</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
             </div>
         </div>
     </nav>
@@ -51,17 +54,17 @@
         <div class="container hero-content">
             <div class="hero-text">
                 <h1 class="hero-title" data-aos="fade-up">
-                    <span class="gradient-text">Architecting</span> the Future
+                    AI Research & <span class="gradient-text">Computer Vision</span>
                 </h1>
                 <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">
-                    AI Research • Computer Vision • Innovation
+                    Advancing Intelligent Systems Through Research
                 </p>
                 <p class="hero-description" data-aos="fade-up" data-aos-delay="400">
-                    Bridging academia, industry, and cutting-edge research to build intelligent systems that reshape human potential.
+                    Researcher specializing in computer vision, deep learning, and hybrid intelligence systems. Published in leading journals with focus on real-world applications and ethical AI development.
                 </p>
                 <div class="hero-buttons" data-aos="fade-up" data-aos-delay="600">
-                    <button class="btn btn-primary" onclick="smoothScroll('#research')">Explore Research</button>
-                    <button class="btn btn-secondary" onclick="smoothScroll('#contact')">Get in Touch</button>
+                    <button class="btn btn-primary" onclick="smoothScroll('#research')">Research Areas</button>
+                    <button class="btn btn-secondary" onclick="smoothScroll('#contact')">Contact</button>
                 </div>
                 <div class="hero-stats" data-aos="fade-up" data-aos-delay="800">
                     <div class="stat">
@@ -73,14 +76,14 @@
                         <div class="stat-label">Projects</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-number" id="citCount">50+</div>
+                        <div class="stat-number" id="citCount">12</div>
                         <div class="stat-label">Citations</div>
                     </div>
                 </div>
             </div>
             <div class="hero-image" data-aos="fade-left" data-aos-delay="400">
                 <div class="profile-card">
-                    <img src="assets/images/mfa.png" alt="MD Foysal Ahmed" class="profile-photo">
+                    <img src="assets/images/ppix/mfa.png" alt="MD Foysal Ahmed" class="profile-photo">
                     <div class="profile-badge">AI Researcher</div>
                 </div>
             </div>
@@ -95,40 +98,31 @@
     <section id="about" class="about">
         <div class="container">
             <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">About Me</h2>
-                <p class="section-subtitle">Visionary, Researcher, Innovator</p>
+                <h2 class="section-title">Background</h2>
+                <p class="section-subtitle">Education, Research & Professional Focus</p>
             </div>
             
             <div class="about-grid">
                 <div class="about-text" data-aos="fade-right">
-                    <h3>Who I Am</h3>
+                    <h3>Research Focus</h3>
                     <p>
-                        I'm a software engineer and AI researcher based in Mianyang, China, with deep academic ties to <strong>Southwest University of Science and Technology (SWUST)</strong> and <strong>Hohai University</strong>. My journey in technology is driven by a singular vision: to advance human potential through intelligent systems.
+                        I am an AI researcher and software engineer based in Mianyang, China, with academic training from <strong>Southwest University of Science and Technology (SWUST)</strong>. My research focuses on computer vision, deep learning systems, and the practical and ethical dimensions of AI development.
                     </p>
                     <p>
-                        With a Bachelor's in Computer Science and Technology and a Master's in Software Engineering, I've dedicated my career to research that bridges theory and practical innovation. My work spans computer vision, hybrid intelligence systems, and the ethical dimensions of AI.
+                        My work bridges theoretical foundations with practical applications in medical imaging, robotics, and human activity recognition. Current research interests include hybrid intelligence systems, AI ethics, and efficient deployment of deep learning on edge devices. I am actively pursuing PhD opportunities in advanced AI research.
                     </p>
                     <div class="about-highlights">
                         <div class="highlight">
-                            <span class="highlight-icon">🎯</span>
-                            <div>
-                                <strong>Visionary Drive</strong>
-                                <p>Building lasting impact through scientific excellence</p>
-                            </div>
+                            <strong>Research Areas:</strong>
+                            <p>Computer vision, deep learning, hybrid intelligence, AI ethics, signal processing</p>
                         </div>
                         <div class="highlight">
-                            <span class="highlight-icon">🌐</span>
-                            <div>
-                                <strong>Global Mindset</strong>
-                                <p>Seeking fully funded PhD scholarships in South Korea & Portugal</p>
-                            </div>
+                            <strong>Publications:</strong>
+                            <p>7 peer-reviewed publications in top-tier journals (2021-2026)</p>
                         </div>
                         <div class="highlight">
-                            <span class="highlight-icon">🤖</span>
-                            <div>
-                                <strong>Tech Passion</strong>
-                                <p>Focused on AGI, robotics, and advanced AI systems</p>
-                            </div>
+                            <strong>Next Steps:</strong>
+                            <p>PhD research in advanced AI systems with focus on practical applications</p>
                         </div>
                     </div>
                 </div>
@@ -142,11 +136,11 @@
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">🏆</div>
+                        <div class="stat-icon">📜</div>
                         <div class="stat-info">
-                            <h4>Awards</h4>
-                            <p>Multiple scholarships & honors</p>
-                            <p>Class Monitor recognition</p>
+                            <h4>Academics</h4>
+                            <p>M.Eng: 88.60% | B.E: 87.05%</p>
+                            <p>Multiple research scholarships</p>
                         </div>
                     </div>
                     <div class="stat-card">
@@ -174,40 +168,34 @@
     <section id="research" class="research">
         <div class="container">
             <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">Research Interests</h2>
-                <p class="section-subtitle">Driving Innovation Through Deep Exploration</p>
+                <h2 class="section-title">Research Areas</h2>
+                <p class="section-subtitle">Specialized Focus Areas in AI & Computer Vision</p>
             </div>
             
             <div class="research-grid">
                 <div class="research-card" data-aos="fade-up" data-aos-delay="0">
-                    <div class="research-icon">🖼️</div>
                     <h3>Computer Vision & Image Processing</h3>
-                    <p>Advanced object detection, medical image analysis, and real-time video processing systems</p>
+                    <p>Advanced object detection, medical image analysis, real-time video processing, and person re-identification systems</p>
                 </div>
                 <div class="research-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="research-icon">🧠</div>
-                    <h3>Deep Learning & AI</h3>
-                    <p>Neural network architectures, transfer learning, and AI optimization for practical applications</p>
+                    <h3>Deep Learning & Neural Networks</h3>
+                    <p>CNN architectures, transfer learning, model optimization, and efficient deployment on edge devices</p>
                 </div>
                 <div class="research-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="research-icon">🤖</div>
-                    <h3>AI in Robotics</h3>
-                    <p>Intelligent robotic systems, machine perception, and autonomous decision-making</p>
+                    <h3>AI Systems & Robotics</h3>
+                    <p>Autonomous systems, machine perception, reinforcement learning, and robotic path planning</p>
                 </div>
                 <div class="research-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="research-icon">🎤</div>
-                    <h3>Speech & Signal Processing</h3>
-                    <p>Audio analysis, speech recognition, and brain-computer interfaces</p>
+                    <h3>Signal Processing & BCI</h3>
+                    <p>Audio analysis, speech recognition systems, brain-computer interfaces, and biomedical signal processing</p>
                 </div>
                 <div class="research-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="research-icon">💬</div>
-                    <h3>NLP & Language Models</h3>
-                    <p>Natural language processing, semantic understanding, and dialogue systems</p>
+                    <h3>Natural Language Processing</h3>
+                    <p>Semantic understanding, dialogue systems, and transformer-based language models</p>
                 </div>
                 <div class="research-card" data-aos="fade-up" data-aos-delay="500">
-                    <div class="research-icon">⚖️</div>
-                    <h3>AI Ethics & Epistemology</h3>
-                    <p>Ethical AI systems, structural bias, and hybrid intelligence cognitively-aligned approaches</p>
+                    <h3>AI Ethics & Hybrid Systems</h3>
+                    <p>Fairness in machine learning, bias mitigation, epistemic approaches, and human-AI cognitive alignment</p>
                 </div>
             </div>
         </div>
@@ -217,8 +205,8 @@
     <section id="publications" class="publications">
         <div class="container">
             <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">Publications & Research</h2>
-                <p class="section-subtitle">Peer-Reviewed Contributions to Knowledge</p>
+                <h2 class="section-title">Publications</h2>
+                <p class="section-subtitle">Peer-Reviewed Research (2021-2026)</p>
             </div>
             
             <div id="publicationsList" class="publications-grid">
@@ -231,8 +219,8 @@
     <section id="projects" class="projects">
         <div class="container">
             <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">Featured Projects</h2>
-                <p class="section-subtitle">Bridging Research and Real-World Innovation</p>
+                <h2 class="section-title">Projects</h2>
+                <p class="section-subtitle">Research & Development Work</p>
             </div>
             
             <div id="projectsList" class="projects-grid">
@@ -306,8 +294,8 @@
     <section id="contact" class="contact">
         <div class="container">
             <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">Let's Connect</h2>
-                <p class="section-subtitle">Collaboration, Opportunities & Inquiries Welcome</p>
+                <h2 class="section-title">Contact</h2>
+                <p class="section-subtitle">Research Collaboration & Professional Inquiries</p>
             </div>
             
             <div class="contact-grid">
@@ -316,11 +304,6 @@
                         <div class="info-icon">📧</div>
                         <h3>Email</h3>
                         <p><a href="mailto:contact@foylix.com">contact@foylix.com</a></p>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-icon">📱</div>
-                        <h3>Phone</h3>
-                        <p><a href="tel:+8801835085533">+88-01835085533</a></p>
                     </div>
                     <div class="info-card">
                         <div class="info-icon">📍</div>
@@ -368,19 +351,19 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>MD Foysal Ahmed</h3>
-                    <p>AI Researcher | Software Engineer | Innovation Visionary</p>
+                    <p>AI Research | Computer Vision | Software Engineering</p>
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About</a></li>
+                        <li><a href="#about">Background</a></li>
                         <li><a href="#publications">Publications</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Research Areas</h4>
+                    <h4>Research Focus</h4>
                     <ul>
                         <li><a href="#research">Computer Vision</a></li>
                         <li><a href="#research">Deep Learning</a></li>
@@ -390,7 +373,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 MD Foysal Ahmed. All rights reserved. | Designed with precision & passion.</p>
+                <p>&copy; 2026 MD Foysal Ahmed. All rights reserved.</p>
                 <div class="footer-links">
                     <a href="#" onclick="return false;">Privacy Policy</a>
                     <a href="#" onclick="return false;">Terms of Service</a>
@@ -400,7 +383,26 @@
     </footer>
 
     <!-- Scripts -->
+    <!-- AOS Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    
     <script src="js/animations.js"></script>
     <script src="js/main.js"></script>
+    
+    <!-- Initialize AOS -->
+    <script>
+        // Wait for AOS to be loaded and initialize it
+        window.addEventListener('load', function() {
+            if (window.AOS) {
+                AOS.init({
+                    duration: 800,
+                    easing: 'ease-in-out',
+                    once: false,
+                    mirror: true,
+                    offset: 100
+                });
+            }
+        });
+    </script>
 </body>
 </html>

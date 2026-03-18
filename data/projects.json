@@ -1,17 +1,17 @@
 [
   {
     "id": 1,
-    "title": "Human Activity Recognition System Based on Hybrid Model",
-    "description": "Master's thesis focused on developing a comprehensive hybrid deep learning model for real-time human activity recognition. Integrates multiple neural network architectures for enhanced accuracy.",
+    "title": "Human Activity Recognition System",
+    "description": "Master's thesis project developing a hybrid deep learning model for real-time human activity recognition. Combines multiple CNN architectures for robust classification across diverse activity types.",
     "emoji": "🏃",
-    "tags": ["Python", "PyTorch", "Deep Learning", "Activity Recognition", "Research"],
+    "tags": ["Python", "PyTorch", "Deep Learning", "Activity Recognition"],
     "date": "2023-2025",
     "institution": "Southwest University of Science and Technology"
   },
   {
     "id": 2,
-    "title": "YOLOv7-Based Surgical Tool Localization",
-    "description": "Bachelor's thesis implementing advanced YOLO variants for detecting and localizing surgical instruments in laparoscopic videos. Achieved real-time processing on edge devices.",
+    "title": "YOLOv7-Based Surgical Tool Detection",
+    "description": "Bachelor's thesis implementing YOLO variants for real-time detection and localization of surgical instruments in laparoscopic videos. Optimized for edge device deployment in operating room environments.",
     "emoji": "🏥",
     "tags": ["YOLOv7", "Computer Vision", "Medical Imaging", "Object Detection"],
     "date": "2019-2023",
@@ -19,24 +19,24 @@
   },
   {
     "id": 3,
-    "title": "AI in Robotics - Motion Planning",
-    "description": "Developed intelligent motion planning algorithms for autonomous robots using deep reinforcement learning and computer vision for real-world navigation.",
+    "title": "Autonomous Robot Motion Planning",
+    "description": "Developed intelligent motion planning using deep reinforcement learning and computer vision. Integrated path planning with real-world obstacle avoidance for autonomous navigation systems.",
     "emoji": "🤖",
-    "tags": ["ROS", "Reinforcement Learning", "Robotics", "AI"],
+    "tags": ["ROS", "Reinforcement Learning", "Robotics", "Python"],
     "date": "2023-2025"
   },
   {
     "id": 4,
     "title": "Person Re-Identification System",
-    "description": "Multi-task deep learning model with attribute-specific heads for person re-identification across different camera views with high accuracy.",
+    "description": "Multi-task deep learning model with attribute-specific heads for cross-camera person re-identification. Achieved state-of-the-art accuracy on standard benchmark datasets.",
     "emoji": "👤",
     "tags": ["Computer Vision", "Deep Learning", "Person Re-ID", "CNN"],
     "date": "2024"
   },
   {
     "id": 5,
-    "title": "Speech Recognition Pipeline",
-    "description": "End-to-end speech recognition system combining signal processing with deep neural networks for real-time audio transcription.",
+    "title": "End-to-End Speech Recognition Pipeline",
+    "description": "Implemented complete speech recognition system combining signal processing with deep neural networks. Supports real-time audio transcription with noise robustness.",
     "emoji": "🎤",
     "tags": ["NLP", "Signal Processing", "Deep Learning", "Audio"],
     "date": "2023-2024"
@@ -44,7 +44,7 @@
   {
     "id": 6,
     "title": "Medical Image Analysis Framework",
-    "description": "Comprehensive framework for medical image processing and analysis using advanced computer vision techniques for disease detection.",
+    "description": "Comprehensive framework for medical image processing and analysis using advanced computer vision techniques. Designed for disease detection and biomedical research applications.",
     "emoji": "🖼️",
     "tags": ["Medical Imaging", "Image Processing", "OpenCV", "Healthcare"],
     "date": "2024"
@@ -52,31 +52,31 @@
   {
     "id": 7,
     "title": "Edge AI Deployment System",
-    "description": "Optimized deep learning model deployment on IoT devices and edge computing platforms for real-time inference.",
+    "description": "Optimized deep learning model deployment on IoT devices and edge computing platforms. Implements quantization and pruning techniques for real-time inference.",
     "emoji": "⚡",
     "tags": ["Edge Computing", "IoT", "Docker", "Model Optimization"],
     "date": "2024-2025"
   },
   {
     "id": 8,
-    "title": "Hybrid Intelligence System",
-    "description": "Research on combining symbolic AI with deep learning to create hybrid systems that mirror human cognition patterns.",
+    "title": "Hybrid Intelligence Research",
+    "description": "Research on combining symbolic AI with deep learning for hybrid systems. Explores cognitive alignment between neural and symbolic approaches.",
     "emoji": "🧠",
     "tags": ["Hybrid AI", "Epistemology", "Cognition", "Research"],
     "date": "2025"
   },
   {
     "id": 9,
-    "title": "AI Ethics Framework",
-    "description": "Developing frameworks for ethical AI systems addressing structural bias, fairness, and epistemic injustice in machine learning.",
+    "title": "AI Ethics & Fairness Framework",
+    "description": "Developing frameworks for ethical AI systems with focus on bias detection and fairness metrics. Addresses structural bias in machine learning and epistemic injustice issues.",
     "emoji": "⚖️",
     "tags": ["AI Ethics", "Fairness", "Bias Mitigation", "Research"],
     "date": "2025-2026"
   },
   {
     "id": 10,
-    "title": "Brain-Computer Interface",
-    "description": "Research on connecting neural signals with computational systems for advanced human-computer interaction and rehabilitation applications.",
+    "title": "Brain-Computer Interface Research",
+    "description": "Research on neural signal processing for human-computer interaction. Applications include rehabilitation systems and advanced assistive technologies.",
     "emoji": "🧩",
     "tags": ["BCI", "Signal Processing", "Neuroscience", "AI"],
     "date": "2024-2025"

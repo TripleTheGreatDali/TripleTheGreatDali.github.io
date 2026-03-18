@@ -583,7 +583,7 @@ a:hover {
 
 .highlight {
     display: flex;
-    gap: var(--spacing-lg);
+    flex-direction: column;
     padding: var(--spacing-lg);
     background: white;
     border-radius: var(--radius-lg);
@@ -597,19 +597,20 @@ a:hover {
 }
 
 .highlight-icon {
-    font-size: 2rem;
-    flex-shrink: 0;
+    display: none;
 }
 
 .highlight strong {
     color: var(--primary);
     display: block;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
 }
 
 .highlight p {
     font-size: 0.875rem;
     margin: 0;
+    color: var(--text-secondary);
 }
 
 .about-stats {
@@ -672,29 +673,30 @@ a:hover {
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all var(--transition-base);
     cursor: pointer;
-    text-align: center;
+    text-align: left;
 }
 
 .research-card:hover {
     background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-10px);
+    transform: translateY(-8px);
     box-shadow: var(--shadow-xl);
 }
 
 .research-icon {
-    font-size: 3rem;
-    margin-bottom: var(--spacing-lg);
-    display: block;
+    display: none;
 }
 
 .research-card h3 {
     margin-bottom: var(--spacing-md);
     color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 
 .research-card p {
     font-size: 0.95rem;
     line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 /* ============================================
