@@ -355,6 +355,9 @@ class ContentLoader {
     async loadPublications() {
         try {
             const response = await fetch('data/publications.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const publications = await response.json();
 
             this.pubCount.textContent = publications.length;
@@ -382,6 +385,8 @@ class ContentLoader {
             }
         } catch (error) {
             console.error('Error loading publications:', error);
+            console.error('Failed URL:', window.location.origin + '/data/publications.json');
+            this.pubCount.textContent = '7';
         }
     }
 
@@ -391,6 +396,9 @@ class ContentLoader {
     async loadProjects() {
         try {
             const response = await fetch('data/projects.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const projects = await response.json();
 
             this.projCount.textContent = projects.length;
@@ -416,6 +424,8 @@ class ContentLoader {
             }
         } catch (error) {
             console.error('Error loading projects:', error);
+            console.error('Failed URL:', window.location.origin + '/data/projects.json');
+            this.projCount.textContent = '10';
         }
     }
 }
