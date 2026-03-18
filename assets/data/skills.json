@@ -1,0 +1,42 @@
+[
+  {
+    "category": "Deep Learning Frameworks",
+    "skills": ["PyTorch", "TensorFlow", "Keras", "JAX", "MXNet"]
+  },
+  {
+    "category": "Computer Vision",
+    "skills": ["OpenCV", "scikit-image", "Pillow", "torchvision", "TensorFlow Vision"]
+  },
+  {
+    "category": "Programming Languages",
+    "skills": ["Python", "Java", "C++", "JavaScript", "SQL", "MATLAB"]
+  },
+  {
+    "category": "AI/ML Specializations",
+    "skills": ["Medical Image Analysis", "Object Detection", "Segmentation", "Classification", "Transfer Learning", "NAS", "Hybrid AI"]
+  },
+  {
+    "category": "Data Science & Analysis",
+    "skills": ["NumPy", "Pandas", "Scikit-learn", "SciPy", "Matplotlib", "Seaborn", "Plotly"]
+  },
+  {
+    "category": "Web Development",
+    "skills": ["React", "Node.js", "HTML/CSS", "Django", "Flask", "FastAPI"]
+  },
+  {
+    "category": "Databases",
+    "skills": ["MongoDB", "PostgreSQL", "MySQL", "Neo4j", "Elasticsearch"]
+  },
+  {
+    "category": "Cloud & DevOps",
+    "skills": ["Docker", "Kubernetes", "AWS", "Azure", "Google Cloud", "Git", "CI/CD"]
+  },
+  {
+    "category": "Research Tools",
+    "skills": ["Jupyter", "Weights & Biases", "Tensorboard", "MLflow", "Wandb", "Latex"]
+  },
+  {
+    "category": "Soft Skills",
+    "skills": ["Research Paper Writing", "Public Speaking", "Team Leadership", "Project Management", "Mentoring"]
+  }
+]

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | MD Foysal Ahmed</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/projects.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .projects-page {
+            padding: 80px 20px;
+        }
+        
+        .filter-section {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #1F4E79;
+            background: transparent;
+            color: #1F4E79;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: #1F4E79;
+            color: white;
+        }
+        
+        .filter-btn:hover {
+            background: #1F4E79;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">MD Foysal Ahmed</div>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#research">Research</a></li>
+                <li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../index.html#publications">Publications</a></li>
+                <li><a href="../index.html#skills">Skills</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Projects Page -->
+    <section class="projects-page">
+        <div class="container">
+            <h2>Featured Projects</h2>
+            
+            <div class="filter-section">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="Deep Learning">Deep Learning</button>
+                <button class="filter-btn" data-filter="Computer Vision">Computer Vision</button>
+                <button class="filter-btn" data-filter="Medical Imaging">Medical Imaging</button>
+                <button class="filter-btn" data-filter="Web">Web Development</button>
+            </div>
+            
+            <div class="projects-grid" id="projects-list"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 MD Foysal Ahmed. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        async function loadProjects() {
+            try {
+                const response = await fetch('../assets/data/projects.json');
+                const projects = await response.json();
+                const container = document.getElementById('projects-list');
+                
+                function renderProjects(filter = 'all') {
+                    let filtered = projects;
+                    
+                    if (filter !== 'all') {
+                        filtered = projects.filter(proj => proj.technologies.includes(filter));
+                    }
+                    
+                    const html = filtered.map(project => `
+                        <div class="project-card">
+                            <div class="project-image">
+                                ${project.image ? `<img src="${project.image}" alt="${project.title}">` : `<span>${project.icon}</span>`}
+                            </div>
+                            <div class="project-content">
+                                <h3 class="project-title">${project.title}</h3>
+                                <p class="project-description">${project.description}</p>
+                                <div class="project-tags">
+                                    ${project.technologies.map(tech => `<span class="project-tag">${tech}</span>`).join('')}
+                                </div>
+                                <div class="project-links">
+                                    ${project.github ? `<a href="${project.github}" target="_blank">GitHub</a>` : ''}
+                                    ${project.demo ? `<a href="${project.demo}" target="_blank">Demo</a>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                    
+                    container.innerHTML = html;
+                }
+                
+                // Initial render
+                renderProjects();
+                
+                // Filter functionality
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        renderProjects(this.dataset.filter);
+                    });
+                });
+                
+            } catch (error) {
+                console.error('Error loading projects:', error);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', loadProjects);
+    </script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+/* Tablet Devices (768px and below) */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.8em;
+        margin-bottom: 30px;
+    }
+
+    h3 {
+        font-size: 1.2em;
+    }
+
+    /* Hero Section */
+    .hero {
+        padding: 60px 20px;
+    }
+
+    .hero-content {
+        gap: 30px;
+    }
+
+    .hero-text {
+        text-align: center;
+    }
+
+    .hero-text h1 {
+        font-size: 2em;
+    }
+
+    .hero-text h2 {
+        font-size: 1.4em;
+        text-align: center;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    /* Research Section */
+    .research {
+        padding: 60px 20px;
+    }
+
+    .research-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+    }
+
+    /* Projects Section */
+    .projects {
+        padding: 60px 20px;
+    }
+
+    .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    /* Publications Section */
+    .publications {
+        padding: 60px 20px;
+    }
+
+    /* Skills Section */
+    .skills {
+        padding: 60px 20px;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Contact Section */
+    .contact {
+        padding: 60px 20px;
+    }
+
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .contact-form button {
+        width: 100%;
+    }
+}
+
+/* Mobile Devices (480px and below) */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5em;
+    }
+
+    h2 {
+        font-size: 1.4em;
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        font-size: 1.1em;
+    }
+
+    p {
+        font-size: 0.95em;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+
+    /* Hero Section */
+    .hero {
+        padding: 40px 15px;
+    }
+
+    .hero-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .profile-image img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .hero-text h1 {
+        font-size: 1.5em;
+    }
+
+    .hero-text h2 {
+        font-size: 1.1em;
+    }
+
+    .hero-text p {
+        font-size: 1em;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+
+    /* Research Section */
+    .research {
+        padding: 40px 15px;
+    }
+
+    .research-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Projects Section */
+    .projects {
+        padding: 40px 15px;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project-card {
+        margin-bottom: 15px;
+    }
+
+    /* Publications Section */
+    .publications {
+        padding: 40px 15px;
+    }
+
+    .publication-item {
+        padding: 15px;
+    }
+
+    /* Skills Section */
+    .skills {
+        padding: 40px 15px;
+    }
+
+    .skill-category {
+        padding: 15px;
+    }
+
+    /* Contact Section */
+    .contact {
+        padding: 40px 15px;
+    }
+
+    .contact-info p {
+        font-size: 0.95em;
+    }
+
+    .contact-form {
+        gap: 10px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        padding: 10px 12px;
+        font-size: 0.95em;
+    }
+
+    /* Navigation */
+    .logo {
+        font-size: 1.2em;
+    }
+
+    .nav-links {
+        gap: 0;
+    }
+}
