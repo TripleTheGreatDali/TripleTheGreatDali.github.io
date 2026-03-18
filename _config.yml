@@ -1,0 +1,7 @@
+development:
+  url: "http://localhost:8000"
+  baseurl: ""
+
+production:
+  url: "https://foylix.com"
+  baseurl: ""
