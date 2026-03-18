@@ -3,141 +3,404 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MD Foysal Ahmed - AI Researcher & Software Engineer</title>
-    <meta name="description" content="Academic portfolio of MD Foysal Ahmed - AI researcher, computer vision expert, and software engineer based in China.">
-    <meta name="keywords" content="AI, Computer Vision, Research, Software Engineering, Deep Learning">
+    <title>MD Foysal Ahmed - AI Research & Innovation</title>
+    <meta name="description" content="Visionary AI researcher, software engineer, and innovator. Specialized in computer vision, deep learning, and hybrid intelligence systems.">
+    <meta name="keywords" content="AI, Research, Computer Vision, Deep Learning, Software Engineering">
     <meta name="author" content="MD Foysal Ahmed">
-    
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="MD Foysal Ahmed - AI Researcher">
-    <meta property="og:description" content="Portfolio and research publication showcase">
-    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#0F3460">
     
     <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- HEADER & NAVIGATION -->
-    <header>
-        <nav class="navbar">
-            <div class="logo">MD Foysal Ahmed</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#publications">Publications</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo-text">MD FOYSAL AHMED</span>
+                <span class="logo-subtitle">AI Visionary</span>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active" data-section="home">Home</a>
+                <a href="#about" class="nav-link" data-section="about">About</a>
+                <a href="#research" class="nav-link" data-section="research">Research</a>
+                <a href="#publications" class="nav-link" data-section="publications">Publications</a>
+                <a href="#projects" class="nav-link" data-section="projects">Projects</a>
+                <a href="#skills" class="nav-link" data-section="skills">Skills</a>
+                <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
 
-    <!-- HERO SECTION -->
-    <section class="hero" id="home">
-        <h1>MD Foysal Ahmed</h1>
-        <p class="subtitle">🤖 AI Researcher | 👨‍💻 Software Engineer | 🎓 Academic Excellence</p>
-        <p style="font-size: 1rem; margin-bottom: 2rem;">Passionate about Hybrid Intelligence, Robotics, and Advanced AI Systems</p>
-        <div class="cta-buttons">
-            <a href="#publications" class="btn btn-primary">View Research</a>
-            <a href="#projects" class="btn btn-secondary">Explore Projects</a>
-            <a href="assets/documents/CV.pdf" class="btn btn-secondary" target="_blank">Download CV</a>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="animated-gradient"></div>
+            <canvas id="particleCanvas"></canvas>
+        </div>
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title" data-aos="fade-up">
+                    <span class="gradient-text">Architecting</span> the Future
+                </h1>
+                <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">
+                    AI Research • Computer Vision • Innovation
+                </p>
+                <p class="hero-description" data-aos="fade-up" data-aos-delay="400">
+                    Bridging academia, industry, and cutting-edge research to build intelligent systems that reshape human potential.
+                </p>
+                <div class="hero-buttons" data-aos="fade-up" data-aos-delay="600">
+                    <button class="btn btn-primary" onclick="smoothScroll('#research')">Explore Research</button>
+                    <button class="btn btn-secondary" onclick="smoothScroll('#contact')">Get in Touch</button>
+                </div>
+                <div class="hero-stats" data-aos="fade-up" data-aos-delay="800">
+                    <div class="stat">
+                        <div class="stat-number" id="pubCount">7</div>
+                        <div class="stat-label">Publications</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" id="projCount">10+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" id="citCount">50+</div>
+                        <div class="stat-label">Citations</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image" data-aos="fade-left" data-aos-delay="400">
+                <div class="profile-card">
+                    <img src="assets/images/mfa.png" alt="MD Foysal Ahmed" class="profile-photo">
+                    <div class="profile-badge">AI Researcher</div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator" onclick="smoothScroll('#about')">
+            <span>Scroll to explore</span>
+            <div class="mouse"></div>
         </div>
     </section>
 
-    <!-- ABOUT SECTION -->
-    <section id="about">
-        <h2>About Me</h2>
-        <div class="card">
-            <h3>Visionary & Perfectionist</h3>
-            <p>I'm a computer scientist with deep expertise in AI, computer vision, and software engineering. Currently pursuing a Master's degree in Software Engineering at Southwest University of Science and Technology (SWUST), with strong research focus on hybrid intelligence systems, robotics, and AGI.</p>
-            <p style="margin-top: 1rem;">My research bridges academia, AI innovation, and practical applications, with publications in top-tier journals and conferences. I'm driven by the vision of leveraging advanced AI technologies to solve real-world problems.</p>
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">About Me</h2>
+                <p class="section-subtitle">Visionary, Researcher, Innovator</p>
+            </div>
+            
+            <div class="about-grid">
+                <div class="about-text" data-aos="fade-right">
+                    <h3>Who I Am</h3>
+                    <p>
+                        I'm a software engineer and AI researcher based in Mianyang, China, with deep academic ties to <strong>Southwest University of Science and Technology (SWUST)</strong> and <strong>Hohai University</strong>. My journey in technology is driven by a singular vision: to advance human potential through intelligent systems.
+                    </p>
+                    <p>
+                        With a Bachelor's in Computer Science and Technology and a Master's in Software Engineering, I've dedicated my career to research that bridges theory and practical innovation. My work spans computer vision, hybrid intelligence systems, and the ethical dimensions of AI.
+                    </p>
+                    <div class="about-highlights">
+                        <div class="highlight">
+                            <span class="highlight-icon">🎯</span>
+                            <div>
+                                <strong>Visionary Drive</strong>
+                                <p>Building lasting impact through scientific excellence</p>
+                            </div>
+                        </div>
+                        <div class="highlight">
+                            <span class="highlight-icon">🌐</span>
+                            <div>
+                                <strong>Global Mindset</strong>
+                                <p>Seeking fully funded PhD scholarships in South Korea & Portugal</p>
+                            </div>
+                        </div>
+                        <div class="highlight">
+                            <span class="highlight-icon">🤖</span>
+                            <div>
+                                <strong>Tech Passion</strong>
+                                <p>Focused on AGI, robotics, and advanced AI systems</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-stats" data-aos="fade-left">
+                    <div class="stat-card">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-info">
+                            <h4>Education</h4>
+                            <p>M.Eng Software Engineering (SWUST) - 88.60%</p>
+                            <p>B.Eng Computer Science (SWUST) - 87.05%</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🏆</div>
+                        <div class="stat-info">
+                            <h4>Awards</h4>
+                            <p>Multiple scholarships & honors</p>
+                            <p>Class Monitor recognition</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🌍</div>
+                        <div class="stat-info">
+                            <h4>Location</h4>
+                            <p>Mianyang, Sichuan, China</p>
+                            <p>Bangladesh origin</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🔗</div>
+                        <div class="stat-info">
+                            <h4>Connect</h4>
+                            <p>ORCID: 0000-0002-5933-8968</p>
+                            <p>GitHub: TripleTheGreatDali</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <h3 style="margin-top: 2rem; color: #1F4E79;">Key Interests</h3>
-        <div id="research-interests"></div>
     </section>
 
-    <!-- PUBLICATIONS SECTION -->
-    <section id="publications">
-        <h2>Publications</h2>
-        <p style="margin-bottom: 2rem; color: #666;">Peer-reviewed research in AI, computer vision, and software engineering</p>
-        <div id="publications-container">Loading publications...</div>
-    </section>
-
-    <!-- PROJECTS SECTION -->
-    <section id="projects">
-        <h2>Projects</h2>
-        <p style="margin-bottom: 2rem; color: #666;">Academic and research projects showcasing technical expertise</p>
-        <div id="projects-container">Loading projects...</div>
-    </section>
-
-    <!-- SKILLS SECTION -->
-    <section id="skills">
-        <h2>Technical Skills</h2>
-        <div id="skills-container">Loading skills...</div>
-    </section>
-
-    <!-- EDUCATION SECTION -->
-    <section id="education">
-        <h2>Education</h2>
-        <div id="education-container">Loading education...</div>
-    </section>
-
-    <!-- CONTACT SECTION -->
-    <section id="contact">
-        <h2>Get In Touch</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-            <div class="card">
-                <h3>📧 Email</h3>
-                <p><a href="mailto:foysal.dali.fd@hotmail.com" style="color: #2E75B6;">foysal.dali.fd@hotmail.com</a></p>
+    <!-- Research Section -->
+    <section id="research" class="research">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Research Interests</h2>
+                <p class="section-subtitle">Driving Innovation Through Deep Exploration</p>
             </div>
-            <div class="card">
-                <h3>📍 Location</h3>
-                <p>Mianyang, Sichuan, China</p>
-            </div>
-            <div class="card">
-                <h3>🔗 Links</h3>
-                <p><a href="https://github.com/TripleTheGreatDali" target="_blank">GitHub</a> • 
-                   <a href="https://orcid.org/0000-0002-5933-8968" target="_blank">ORCID</a> •
-                   <a href="https://www.webofscience.com/wos/author/record/LGY-3964-2024" target="_blank">WoS</a></p>
+            
+            <div class="research-grid">
+                <div class="research-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="research-icon">🖼️</div>
+                    <h3>Computer Vision & Image Processing</h3>
+                    <p>Advanced object detection, medical image analysis, and real-time video processing systems</p>
+                </div>
+                <div class="research-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="research-icon">🧠</div>
+                    <h3>Deep Learning & AI</h3>
+                    <p>Neural network architectures, transfer learning, and AI optimization for practical applications</p>
+                </div>
+                <div class="research-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="research-icon">🤖</div>
+                    <h3>AI in Robotics</h3>
+                    <p>Intelligent robotic systems, machine perception, and autonomous decision-making</p>
+                </div>
+                <div class="research-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="research-icon">🎤</div>
+                    <h3>Speech & Signal Processing</h3>
+                    <p>Audio analysis, speech recognition, and brain-computer interfaces</p>
+                </div>
+                <div class="research-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="research-icon">💬</div>
+                    <h3>NLP & Language Models</h3>
+                    <p>Natural language processing, semantic understanding, and dialogue systems</p>
+                </div>
+                <div class="research-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="research-icon">⚖️</div>
+                    <h3>AI Ethics & Epistemology</h3>
+                    <p>Ethical AI systems, structural bias, and hybrid intelligence cognitively-aligned approaches</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="https://github.com/TripleTheGreatDali" target="_blank">GitHub</a>
-                <a href="https://orcid.org/0000-0002-5933-8968" target="_blank">ORCID</a>
-                <a href="mailto:foysal.dali.fd@hotmail.com">Email</a>
+    <!-- Publications Section -->
+    <section id="publications" class="publications">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Publications & Research</h2>
+                <p class="section-subtitle">Peer-Reviewed Contributions to Knowledge</p>
+            </div>
+            
+            <div id="publicationsList" class="publications-grid">
+                <!-- Dynamically loaded -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Featured Projects</h2>
+                <p class="section-subtitle">Bridging Research and Real-World Innovation</p>
+            </div>
+            
+            <div id="projectsList" class="projects-grid">
+                <!-- Dynamically loaded -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Technical Expertise</h2>
+                <p class="section-subtitle">Tools, Technologies & Proficiencies</p>
+            </div>
+            
+            <div class="skills-grid">
+                <div class="skill-category" data-aos="fade-up">
+                    <h3>AI & Computer Vision</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">OpenCV</span>
+                        <span class="skill-tag">YOLO</span>
+                        <span class="skill-tag">Deep Learning</span>
+                    </div>
+                </div>
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
+                    <h3>Programming Languages</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">C</span>
+                        <span class="skill-tag">HTML/CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                    </div>
+                </div>
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
+                    <h3>Edge & IoT</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">ROS</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Linux</span>
+                        <span class="skill-tag">Embedded Systems</span>
+                        <span class="skill-tag">Real-Time OS</span>
+                    </div>
+                </div>
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="300">
+                    <h3>Data & Software Engineering</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">NumPy</span>
+                        <span class="skill-tag">Pandas</span>
+                        <span class="skill-tag">Scikit-learn</span>
+                        <span class="skill-tag">System Architecture</span>
+                        <span class="skill-tag">API Development</span>
+                    </div>
+                </div>
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="400">
+                    <h3>Languages</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">English (Fluent)</span>
+                        <span class="skill-tag">Bengali (Native)</span>
+                        <span class="skill-tag">Chinese (HSK3)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Let's Connect</h2>
+                <p class="section-subtitle">Collaboration, Opportunities & Inquiries Welcome</p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-info" data-aos="fade-right">
+                    <div class="info-card">
+                        <div class="info-icon">📧</div>
+                        <h3>Email</h3>
+                        <p><a href="mailto:contact@foylix.com">contact@foylix.com</a></p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">📱</div>
+                        <h3>Phone</h3>
+                        <p><a href="tel:+8801835085533">+88-01835085533</a></p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">📍</div>
+                        <h3>Location</h3>
+                        <p>Mianyang, Sichuan, China</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🔗</div>
+                        <h3>Social Links</h3>
+                        <div class="social-links">
+                            <a href="https://github.com/TripleTheGreatDali" target="_blank" title="GitHub">GitHub</a>
+                            <a href="https://orcid.org/0000-0002-5933-8968" target="_blank" title="ORCID">ORCID</a>
+                            <a href="https://www.webofscience.com/wos/author/record/LGY-3964-2024" target="_blank" title="Web of Science">WOS</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="contact-form" id="contactForm" data-aos="fade-left">
+                    <div class="form-group">
+                        <input type="text" id="name" placeholder="Your Name" required>
+                        <span class="form-error" id="nameError"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Your Email" required>
+                        <span class="form-error" id="emailError"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" placeholder="Subject" required>
+                        <span class="form-error" id="subjectError"></span>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" placeholder="Your Message" rows="6" required></textarea>
+                        <span class="form-error" id="messageError"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                    <span class="form-status" id="formStatus"></span>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>MD Foysal Ahmed</h3>
+                    <p>AI Researcher | Software Engineer | Innovation Visionary</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#publications">Publications</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Research Areas</h4>
+                    <ul>
+                        <li><a href="#research">Computer Vision</a></li>
+                        <li><a href="#research">Deep Learning</a></li>
+                        <li><a href="#research">AI Ethics</a></li>
+                        <li><a href="#research">Robotics</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 MD Foysal Ahmed. All rights reserved.</p>
+                <p>&copy; 2026 MD Foysal Ahmed. All rights reserved. | Designed with precision & passion.</p>
+                <div class="footer-links">
+                    <a href="#" onclick="return false;">Privacy Policy</a>
+                    <a href="#" onclick="return false;">Terms of Service</a>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="js/animations.js"></script>
     <script src="js/main.js"></script>
-    <script>
-        // Render research interests
-        async function renderResearchInterests() {
-            const interests = await loadJSON('data/research-interests.json');
-            const container = document.querySelector('#about .card:last-child') || document.getElementById('research-interests');
-            if (!interests || !container) return;
-            
-            let html = '<ul style="columns: 2; list-style-position: inside;">';
-            interests.forEach(interest => {
-                html += `<li style="margin-bottom: 0.5rem;">✓ ${interest}</li>`;
-            });
-            html += '</ul>';
-            
-            const div = document.getElementById('research-interests');
-            if (div) div.innerHTML = html;
-        }
-        
-        document.addEventListener('DOMContentLoaded', renderResearchInterests);
-    </script>
 </body>
 </html>

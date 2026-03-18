@@ -1,0 +1,59 @@
+{
+  "name": "MD Foysal Ahmed",
+  "title": "AI Researcher & Software Engineer",
+  "email": "contact@foylix.com",
+  "phone": "+88-01835085533",
+  "location": "Mianyang, Sichuan, China",
+  "bio": "Visionary AI researcher and software engineer bridging academia, industry, and innovation. Specializing in computer vision, deep learning, and hybrid intelligence systems.",
+  "summary": "Experienced AI researcher with a Master's in Software Engineering and Bachelor's in Computer Science and Technology from Southwest University of Science and Technology. Published in top-tier journals including AI and Ethics, Pattern Analysis and Applications, and Signal Image and Video Processing. Passionate about advancing human potential through intelligent systems.",
+  "links": {
+    "github": "https://github.com/TripleTheGreatDali",
+    "orcid": "https://orcid.org/0000-0002-5933-8968",
+    "wos": "https://www.webofscience.com/wos/author/record/LGY-3964-2024",
+    "linkedin": ""
+  },
+  "education": [
+    {
+      "degree": "Master of Engineering in Software Engineering",
+      "institution": "Southwest University of Science and Technology",
+      "location": "Mianyang, China",
+      "year": "2023-2025",
+      "gpa": "88.60%"
+    },
+    {
+      "degree": "Bachelor of Engineering in Computer Science and Technology",
+      "institution": "Southwest University of Science and Technology",
+      "location": "Mianyang, China",
+      "year": "2019-2023",
+      "gpa": "87.05%"
+    }
+  ],
+  "researchInterests": [
+    "Computer Vision & Image Processing",
+    "Deep Learning & AI Systems",
+    "AI in Robotics",
+    "Speech & Signal Processing",
+    "Natural Language Processing",
+    "AI Ethics & Epistemology",
+    "Edge Computing & IoT",
+    "Hybrid Intelligence Systems"
+  ],
+  "skills": {
+    "aiVision": ["PyTorch", "TensorFlow", "OpenCV", "YOLO", "Deep Learning"],
+    "programming": ["Python", "Java", "C", "HTML", "CSS", "JavaScript"],
+    "edgeIoT": ["ROS", "Docker", "Linux", "Embedded Systems", "Real-Time OS"],
+    "software": ["System Architecture", "Performance Optimization", "API Development", "Flask", "FastAPI"],
+    "data": ["NumPy", "Pandas", "Scikit-learn", "Data Streaming"]
+  },
+  "languages": [
+    { "name": "English", "level": "Fluent" },
+    { "name": "Bengali", "level": "Native" },
+    { "name": "Chinese", "level": "HSK3 - Intermediate" }
+  ],
+  "awards": [
+    "1st Prize Special Scholarship - SWUST 2019",
+    "Sichuan Provincial Government Scholarship 2023",
+    "3rd Prize Sichuan Biomedical Engineering Design Competition 2024",
+    "Class Monitor Recognition (2019-2023, 2023-2025)"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "foysal-portfolio",
+  "version": "2.0.0",
+  "description": "Professional academic portfolio website for MD Foysal Ahmed",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server",
+    "deploy": "git add . && git commit -m 'Update portfolio' && git push"
+  },
+  "keywords": ["AI", "Computer Vision", "Research", "Portfolio"],
+  "author": "MD Foysal Ahmed",
+  "license": "MIT"
+}

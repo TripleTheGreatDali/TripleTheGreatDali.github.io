@@ -1,0 +1,44 @@
+{
+  "siteConfig": {
+    "title": "MD Foysal Ahmed | AI Research & Computer Vision Expert",
+    "baseUrl": "https://TripleTheGreatDali.github.io",
+    "author": "MD Foysal Ahmed",
+    "email": "foysal.dali.fd@hotmail.com",
+    "phone": "+88 01835085533",
+    "location": "Mianyang, Sichuan, China",
+    "description": "AI researcher and computer vision expert specializing in deep learning, medical imaging, and hybrid intelligence systems.",
+    "keywords": ["AI", "Computer Vision", "Deep Learning", "Research", "Machine Learning", "PyTorch", "TensorFlow"],
+    
+    "social": {
+      "github": "https://github.com/TripleTheGreatDali",
+      "orcid": "https://orcid.org/0000-0002-5933-8968",
+      "webofscience": "https://www.webofscience.com/wos/author/record/LGY-3964-2024",
+      "linkedin": "https://www.linkedin.com/in/md-foysal-ahmed/"
+    },
+    
+    "appearance": {
+      "primaryColor": "#1F4E79",
+      "secondaryColor": "#2E75B6",
+      "accentColor": "#FFA500",
+      "fontFamily": "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+      "darkMode": false
+    },
+    
+    "seo": {
+      "enableAnalytics": false,
+      "googleAnalyticsId": "",
+      "enableSitemap": true,
+      "enableRobots": true
+    },
+    
+    "features": {
+      "publications": true,
+      "projects": true,
+      "timeline": true,
+      "contactForm": true,
+      "socialLinks": true,
+      "scrollAnimation": true,
+      "mobileMenu": true
+    }
+  }
+}
