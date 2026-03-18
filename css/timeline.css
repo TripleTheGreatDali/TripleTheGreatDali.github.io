@@ -1,0 +1,226 @@
+/* Timeline Styles */
+.timeline {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--accent-neon), var(--accent-purple));
+    z-index: 0;
+}
+
+.timeline-item {
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 1;
+}
+
+.timeline-item:nth-child(odd) {
+    padding-right: calc(50% + 50px);
+    text-align: right;
+}
+
+.timeline-item:nth-child(even) {
+    padding-left: calc(50% + 50px);
+}
+
+.timeline-marker {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background: var(--accent-neon);
+    border: 3px solid var(--bg-dark);
+    border-radius: 50%;
+    top: 20px;
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.6);
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-marker {
+    width: 30px;
+    height: 30px;
+    top: 15px;
+    box-shadow: 0 0 25px rgba(0, 217, 255, 1);
+}
+
+.timeline-dot {
+    display: none;
+}
+
+.timeline-content {
+    background: rgba(0, 217, 255, 0.05);
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    border-radius: 8px;
+    padding: 25px;
+    transition: all 0.3s ease;
+}
+
+.timeline-content:hover {
+    border-color: var(--accent-neon);
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+    transform: translateY(-5px);
+}
+
+.timeline-content h3 {
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    font-size: 1.3em;
+}
+
+.institution {
+    color: var(--accent-cyan);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.timeline-year {
+    display: inline-block;
+    background: rgba(176, 38, 255, 0.2);
+    color: var(--accent-purple);
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.focus {
+    color: var(--accent-neon);
+    font-style: italic;
+    margin-bottom: 12px;
+}
+
+.achievements {
+    list-style: none;
+    margin-top: 12px;
+    padding-left: 0;
+}
+
+.achievements li {
+    color: var(--text-secondary);
+    padding: 5px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.achievements li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent-neon);
+}
+
+/* Blog Grid */
+.blog {
+    padding: 100px 20px;
+    background: rgba(176, 38, 255, 0.02);
+    border-top: 1px solid rgba(176, 38, 255, 0.1);
+}
+
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.blog-card {
+    background: rgba(176, 38, 255, 0.05);
+    border: 1px solid rgba(176, 38, 255, 0.2);
+    border-radius: 8px;
+    padding: 30px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-card:hover {
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 20px rgba(176, 38, 255, 0.3);
+    transform: translateY(-5px);
+}
+
+.blog-date {
+    color: var(--accent-purple);
+    font-size: 0.85em;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.blog-title {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.blog-excerpt {
+    color: var(--text-secondary);
+    font-size: 0.95em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.blog-readmore {
+    color: var(--accent-purple);
+    font-weight: 600;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.blog-readmore:hover {
+    color: var(--accent-neon);
+    padding-left: 5px;
+}
+
+/* Responsive Timeline */
+@media (max-width: 768px) {
+    .timeline::before {
+        left: 30px;
+    }
+
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        padding-left: 80px;
+        padding-right: 0;
+        text-align: left;
+    }
+
+    .timeline-marker {
+        left: 30px;
+    }
+
+    .timeline-content {
+        padding: 20px;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.timeline-item {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.timeline-item:nth-child(1) { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.2s; }
+.timeline-item:nth-child(3) { animation-delay: 0.3s; }

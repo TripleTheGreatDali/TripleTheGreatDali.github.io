@@ -1,137 +1,41 @@
+// Advanced Animations & Interactions
+
 // Scroll animations and interactive effects
-
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        const scrollY = window.pageYOffset;
-        hero.style.backgroundPosition = `0px ${scrollY * 0.5}px`;
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    setupParticleAnimation();
+    setupCardHoverEffects();
+    setupScrollToTopButton();
+    setupGlitchAnimation();
 });
 
-// Add scroll animation to header
-let lastScrollPos = 0;
-const navbar = document.querySelector('.navbar');
-
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
+// Particle Animation
+function setupParticleAnimation() {
+    const particles = document.querySelectorAll('.particle');
     
-    if (navbar) {
-        if (currentScroll > lastScrollPos) {
-            // Scrolling down
-            navbar.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
-        } else {
-            // Scrolling up
-            navbar.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
-        }
-    }
-    
-    lastScrollPos = currentScroll <= 0 ? 0 : currentScroll;
-});
-
-// Counter animation for statistics (if added)
-function animateCounter(element, final, duration = 2000) {
-    let start = 0;
-    const increment = final / (duration / 16);
-    
-    const timer = setInterval(() => {
-        start += increment;
-        if (start >= final) {
-            element.textContent = final;
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.floor(start);
-        }
-    }, 16);
+    particles.forEach((particle, index) => {
+        const randomDuration = 15 + Math.random() * 10;
+        particle.style.setProperty('--duration', `${randomDuration}s`);
+    });
 }
 
-// Lazy load images
-document.addEventListener('DOMContentLoaded', () => {
-    const images = document.querySelectorAll('img[data-src]');
+// Card Hover Effects
+function setupCardHoverEffects() {
+    const cards = document.querySelectorAll('.publication-card, .project-card, .blog-card, .upcoming-card');
     
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.removeAttribute('data-src');
-                observer.unobserve(img);
-            }
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
         });
     });
-    
-    images.forEach(img => imageObserver.observe(img));
-});
+}
 
-// Add active class to nav items based on scroll position
-window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-    
-    let current = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (pageYOffset >= sectionTop - 200) {
-            current = section.getAttribute('id');
-        }
-    });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').slice(1) === current) {
-            link.classList.add('active');
-        }
-    });
-});
-
-// Add ripple effect to buttons
-document.querySelectorAll('.btn').forEach(button => {
-    button.addEventListener('click', function(e) {
-        const ripple = document.createElement('span');
-        const rect = this.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-        
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
-        ripple.classList.add('ripple');
-        
-        this.appendChild(ripple);
-        
-        setTimeout(() => ripple.remove(), 600);
-    });
-});
-
-// Ripple effect styles (add to CSS)
-const style = document.createElement('style');
-style.textContent = `
-    .btn {
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .ripple {
-        position: absolute;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.6);
-        transform: scale(0);
-        animation: ripple-animation 0.6s ease-out;
-        pointer-events: none;
-    }
-    
-    @keyframes ripple-animation {
-        to {
-            transform: scale(4);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// Scroll to top button
-function createScrollToTopButton() {
+// Scroll to Top Button
+function setupScrollToTopButton() {
     const button = document.createElement('button');
     button.innerHTML = '↑';
     button.className = 'scroll-to-top';
@@ -139,17 +43,19 @@ function createScrollToTopButton() {
         position: fixed;
         bottom: 30px;
         right: 30px;
-        background-color: #1F4E79;
+        background: linear-gradient(135deg, rgba(0, 217, 255, 0.8), rgba(176, 38, 255, 0.8));
         color: white;
-        border: none;
+        border: 2px solid rgba(0, 217, 255, 0.5);
         border-radius: 50%;
         width: 50px;
         height: 50px;
         font-size: 24px;
         cursor: pointer;
         opacity: 0;
-        transition: opacity 0.3s ease;
+        transition: opacity 0.3s ease, transform 0.3s ease;
         z-index: 999;
+        pointer-events: none;
+        box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
     `;
     
     document.body.appendChild(button);
@@ -167,7 +73,152 @@ function createScrollToTopButton() {
     button.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+    
+    button.addEventListener('mouseenter', () => {
+        button.style.transform = 'scale(1.1)';
+        button.style.boxShadow = '0 0 30px rgba(0, 217, 255, 0.8)';
+    });
+    
+    button.addEventListener('mouseleave', () => {
+        button.style.transform = 'scale(1)';
+        button.style.boxShadow = '0 0 20px rgba(0, 217, 255, 0.3)';
+    });
 }
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', createScrollToTopButton);
+// Glitch Animation Effect
+function setupGlitchAnimation() {
+    const glitchElement = document.querySelector('.glitch');
+    
+    if (glitchElement) {
+        // Add random glitch trigger every 3-5 seconds
+        setInterval(() => {
+            glitchElement.style.animation = 'none';
+            setTimeout(() => {
+                glitchElement.style.animation = 'glitch-animation 2s ease-in-out';
+            }, 10);
+        }, 3000 + Math.random() * 2000);
+    }
+}
+
+// Add smooth parallax effect on scroll
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const particles = document.querySelectorAll('.particle');
+    
+    particles.forEach((particle, index) => {
+        const speed = 0.5 + (index * 0.1);
+        particle.style.transform = `translateY(${scrolled * speed}px)`;
+    });
+});
+
+// Add CSS animations dynamically
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes glitch-animation {
+        0%, 100% {
+            text-shadow: 0 0 0 transparent;
+        }
+        20% {
+            text-shadow: -2px 2px 0 rgba(176, 38, 255, 0.8), 2px -2px 0 rgba(0, 240, 255, 0.8);
+        }
+        40% {
+            text-shadow: 3px -3px 0 rgba(0, 217, 255, 0.8), -3px 3px 0 rgba(176, 38, 255, 0.8);
+        }
+        60% {
+            text-shadow: -2px 2px 0 rgba(0, 240, 255, 0.8), 2px -2px 0 rgba(176, 38, 255, 0.8);
+        }
+        80% {
+            text-shadow: 2px 2px 0 rgba(176, 38, 255, 0.8), -2px -2px 0 rgba(0, 217, 255, 0.8);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translate(0, 0); }
+        25% { transform: translate(50px, -50px); }
+        50% { transform: translate(-30px, 30px); }
+        75% { transform: translate(20px, 50px); }
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(10px); }
+    }
+
+    .scroll-to-top:hover {
+        animation: bounce 0.6s ease-in-out;
+    }
+
+    /* Smooth card transition */
+    .publication-card, .project-card, .blog-card, .upcoming-card {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .publication-card::after, .project-card::after, .blog-card::after, .upcoming-card::after {
+        content: '';
+        position: absolute;
+        top: var(--mouse-y, 50%);
+        left: var(--mouse-x, 50%);
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(0, 217, 255, 0.1), transparent);
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        transition: width 0.3s, height 0.3s;
+    }
+
+    .publication-card:hover::after, .project-card:hover::after, .blog-card:hover::after, .upcoming-card:hover::after {
+        width: 300px;
+        height: 300px;
+    }
+`;
+document.head.appendChild(style);
+
+// Add smooth scroll behavior enhancement
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Add keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const navLinks = document.querySelector('.nav-links');
+        if (navLinks && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+        }
+    }
+});
+
+// Monitor scroll position for navbar transparency
+window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        if (window.pageYOffset > 50) {
+            navbar.style.borderBottomColor = 'rgba(0, 217, 255, 0.2)';
+        } else {
+            navbar.style.borderBottomColor = 'rgba(0, 217, 255, 0.1)';
+        }
+    }
+});

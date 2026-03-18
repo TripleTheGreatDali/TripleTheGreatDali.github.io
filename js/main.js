@@ -1,10 +1,152 @@
-// Load data from JSON files and populate sections
+// Load all data and initialize the portfolio
 document.addEventListener('DOMContentLoaded', async () => {
-    await loadProjects();
+    setupMobileMenu();
+    setupNavigation();
     await loadPublications();
-    await loadSkills();
-    setupEventListeners();
+    await loadUpcomingResearch();
+    await loadNews();
+    await loadProjects();
+    await loadBlog();
+    setupContactForm();
+    setupScrollAnimations();
 });
+
+// Mobile Menu Toggle
+function setupMobileMenu() {
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (toggle) {
+        toggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+    }
+}
+
+// Setup Navigation Active States
+function setupNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    window.addEventListener('scroll', () => {
+        let current = '';
+        const sections = document.querySelectorAll('section[id]');
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').slice(1) === current) {
+                link.classList.add('active');
+            }
+        });
+    });
+}
+
+// Load Publications
+async function loadPublications() {
+    try {
+        const response = await fetch('assets/data/publications.json');
+        const publications = await response.json();
+        const container = document.getElementById('publications-container');
+        
+        function renderPublications(year = 'all') {
+            let filtered = publications;
+            
+            if (year !== 'all') {
+                filtered = publications.filter(pub => pub.year === parseInt(year));
+            }
+            
+            const html = filtered.map(pub => `
+                <div class="publication-card">
+                    <div class="publication-year">${pub.year}</div>
+                    <div class="publication-title">${pub.title}</div>
+                    <div class="publication-venue">${pub.journal || pub.conference}</div>
+                    <div class="publication-abstract">${pub.abstract}</div>
+                    <div class="publication-tags">
+                        ${pub.tags.map(tag => `<span class="publication-tag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+            
+            container.innerHTML = html;
+        }
+        
+        renderPublications();
+        
+        // Filter buttons
+        document.querySelectorAll('.publications-filter .filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.publications-filter .filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                renderPublications(this.dataset.filter);
+            });
+        });
+        
+    } catch (error) {
+        console.error('Error loading publications:', error);
+    }
+}
+
+// Load Upcoming Research
+async function loadUpcomingResearch() {
+    try {
+        const response = await fetch('assets/data/upcoming.json');
+        const upcoming = await response.json();
+        const container = document.getElementById('upcoming-container');
+        
+        const html = upcoming.map(item => `
+            <div class="upcoming-card">
+                <div class="status-badge">${item.status}</div>
+                <h3>${item.title}</h3>
+                <p>${item.description}</p>
+                <div class="publication-tags">
+                    ${item.keywords.map(kw => `<span class="publication-tag">${kw}</span>`).join('')}
+                </div>
+                ${item.targetConference ? `<p style="margin-top: 12px; color: var(--accent-neon);"><strong>Target:</strong> ${item.targetConference}</p>` : ''}
+                ${item.expectedDate ? `<p style="color: var(--text-secondary);">Expected: ${item.expectedDate}</p>` : ''}
+            </div>
+        `).join('');
+        
+        container.innerHTML = html;
+    } catch (error) {
+        console.error('Error loading upcoming research:', error);
+    }
+}
+
+// Load News & Updates
+async function loadNews() {
+    try {
+        const response = await fetch('assets/data/news.json');
+        const news = await response.json();
+        const container = document.getElementById('news-container');
+        
+        const html = news.map((item, index) => `
+            <div class="news-item" style="animation-delay: ${index * 0.1}s">
+                <div class="news-content">
+                    <div class="news-date">${item.date} • ${item.icon} ${item.category}</div>
+                    <div class="news-title">${item.title}</div>
+                    <div class="news-description">${item.description}</div>
+                </div>
+            </div>
+        `).join('');
+        
+        container.innerHTML = html;
+    } catch (error) {
+        console.error('Error loading news:', error);
+    }
+}
 
 // Load Projects
 async function loadProjects() {
@@ -13,11 +155,9 @@ async function loadProjects() {
         const projects = await response.json();
         const container = document.getElementById('projects-container');
         
-        const projectsHTML = projects.slice(0, 6).map(project => `
+        const html = projects.slice(0, 6).map(project => `
             <div class="project-card">
-                <div class="project-image">
-                    ${project.image ? `<img src="${project.image}" alt="${project.title}">` : `<span>${project.icon}</span>`}
-                </div>
+                <div class="project-image">${project.icon}</div>
                 <div class="project-content">
                     <h3 class="project-title">${project.title}</h3>
                     <p class="project-description">${project.description}</p>
@@ -32,89 +172,45 @@ async function loadProjects() {
             </div>
         `).join('');
         
-        container.innerHTML = projectsHTML;
+        container.innerHTML = html;
     } catch (error) {
         console.error('Error loading projects:', error);
     }
 }
 
-// Load Publications
-async function loadPublications() {
+// Load Blog Posts
+async function loadBlog() {
     try {
-        const response = await fetch('assets/data/publications.json');
-        const publications = await response.json();
-        const container = document.getElementById('publications-container');
+        const response = await fetch('assets/data/blog.json');
+        const blog = await response.json();
+        const container = document.getElementById('blog-container');
         
-        const publicationsHTML = publications.slice(0, 4).map(pub => `
-            <div class="publication-item">
-                <div class="publication-title">${pub.title}</div>
-                <div class="publication-authors">${pub.authors}</div>
-                <div class="publication-meta">
-                    ${pub.journal || pub.conference} ${pub.year}
-                    ${pub.doi ? ` | DOI: <a href="https://doi.org/${pub.doi}" target="_blank">${pub.doi}</a>` : ''}
-                </div>
+        const html = blog.slice(0, 6).map(post => `
+            <div class="blog-card">
+                <div class="blog-date">${post.date}</div>
+                <div class="blog-title">${post.title}</div>
+                <div class="blog-excerpt">${post.excerpt}</div>
+                <a href="${post.link || '#'}" class="blog-readmore">Read More →</a>
             </div>
         `).join('');
         
-        container.innerHTML = publicationsHTML;
+        container.innerHTML = html;
     } catch (error) {
-        console.error('Error loading publications:', error);
+        console.error('Error loading blog:', error);
     }
 }
 
-// Load Skills
-async function loadSkills() {
-    try {
-        const response = await fetch('assets/data/skills.json');
-        const skillsData = await response.json();
-        const container = document.getElementById('skills-container');
-        
-        const skillsHTML = skillsData.map(category => `
-            <div class="skill-category">
-                <h4>${category.category}</h4>
-                <div class="skill-list">
-                    ${category.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
-                </div>
-            </div>
-        `).join('');
-        
-        container.innerHTML = skillsHTML;
-    } catch (error) {
-        console.error('Error loading skills:', error);
-    }
-}
-
-// Setup Event Listeners
-function setupEventListeners() {
-    // Mobile menu toggle
-    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
+// Setup Contact Form
+function setupContactForm() {
+    const form = document.getElementById('contact-form');
     
-    if (mobileMenuToggle) {
-        mobileMenuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-    }
-
-    // Close mobile menu on link click
-    const navItems = document.querySelectorAll('.nav-links a');
-    navItems.forEach(item => {
-        item.addEventListener('click', () => {
-            if (navLinks) {
-                navLinks.classList.remove('active');
-            }
-        });
-    });
-
-    // Contact form submission
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', handleContactForm);
+    if (form) {
+        form.addEventListener('submit', handleContactSubmit);
     }
 }
 
 // Handle Contact Form Submission
-function handleContactForm(e) {
+function handleContactSubmit(e) {
     e.preventDefault();
     
     const formData = new FormData(e.target);
@@ -124,43 +220,29 @@ function handleContactForm(e) {
         message: formData.get('message')
     };
     
-    // Here you would typically send the data to a server
     console.log('Form submitted:', data);
-    
-    // Show success message
     alert('Thank you for your message! I will get back to you soon.');
     e.target.reset();
 }
 
-// Smooth scroll to sections
-function smoothScroll(e) {
-    if (e.target.tagName === 'A' && e.target.hash) {
-        e.preventDefault();
-        const element = document.querySelector(e.target.hash);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-}
-
-// Intersection Observer for animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in-up');
-            observer.unobserve(entry.target);
-        }
-    });
-}, observerOptions);
-
-// Observe all cards for animation
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.research-card, .project-card, .publication-item, .skill-category').forEach(el => {
+// Setup Scroll Animations
+function setupScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animation = 'fadeInUp 0.6s ease-out';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    // Observe all cards
+    document.querySelectorAll('.publication-card, .project-card, .blog-card, .upcoming-card, .timeline-item').forEach(el => {
         observer.observe(el);
     });
-});
+}

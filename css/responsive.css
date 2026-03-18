@@ -1,113 +1,130 @@
 /* Tablet Devices (768px and below) */
 @media (max-width: 768px) {
     h1 {
-        font-size: 2em;
+        font-size: 2.5em;
     }
 
     h2 {
         font-size: 1.8em;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
     }
 
-    h3 {
-        font-size: 1.2em;
+    .section-title {
+        font-size: 1.8em;
+    }
+
+    .glitch {
+        font-size: 2.5em;
     }
 
     /* Hero Section */
     .hero {
         padding: 60px 20px;
+        min-height: auto;
     }
 
-    .hero-content {
-        gap: 30px;
+    .subtitle {
+        font-size: 1.3em;
+        gap: 10px;
     }
 
-    .hero-text {
-        text-align: center;
-    }
-
-    .hero-text h1 {
-        font-size: 2em;
-    }
-
-    .hero-text h2 {
-        font-size: 1.4em;
-        text-align: center;
+    .description {
+        font-size: 1em;
     }
 
     .hero-buttons {
-        justify-content: center;
+        flex-direction: column;
+        align-items: stretch;
     }
 
-    .social-links {
-        justify-content: center;
+    .btn {
+        width: 100%;
     }
 
-    /* Research Section */
-    .research {
-        padding: 60px 20px;
+    /* Timeline */
+    .timeline::before {
+        left: 25px;
     }
 
-    .research-grid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        padding-left: 70px;
+        padding-right: 0;
+        text-align: left;
+    }
+
+    .timeline-marker {
+        left: 25px;
+    }
+
+    /* Publications */
+    .publications-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 20px;
     }
 
-    /* Projects Section */
-    .projects {
-        padding: 60px 20px;
-    }
-
+    /* Projects */
     .projects-grid {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 20px;
     }
 
-    /* Publications Section */
-    .publications {
-        padding: 60px 20px;
+    /* News Timeline */
+    .news-timeline::before {
+        left: 25px;
     }
 
-    /* Skills Section */
-    .skills {
-        padding: 60px 20px;
+    .news-item {
+        gap: 20px;
     }
 
-    .skills-grid {
-        grid-template-columns: 1fr;
+    .news-item:nth-child(odd),
+    .news-item:nth-child(even) {
+        flex-direction: column !important;
     }
 
-    /* Contact Section */
-    .contact {
-        padding: 60px 20px;
-    }
-
+    /* Contact */
     .contact-content {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 40px;
     }
 
-    .contact-form button {
-        width: 100%;
+    /* Blog */
+    .blog-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+
+    section {
+        padding: 60px 20px;
     }
 }
 
 /* Mobile Devices (480px and below) */
 @media (max-width: 480px) {
     h1 {
-        font-size: 1.5em;
+        font-size: 2em;
     }
 
     h2 {
-        font-size: 1.4em;
-        margin-bottom: 20px;
+        font-size: 1.5em;
+        margin-bottom: 30px;
     }
 
-    h3 {
+    .section-title {
+        font-size: 1.5em;
+    }
+
+    .glitch {
+        font-size: 1.8em;
+    }
+
+    .subtitle {
         font-size: 1.1em;
+        flex-direction: column;
+        gap: 8px;
     }
 
-    p {
+    .description {
         font-size: 0.95em;
     }
 
@@ -115,35 +132,30 @@
         padding: 0 15px;
     }
 
-    /* Hero Section */
-    .hero {
-        padding: 40px 15px;
+    /* Navigation */
+    .navbar .container {
+        padding: 15px;
     }
 
-    .hero-content {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .profile-image img {
-        width: 200px;
-        height: 200px;
-    }
-
-    .hero-text h1 {
-        font-size: 1.5em;
-    }
-
-    .hero-text h2 {
+    .logo {
         font-size: 1.1em;
     }
 
-    .hero-text p {
-        font-size: 1em;
+    .nav-links {
+        gap: 0;
+    }
+
+    /* Hero Section */
+    .hero {
+        padding: 40px 15px;
+        min-height: auto;
+    }
+
+    .hero-content h1 {
+        font-size: 1.8em;
     }
 
     .hero-buttons {
-        flex-direction: column;
         gap: 10px;
     }
 
@@ -152,57 +164,69 @@
         font-size: 0.9em;
     }
 
-    /* Research Section */
-    .research {
-        padding: 40px 15px;
+    /* Timeline */
+    .timeline::before {
+        left: 15px;
     }
 
-    .research-grid {
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        padding-left: 60px;
+    }
+
+    .timeline-marker {
+        left: 15px;
+        width: 15px;
+        height: 15px;
+        top: 20px;
+    }
+
+    .timeline-item:hover .timeline-marker {
+        width: 15px;
+        height: 15px;
+        top: 20px;
+    }
+
+    .timeline-content {
+        padding: 15px;
+    }
+
+    /* Publications Filter */
+    .publications-filter {
+        gap: 8px;
+    }
+
+    .filter-btn {
+        padding: 8px 15px;
+        font-size: 0.85em;
+    }
+
+    /* Publications Grid */
+    .publications-grid {
         grid-template-columns: 1fr;
     }
 
-    /* Projects Section */
-    .projects {
-        padding: 40px 15px;
-    }
-
+    /* Projects */
     .projects-grid {
         grid-template-columns: 1fr;
     }
 
-    .project-card {
-        margin-bottom: 15px;
+    /* News */
+    .news-timeline::before {
+        left: 15px;
     }
 
-    /* Publications Section */
-    .publications {
-        padding: 40px 15px;
+    .news-item {
+        gap: 15px;
     }
 
-    .publication-item {
+    .news-content {
         padding: 15px;
     }
 
-    /* Skills Section */
-    .skills {
-        padding: 40px 15px;
-    }
-
-    .skill-category {
-        padding: 15px;
-    }
-
-    /* Contact Section */
-    .contact {
-        padding: 40px 15px;
-    }
-
-    .contact-info p {
-        font-size: 0.95em;
-    }
-
-    .contact-form {
-        gap: 10px;
+    /* Contact */
+    .contact-content {
+        gap: 30px;
     }
 
     .contact-form input,
@@ -211,12 +235,39 @@
         font-size: 0.95em;
     }
 
-    /* Navigation */
-    .logo {
-        font-size: 1.2em;
+    /* Blog */
+    .blog-grid {
+        grid-template-columns: 1fr;
     }
 
-    .nav-links {
-        gap: 0;
+    .blog-card {
+        padding: 20px;
+    }
+
+    section {
+        padding: 40px 15px;
+    }
+
+    .scroll-indicator {
+        display: none;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 360px) {
+    h1 {
+        font-size: 1.5em;
+    }
+
+    .glitch {
+        font-size: 1.4em;
+    }
+
+    .subtitle {
+        font-size: 0.95em;
+    }
+
+    .section-title::after {
+        width: 40px;
     }
 }

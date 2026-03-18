@@ -3,124 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AI Research & Computer Vision Expert - Portfolio">
-    <title>MD Foysal Ahmed | AI Research & Computer Vision Expert</title>
+    <meta name="description" content="MD Foysal Ahmed - AI Research Engineer & Computer Vision Expert">
+    <title>MD Foysal Ahmed | AI Research & Computer Vision</title>
     
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/projects.css">
+    <link rel="stylesheet" href="css/timeline.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="particle" style="--x: 10%; --y: 20%;"></div>
+        <div class="particle" style="--x: 80%; --y: 60%;"></div>
+        <div class="particle" style="--x: 40%; --y: 80%;"></div>
+        <div class="particle" style="--x: 70%; --y: 30%;"></div>
+        <div class="particle" style="--x: 20%; --y: 70%;"></div>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
-            <div class="logo">MD Foysal Ahmed</div>
+            <div class="logo">
+                <span class="logo-accent">&gt;</span> MD Foysal Ahmed
+            </div>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#research">Research</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#publications">Publications</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#hero" class="nav-link">Home</a></li>
+                <li><a href="#education" class="nav-link">Education</a></li>
+                <li><a href="#publications" class="nav-link">Publications</a></li>
+                <li><a href="#upcoming" class="nav-link">Research</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#news" class="nav-link">News</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
+            <button class="mobile-menu-toggle">☰</button>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
+    <section id="hero" class="hero">
         <div class="hero-content">
-            <div class="profile-image">
-                <img src="assets/images/profile/profile.jpg" alt="Profile Picture">
+            <h1 class="glitch" data-text="AI RESEARCHER">AI RESEARCHER</h1>
+            <div class="subtitle">
+                <span class="accent-neon">Hybrid Intelligence</span> • 
+                <span class="accent-purple">Computer Vision</span> • 
+                <span class="accent-cyan">Control Science</span>
             </div>
-            <div class="hero-text">
-                <h1>MD Foysal Ahmed</h1>
-                <h2>AI Research Engineer & Computer Vision Expert</h2>
-                <p>Specializing in Deep Learning, Medical Imaging, and Hybrid Intelligence Systems</p>
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary">Get In Touch</a>
-                    <a href="assets/data/CV.pdf" class="btn btn-secondary">Download CV</a>
-                </div>
-                <div class="social-links">
-                    <a href="https://github.com/TripleTheGreatDali" target="_blank">GitHub</a>
-                    <a href="https://www.linkedin.com/in/md-foysal-ahmed/" target="_blank">LinkedIn</a>
-                    <a href="https://orcid.org/0000-0002-5933-8968" target="_blank">ORCID</a>
-                    <a href="https://www.webofscience.com/wos/author/record/LGY-3964-2024" target="_blank">Web of Science</a>
-                </div>
+            <p class="description">
+                Exploring the intersection of symbolic AI and deep learning to build interpretable, 
+                robust intelligent systems. Passionate about medical imaging, real-time processing, and research excellence.
+            </p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="document.getElementById('publications').scrollIntoView({behavior: 'smooth'})">
+                    Explore My Work
+                </button>
+                <button class="btn btn-secondary" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+                    Collaborate With Me
+                </button>
+            </div>
+            <div class="scroll-indicator">
+                <span>Scroll to explore</span>
+                <div class="scroll-arrow"></div>
             </div>
         </div>
     </section>
 
-    <!-- Research Focus Section -->
-    <section id="research" class="research">
+    <!-- Education Timeline -->
+    <section id="education" class="education">
         <div class="container">
-            <h2>Research Focus</h2>
-            <div class="research-grid">
-                <div class="research-card">
-                    <div class="icon">🤵‍♂️</div>
-                    <h3>Medical Imaging</h3>
-                    <p>Advanced deep learning techniques for medical image segmentation, classification, and analysis</p>
+            <h2 class="section-title">
+                <span class="accent-cyan">&lt;</span> Education <span class="accent-cyan">/&gt;</span>
+            </h2>
+            <div class="timeline">
+                <div class="timeline-item" data-year="2025">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-dot"></div>
+                        <h3>M.Eng. Software Engineering</h3>
+                        <p class="institution">Southwest University of Technology (SWUST)</p>
+                        <p class="timeline-year">Expected 2025</p>
+                        <p class="focus">Focus: Deep Learning Systems & Hybrid Intelligence</p>
+                        <ul class="achievements">
+                            <li>Advanced neural architecture research</li>
+                            <li>Collaboration on medical imaging systems</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="research-card">
-                    <div class="icon">🧠</div>
-                    <h3>Computer Vision</h3>
-                    <p>State-of-the-art CNN architectures, object detection, and image processing</p>
+
+                <div class="timeline-item" data-year="2023">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-dot"></div>
+                        <h3>B.Eng. Computer Science & Engineering</h3>
+                        <p class="institution">Southwest University of Technology (SWUST)</p>
+                        <p class="timeline-year">2023</p>
+                        <p class="focus">Focus: AI, Computer Vision & Signal Processing</p>
+                        <ul class="achievements">
+                            <li>GPA: 3.8/4.0</li>
+                            <li>Published 3 papers during undergraduate</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="research-card">
-                    <div class="icon">🔗</div>
-                    <h3>Hybrid Intelligence</h3>
-                    <p>Combining symbolic AI with deep learning for robust intelligent systems</p>
-                </div>
-                <div class="research-card">
-                    <div class="icon">📊</div>
-                    <h3>Deep Learning</h3>
-                    <p>Neural network optimization, model architectures, and training methodologies</p>
+
+                <div class="timeline-item" data-year="2024">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-dot"></div>
+                        <h3>Ongoing - Double Major</h3>
+                        <p class="institution">Hohai University</p>
+                        <p class="timeline-year">2024 - Ongoing</p>
+                        <p class="focus">Major: Control Science & Engineering</p>
+                        <ul class="achievements">
+                            <li>Advanced control systems theory</li>
+                            <li>AI for autonomous systems</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Featured Projects -->
+    <!-- Publications Section -->
+    <section id="publications" class="publications">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="accent-neon">&lt;</span> Publications <span class="accent-neon">/&gt;</span>
+            </h2>
+            
+            <div class="publications-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="2024">2024</button>
+                <button class="filter-btn" data-filter="2023">2023</button>
+                <button class="filter-btn" data-filter="2022">2022</button>
+            </div>
+
+            <div class="publications-grid" id="publications-container"></div>
+        </div>
+    </section>
+
+    <!-- Upcoming Research Section -->
+    <section id="upcoming" class="upcoming-research">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="accent-purple">&lt;</span> Ongoing Research <span class="accent-purple">/&gt;</span>
+            </h2>
+            
+            <div class="upcoming-grid" id="upcoming-container"></div>
+        </div>
+    </section>
+
+    <!-- News & Updates Section -->
+    <section id="news" class="news">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="accent-cyan">&lt;</span> News & Updates <span class="accent-cyan">/&gt;</span>
+            </h2>
+            
+            <div class="news-timeline" id="news-container"></div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
     <section id="projects" class="projects">
         <div class="container">
-            <h2>Featured Projects</h2>
+            <h2 class="section-title">
+                <span class="accent-neon">&lt;</span> Projects & Demos <span class="accent-neon">/&gt;</span>
+            </h2>
+            
             <div class="projects-grid" id="projects-container"></div>
         </div>
     </section>
 
-    <!-- Publications -->
-    <section id="publications" class="publications">
+    <!-- Blog Section -->
+    <section id="blog" class="blog">
         <div class="container">
-            <h2>Recent Publications</h2>
-            <div class="publications-list" id="publications-container"></div>
-            <div class="view-all">
-                <a href="pages/publications.html" class="btn btn-secondary">View All Publications</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2>Technical Skills</h2>
-            <div class="skills-grid" id="skills-container"></div>
+            <h2 class="section-title">
+                <span class="accent-purple">&lt;</span> Technical Thoughts <span class="accent-purple">/&gt;</span>
+            </h2>
+            
+            <div class="blog-grid" id="blog-container"></div>
         </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
-            <h2>Contact & Collaboration</h2>
+            <h2 class="section-title">
+                <span class="accent-neon">&lt;</span> Let's Connect <span class="accent-neon">/&gt;</span>
+            </h2>
+            
             <div class="contact-content">
                 <div class="contact-info">
-                    <p><strong>Email:</strong> <a href="mailto:foysal.dali.fd@hotmail.com">foysal.dali.fd@hotmail.com</a></p>
-                    <p><strong>Phone:</strong> +88 01835085533</p>
-                    <p><strong>Location:</strong> Mianyang, Sichuan, China</p>
+                    <div class="contact-item">
+                        <h3>Email</h3>
+                        <a href="mailto:foysal.dali.fd@hotmail.com">foysal.dali.fd@hotmail.com</a>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h3>Phone</h3>
+                        <p>+88 01835085533</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h3>Location</h3>
+                        <p>Mianyang, Sichuan, China</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h3>Research Interests</h3>
+                        <p>Medical Image Analysis • Computer Vision • Deep Learning • Hybrid Intelligence • AI Systems</p>
+                    </div>
+                    
+                    <div class="contact-socials">
+                        <a href="https://github.com/TripleTheGreatDali" target="_blank" class="social-link">GitHub</a>
+                        <a href="https://www.linkedin.com/in/md-foysal-ahmed/" target="_blank" class="social-link">LinkedIn</a>
+                        <a href="https://orcid.org/0000-0002-5933-8968" target="_blank" class="social-link">ORCID</a>
+                        <a href="https://www.webofscience.com/wos/author/record/LGY-3964-2024" target="_blank" class="social-link">Web of Science</a>
+                    </div>
+                    
+                    <p class="collaboration-note">
+                        <span class="accent-cyan">→</span> Open for collaboration on cutting-edge AI research 
+                    </p>
                 </div>
-                <form class="contact-form" id="contact-form">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <textarea placeholder="Your Message" rows="5" required></textarea>
+
+                <form class="contact-form" id="contact-form" onsubmit="handleContactSubmit(event)">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" rows="6" required></textarea>
+                    </div>
                     <button type="submit" class="btn btn-primary">Send Message</button>
                 </form>
             </div>
@@ -130,7 +246,10 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 MD Foysal Ahmed. All rights reserved.</p>
+            <div class="footer-content">
+                <p><span class="accent-neon">&lt;</span> © 2026 MD Foysal Ahmed <span class="accent-neon">/&gt;</span></p>
+                <p>Built with passion for research and innovation</p>
+            </div>
         </div>
     </footer>
 
