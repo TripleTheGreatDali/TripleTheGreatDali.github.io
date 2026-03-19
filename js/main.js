@@ -77,7 +77,7 @@ async function loadPublications() {
                     <div class="publication-tags">
                         ${pub.tags.map(tag => `<span class="publication-tag">${tag}</span>`).join('')}
                     </div>
-                    ${pub.doi ? `<div class="publication-links" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);"><a href="${pub.doi}" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 8px 16px; background: var(--accent-neon); color: var(--bg-dark); border-radius: 5px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">🔗 View Article</a></div>` : ''}
+                    ${pub.doi ? `<div class="publication-links" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);"><a href="${pub.doi}" target="_blank" rel="noopener noreferrer" title="Open article in new window" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; background: linear-gradient(135deg, var(--accent-neon), rgba(31, 78, 121, 0.8)); color: var(--bg-dark); border-radius: 8px; text-decoration: none; font-weight: 700; transition: all 0.3s ease; cursor: pointer; font-size: 0.95em; box-shadow: 0 4px 12px rgba(0, 217, 255, 0.3);"><span style="font-size: 1.1em;">📄</span><span>Read Article</span><span style="font-size: 0.85em;">↗</span></a></div>` : ''}
                 </div>
             `).join('');
             
