@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Foylix Blog - AI Research Article">
+    <title>Blog Post | Foylix</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .post-container {
+            max-width: 800px;
+            margin: 100px auto;
+            padding: 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: #1F4E79;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .post-header {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #1F4E79;
+        }
+
+        .post-date {
+            font-size: 0.95em;
+            color: #1F4E79;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .post-title {
+            font-size: 2.5em;
+            color: #1F4E79;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .post-content {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .post-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .post-content h3 {
+            color: #1F4E79;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .post-content ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .post-content li {
+            margin-bottom: 10px;
+        }
+
+        .author-info {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 40px;
+            border-left: 4px solid #1F4E79;
+        }
+
+        .author-info p {
+            margin: 0;
+            color: #555;
+        }
+
+        .topics {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .topic-tag {
+            background: #1F4E79;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .topic-tag:hover {
+            background: #0a2e47;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-accent">&gt;</span> Md Foysal Ahmed
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../pages/education.html">Education</a></li>
+                <li><a href="../pages/publications.html">Publications</a></li>
+                <li><a href="../pages/research.html">Research</a></li>
+                <li><a href="../pages/projects.html">Projects</a></li>
+                <li><a href="../pages/news.html">News</a></li>
+                <li><a href="../pages/blog.html">Blog</a></li>
+                <li><a href="../pages/contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="particle" style="--x: 10%; --y: 20%;"></div>
+        <div class="particle" style="--x: 80%; --y: 60%;"></div>
+        <div class="particle" style="--x: 40%; --y: 80%;"></div>
+        <div class="particle" style="--x: 70%; --y: 30%;"></div>
+        <div class="particle" style="--x: 20%; --y: 70%;"></div>
+    </div>
+
+    <!-- Main Content -->
+    <article class="post-container">
+        <a href="blog.html" class="back-link">← Back to Blog</a>
+        
+        <header class="post-header">
+            <div class="post-date" id="postDate"></div>
+            <h1 class="post-title" id="postTitle"></h1>
+        </header>
+
+        <div class="post-content" id="postContent">
+            <!-- Content will be loaded here -->
+        </div>
+
+        <div class="author-info">
+            <p><strong>About the Author:</strong></p>
+            <p>MD Foysal Ahmed is an AI Research Engineer specializing in Deep Learning, Computer Vision, and Activity Recognition. With expertise in cutting-edge research and practical deployments, he bridges the gap between theory and real-world applications.</p>
+        </div>
+
+        <div class="topics" id="topics">
+            <!-- Topics will be added here -->
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 MD Foysal Ahmed. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://github.com" target="_blank">GitHub</a>
+                <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+                <a href="https://twitter.com" target="_blank">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Get blog post ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const postId = urlParams.get('id');
+
+        async function loadBlogPost() {
+            try {
+                const response = await fetch('../assets/data/blog.json');
+                const posts = await response.json();
+                const post = posts[postId];
+
+                if (!post) {
+                    document.getElementById('postContent').innerHTML = 
+                        '<p style="color: red;">Blog post not found.</p>';
+                    return;
+                }
+
+                // Set page title
+                document.title = post.title + ' | Foylix Blog';
+
+                // Load post metadata
+                document.getElementById('postDate').textContent = post.date;
+                document.getElementById('postTitle').textContent = post.title;
+
+                // Load post content (using excerpt for now, you can extend with full_content)
+                const contentArea = document.getElementById('postContent');
+                contentArea.innerHTML = `
+                    <p>${post.excerpt}</p>
+                    <h3>Key Takeaways</h3>
+                    <p>This article provides valuable insights into the latest developments in AI and deep learning. Continue reading to discover practical implementations and best practices.</p>
+                    <h3>Practical Applications</h3>
+                    <p>The concepts discussed in this post can be applied to various real-world scenarios and production environments.</p>
+                    <h3>Looking Forward</h3>
+                    <p>Stay tuned for more articles and research updates on AI, computer vision, and deep learning.</p>
+                `;
+
+                // Add topics
+                const topicsContainer = document.getElementById('topics');
+                const defaultTopics = ['AI Research', 'Deep Learning', 'Computer Vision'];
+                defaultTopics.forEach(topic => {
+                    const tag = document.createElement('a');
+                    tag.href = '#';
+                    tag.className = 'topic-tag';
+                    tag.textContent = topic;
+                    topicsContainer.appendChild(tag);
+                });
+
+            } catch (error) {
+                console.error('Error loading blog post:', error);
+                document.getElementById('postContent').innerHTML = 
+                    '<p style="color: red;">Error loading blog post. Please try again later.</p>';
+            }
+        }
+
+        // Load post on page load
+        document.addEventListener('DOMContentLoaded', loadBlogPost);
+    </script>
+</body>
+</html>

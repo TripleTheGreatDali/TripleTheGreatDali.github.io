@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Research - MD Foysal Ahmed">
+    <title>Research | MD Foysal Ahmed</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .page-container {
+            max-width: 900px;
+            margin: 100px auto;
+            padding: 20px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #1F4E79;
+        }
+
+        .page-header h1 {
+            font-size: 3em;
+            color: #1F4E79;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: #1F4E79;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .research-grid {
+            display: grid;
+            gap: 30px;
+        }
+
+        .research-item {
+            padding: 25px;
+            border-left: 4px solid #1F4E79;
+            background: #f9f9f9;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .research-item:hover {
+            background: #f0f0f0;
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(31, 78, 121, 0.2);
+        }
+
+        .research-title {
+            font-size: 1.4em;
+            color: #1F4E79;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .research-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .research-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #1F4E79;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-accent">&gt;</span> Md Foysal Ahmed
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../pages/education.html">Education</a></li>
+                <li><a href="../pages/publications.html">Publications</a></li>
+                <li><a href="../pages/research.html">Research</a></li>
+                <li><a href="../pages/projects.html">Projects</a></li>
+                <li><a href="../pages/news.html">News</a></li>
+                <li><a href="../pages/blog.html">Blog</a></li>
+                <li><a href="../pages/contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="particle" style="--x: 10%; --y: 20%;"></div>
+        <div class="particle" style="--x: 80%; --y: 60%;"></div>
+        <div class="particle" style="--x: 40%; --y: 80%;"></div>
+        <div class="particle" style="--x: 70%; --y: 30%;"></div>
+        <div class="particle" style="--x: 20%; --y: 70%;"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="page-container">
+        <a href="../index.html" class="back-link">← Back to Home</a>
+        
+        <div class="page-header">
+            <h1>Research Areas</h1>
+        </div>
+
+        <div class="research-grid" id="researchContainer">
+            <!-- Research items will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 MD Foysal Ahmed. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://github.com" target="_blank">GitHub</a>
+                <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+                <a href="https://twitter.com" target="_blank">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        async function loadResearch() {
+            try {
+                const response = await fetch('../assets/data/upcoming.json');
+                const research = await response.json();
+                const container = document.getElementById('researchContainer');
+                
+                research.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'research-item';
+                    const tags = item.tags ? item.tags.map(tag => `<span class="tag">${tag}</span>`).join('') : '';
+                    card.innerHTML = `
+                        <h3 class="research-title">${item.title}</h3>
+                        <p class="research-description">${item.description}</p>
+                        <div class="research-tags">${tags}</div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Error loading research:', error);
+                document.getElementById('researchContainer').innerHTML = 
+                    '<p style="color: red;">Error loading research data. Please try again later.</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadResearch);
+    </script>
+</body>
+</html>
