@@ -191,7 +191,7 @@
                                 ${pub.tags.map(tag => `<span class="publication-tag">${tag}</span>`).join('')}
                             </div>
                             <div class="publication-links">
-                                ${pub.doi ? `<a href="${pub.doi.startsWith('http') ? pub.doi : 'https://doi.org/' + pub.doi}" target="_blank">DOI: ${pub.doi.replace('https://doi.org/', '')}</a>` : ''}
+                                ${pub.doi ? `<a href="${pub.doi}" target="_blank">DOI</a>` : ''}
                             </div>
                         </div>
                     `).join('');
