@@ -1,82 +1,72 @@
 [
-  {
-    "id": 1,
-    "title": "Deep Learning Approaches for Medical Image Segmentation: A Comparative Study",
-    "authors": "MD Foysal Ahmed, et al.",
-    "journal": "IEEE Transactions on Medical Imaging",
-    "year": 2024,
-    "doi": "10.1109/TMI.2024.xxxxx",
-    "abstract": "A comprehensive review of state-of-the-art deep learning techniques for medical image segmentation with focus on U-Net variants and attention mechanisms.",
-    "tags": ["Medical Imaging", "Deep Learning", "Segmentation"]
-  },
-  {
-    "id": 2,
-    "title": "Hybrid Intelligence Systems: Integrating Symbolic AI with Deep Neural Networks",
-    "authors": "MD Foysal Ahmed, Zhang Wei, et al.",
-    "conference": "International Conference on Computer Vision (ICCV)",
-    "year": 2024,
-    "doi": "10.1109/ICCV2024.xxxxx",
-    "abstract": "Novel approach combining symbolic reasoning with deep learning for improved interpretability and performance in visual recognition tasks.",
-    "tags": ["Hybrid AI", "Computer Vision", "Neural Networks"]
-  },
-  {
-    "id": 3,
-    "title": "Real-time Object Detection using Optimized YOLO Architecture for Edge Devices",
-    "authors": "MD Foysal Ahmed, Kumar Rajesh",
-    "conference": "IEEE International Conference on Image Processing (ICIP)",
-    "year": 2023,
-    "doi": "10.1109/ICIP2023.xxxxx",
-    "abstract": "Efficient object detection framework optimized for deployment on resource-constrained edge devices with minimal latency.",
-    "tags": ["Object Detection", "Edge Computing", "YOLO"]
-  },
-  {
-    "id": 4,
-    "title": "Transfer Learning Strategies for Domain-Specific Medical Image Analysis",
-    "authors": "MD Foysal Ahmed, et al.",
-    "journal": "Pattern Recognition Letters",
-    "year": 2023,
-    "doi": "10.1016/j.patrec.2023.xxxxx",
-    "abstract": "Comprehensive study of transfer learning techniques tailored for medical imaging applications with limited training data.",
-    "tags": ["Transfer Learning", "Medical Imaging", "Deep Learning"]
-  },
-  {
-    "id": 5,
-    "title": "Vision Transformers for Medical Image Analysis: Benefits and Challenges",
-    "authors": "MD Foysal Ahmed, Wang Liu, et al.",
-    "conference": "Medical Image Computing and Computer-Assisted Intervention (MICCAI)",
-    "year": 2023,
-    "doi": "10.1007/978-3-031-xxxxx",
-    "abstract": "In-depth analysis of Vision Transformer architectures applied to medical imaging with discussion of computational challenges.",
-    "tags": ["Vision Transformers", "Medical Imaging", "Transformers"]
-  },
-  {
-    "id": 6,
-    "title": "Attention Mechanisms in Convolutional Neural Networks: A Survey",
-    "authors": "MD Foysal Ahmed, et al.",
-    "journal": "ACM Computing Surveys",
-    "year": 2022,
-    "doi": "10.1145/3xxxxx",
-    "abstract": "Comprehensive survey of attention mechanisms and their applications in improving CNN performance for visual recognition tasks.",
-    "tags": ["Attention Mechanisms", "CNNs", "Survey"]
-  },
-  {
-    "id": 7,
-    "title": "Automated Machine Learning for Computer Vision: Current Trends and Future Directions",
-    "authors": "MD Foysal Ahmed, Chen Yang",
-    "conference": "AutoML Workshop at NeurIPS",
-    "year": 2022,
-    "doi": "10.48550/arXiv.2212.xxxxx",
-    "abstract": "Review of AutoML techniques for automated neural architecture design and hyperparameter optimization in computer vision.",
-    "tags": ["AutoML", "NAS", "Computer Vision"]
-  },
-  {
-    "id": 8,
-    "title": "Explainability in Deep Learning Models for Medical Image Diagnosis",
-    "authors": "MD Foysal Ahmed, et al.",
-    "journal": "Frontiers in Artificial Intelligence",
-    "year": 2022,
-    "doi": "10.3389/frai.2022.xxxxx",
-    "abstract": "Methods for improving interpretability of deep learning models in clinical settings through attention visualization and saliency maps.",
-    "tags": ["Explainability", "Medical AI", "Deep Learning"]
-  }
+{
+"id": 1,
+"title": "Algorithmic co-arguers: AI-mediated argumentation and structural epistemic injustice",
+"authors": "MD Foysal Ahmed, et al.",
+"journal": "AI and Ethics",
+"year": 2026,
+"doi": "10.1007/10.1007/s43681-026-01078-3",
+"abstract": "Explores AI-mediated argumentation and its role in structural epistemic injustice.",
+"tags": ["AI Ethics", "Argumentation", "Epistemic Injustice"]
+},
+{
+"id": 2,
+"title": "Hybrid intelligence systems as ontological mirrors of human cognition",
+"authors": "MD Foysal Ahmed, et al.",
+"journal": "AI and Ethics",
+"year": 2026,
+"doi": "10.1007/s43681-026-01032-3",
+"abstract": "Investigates hybrid intelligence systems as representations of human cognitive structures.",
+"tags": ["Hybrid AI", "Cognition", "AI Ethics"]
+},
+{
+"id": 3,
+"title": "Multi-task model with attribute-specific heads for person re-identification",
+"authors": "MD Foysal Ahmed, et al.",
+"journal": "Pattern Analysis and Applications",
+"year": 2025,
+"doi": "10.1007/s10044-025-01421-0",
+"abstract": "Proposes a multi-task learning framework with attribute-specific heads for improved person re-identification.",
+"tags": ["Person ReID", "Multi-task Learning", "Computer Vision"]
+},
+{
+"id": 4,
+"title": "TriFusion hybrid model for human activity recognition",
+"authors": "MD Foysal Ahmed, et al.",
+"journal": "Signal Image and Video Processing",
+"year": 2024,
+"doi": "10.1007/s11760-024-03487-5",
+"abstract": "Introduces a hybrid TriFusion model for accurate human activity recognition.",
+"tags": ["Human Activity Recognition", "Deep Learning", "Hybrid Model"]
+},
+{
+"id": 5,
+"title": "YOLOv7-Based Multiple Surgical Tool Localization and Detection in Laparoscopic Videos",
+"authors": "MD Foysal Ahmed, et al.",
+"conference": "12th IFMBE APCMBE",
+"year": 2023,
+"doi": "10.1007/978-3-031-51485-2_6",
+"abstract": "Presents a YOLOv7-based approach for detecting and localizing surgical tools in laparoscopic videos.",
+"tags": ["YOLOv7", "Medical Imaging", "Object Detection"]
+},
+{
+"id": 6,
+"title": "A Real-Time Laparoscopic Surgical Instrument Detection System Based on YOLOv5",
+"authors": "MD Foysal Ahmed, et al.",
+"conference": "CISP-BMEI",
+"year": 2023,
+"doi": "10.1109/CISP-BMEI60920.2023.10373249",
+"abstract": "Develops a real-time surgical instrument detection system using YOLOv5.",
+"tags": ["YOLOv5", "Medical Imaging", "Real-time Detection"]
+},
+{
+"id": 7,
+"title": "Novel Closed-Form Expressions for Ergodic Capacity of MIMO Ad-Hoc Networks",
+"authors": "MD Foysal Ahmed, et al.",
+"conference": "EITCE",
+"year": 2021,
+"doi": "10.1145/3501409.3501690",
+"abstract": "Derives closed-form expressions for evaluating ergodic capacity in MIMO ad-hoc networks.",
+"tags": ["MIMO", "Wireless Networks", "Communication Systems"]
+}
 ]
