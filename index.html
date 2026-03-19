@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/projects.css">
     <link rel="stylesheet" href="css/timeline.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/search-challenge.css">
 </head>
 <body>
     <!-- Animated Background -->
@@ -68,6 +69,21 @@
             <div class="scroll-indicator">
                 <span>Scroll to explore</span>
                 <div class="scroll-arrow"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Bar Section -->
+    <section style="padding: 30px 20px; background: rgba(31, 78, 121, 0.05);">
+        <div class="container">
+            <div class="search-container" id="search-container">
+                <input 
+                    type="text" 
+                    class="search-bar" 
+                    id="search-bar" 
+                    placeholder="🔍 Search blog posts, news, projects, skills, research..."
+                >
+                <div class="search-results" id="search-results"></div>
             </div>
         </div>
     </section>
@@ -135,10 +151,10 @@
             
             <div class="publications-filter">
                 <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="2024">2026</button>
-                <button class="filter-btn" data-filter="2023">2025</button>
-                <button class="filter-btn" data-filter="2022">2023</button>
-                <button class="filter-btn" data-filter="2022">2021</button>
+                <button class="filter-btn" data-filter="2026">2026</button>
+                <button class="filter-btn" data-filter="2025">2025</button>
+                <button class="filter-btn" data-filter="2023">2023</button>
+                <button class="filter-btn" data-filter="2021">2021</button>
             </div>
 
             <div class="publications-grid" id="publications-container"></div>
@@ -258,5 +274,6 @@
 
     <script src="js/main.js"></script>
     <script src="js/animations.js"></script>
+    <script src="js/search-challenge.js"></script>
 </body>
 </html>

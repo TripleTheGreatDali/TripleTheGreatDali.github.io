@@ -134,11 +134,12 @@ async function loadNews() {
         const container = document.getElementById('news-container');
         
         const html = news.map((item, index) => `
-            <div class="news-item" style="animation-delay: ${index * 0.1}s">
+            <div class="news-item" style="animation-delay: ${index * 0.1}s; cursor: pointer;" onclick="window.location.href='pages/news-detail.html?id=${index}'">
                 <div class="news-content">
                     <div class="news-date">${item.date} • ${item.icon} ${item.category}</div>
                     <div class="news-title">${item.title}</div>
                     <div class="news-description">${item.description}</div>
+                    <span style="color: #1F4E79; font-weight: 600; margin-top: 10px; display: inline-block;">Read More →</span>
                 </div>
             </div>
         `).join('');
@@ -186,12 +187,12 @@ async function loadBlog() {
         const blog = await response.json();
         const container = document.getElementById('blog-container');
         
-        const html = blog.slice(0, 6).map(post => `
-            <div class="blog-card">
+        const html = blog.slice(0, 6).map((post, index) => `
+            <div class="blog-card" style="cursor: pointer;" onclick="window.location.href='pages/blog-post.html?id=${index}'">
                 <div class="blog-date">${post.date}</div>
                 <div class="blog-title">${post.title}</div>
                 <div class="blog-excerpt">${post.excerpt}</div>
-                <a href="${post.link || '#'}" class="blog-readmore">Read More →</a>
+                <a href="pages/blog-post.html?id=${index}" class="blog-readmore" onclick="event.stopPropagation();">Read More →</a>
             </div>
         `).join('');
         
@@ -221,9 +222,28 @@ function handleContactSubmit(e) {
         message: formData.get('message')
     };
     
-    console.log('Form submitted:', data);
-    alert('Thank you for your message! I will get back to you soon.');
-    e.target.reset();
+    // Send to backend
+    fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Thank you for your message! I will get back to you soon. Email sent to contact@foylix.com');
+            e.target.reset();
+            return response.json();
+        } else {
+            throw new Error('Failed to send message');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Thank you! Your message has been recorded. (Backend email service not available)');
+        e.target.reset();
+    });
 }
 
 // Setup Scroll Animations

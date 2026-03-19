@@ -64,6 +64,11 @@ npm run dev
 ### Research Endpoints
 - `GET /api/research` - Get all research areas
 
+### Contact Endpoints
+- `POST /api/contact` - Submit contact form
+  - Body: `{ name, email, message }`
+  - Currently logs messages (ready for email integration)
+
 ### Health Check
 - `GET /api/health` - Check API status
 

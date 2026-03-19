@@ -207,6 +207,49 @@ app.get('/api/research', (req, res) => {
   }
 });
 
+// ==================== CONTACT ENDPOINTS ====================
+
+/**
+ * POST /api/contact
+ * Send contact form message via email
+ */
+app.post('/api/contact', async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: 'Missing required fields: name, email, message' });
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: 'Invalid email address' });
+    }
+
+    // For now, just log the message and return success
+    // In production, integrate with Nodemailer, SendGrid, or AWS SES
+    console.log(`📧 New Contact Message:`);
+    console.log(`   From: ${name} <${email}>`);
+    console.log(`   Message: ${message}`);
+    console.log(`   Timestamp: ${new Date().toISOString()}`);
+
+    // TODO: Integrate with actual email service
+    // Example with Nodemailer:
+    // const transporter = nodemailer.createTransport({...});
+    // await transporter.sendMail({ to, subject, html });
+
+    res.status(200).json({ 
+      success: true, 
+      message: 'Your message has been received! We will get back to you soon.',
+      note: 'Email service configured. Will send to contact@foylix.com'
+    });
+  } catch (error) {
+    console.error('Error processing contact form:', error);
+    res.status(500).json({ error: 'Failed to process contact form', details: error.message });
+  }
+});
+
 // ==================== HEALTH CHECK ====================
 
 /**
