@@ -1,14 +1,14 @@
 [
-{
-"id": 1,
-"title": "Algorithmic co-arguers: AI-mediated argumentation and structural epistemic injustice",
-"authors": "MD Foysal Ahmed, et al.",
-"journal": "AI and Ethics",
-"year": 2026,
-  "doi": "https://doi.org/10.1007/s43681-026-01078-3",
-"abstract": "Explores AI-mediated argumentation and its role in structural epistemic injustice.",
-"tags": ["AI Ethics", "Argumentation", "Epistemic Injustice"]
-},
+  {
+    "id": 1,
+    "title": "Algorithmic co-arguers: AI-mediated argumentation and structural epistemic injustice",
+    "authors": "MD Foysal Ahmed, et al.",
+    "journal": "AI and Ethics",
+    "year": 2026,
+    "doi": "https://doi.org/10.1007/s43681-026-01078-3",
+    "abstract": "Explores AI-mediated argumentation and its role in structural epistemic injustice.",
+    "tags": ["AI Ethics", "Argumentation", "Epistemic Injustice"]
+  },
 {
 "id": 2,
 "title": "Hybrid intelligence systems as ontological mirrors of human cognition",

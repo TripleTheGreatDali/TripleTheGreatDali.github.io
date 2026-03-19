@@ -114,14 +114,21 @@
         .publication-links a {
             display: inline-block;
             margin-right: 15px;
-            color: #1F4E79;
+            padding: 8px 16px;
+            color: white;
+            background-color: #1F4E79;
             text-decoration: none;
             font-weight: 600;
+            border-radius: 5px;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
         
         .publication-links a:hover {
-            color: #FFA500;
+            background-color: #FFA500;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
@@ -191,7 +198,7 @@
                                 ${pub.tags.map(tag => `<span class="publication-tag">${tag}</span>`).join('')}
                             </div>
                             <div class="publication-links">
-                                ${pub.doi ? `<a href="${pub.doi}" target="_blank">DOI</a>` : ''}
+                                ${pub.doi ? `<a href="${pub.doi}" target="_blank" rel="noopener noreferrer">🔗 View Article</a>` : ''}
                             </div>
                         </div>
                     `).join('');
