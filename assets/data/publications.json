@@ -5,7 +5,7 @@
 "authors": "MD Foysal Ahmed, et al.",
 "journal": "AI and Ethics",
 "year": 2026,
-"doi": "10.1007/10.1007/s43681-026-01078-3",
+"doi": "https://doi.org/10.1007/10.1007/s43681-026-01078-3",
 "abstract": "Explores AI-mediated argumentation and its role in structural epistemic injustice.",
 "tags": ["AI Ethics", "Argumentation", "Epistemic Injustice"]
 },
@@ -15,7 +15,7 @@
 "authors": "MD Foysal Ahmed, et al.",
 "journal": "AI and Ethics",
 "year": 2026,
-"doi": "10.1007/s43681-026-01032-3",
+"doi": "https://doi.org/10.1007/s43681-026-01032-3",
 "abstract": "Investigates hybrid intelligence systems as representations of human cognitive structures.",
 "tags": ["Hybrid AI", "Cognition", "AI Ethics"]
 },
@@ -25,7 +25,7 @@
 "authors": "MD Foysal Ahmed, et al.",
 "journal": "Pattern Analysis and Applications",
 "year": 2025,
-"doi": "10.1007/s10044-025-01421-0",
+"doi": "https://doi.org/10.1007/s10044-025-01421-0",
 "abstract": "Proposes a multi-task learning framework with attribute-specific heads for improved person re-identification.",
 "tags": ["Person ReID", "Multi-task Learning", "Computer Vision"]
 },
@@ -35,7 +35,7 @@
 "authors": "MD Foysal Ahmed, et al.",
 "journal": "Signal Image and Video Processing",
 "year": 2024,
-"doi": "10.1007/s11760-024-03487-5",
+"doi": "https://doi.org/10.1007/s11760-024-03487-5",
 "abstract": "Introduces a hybrid TriFusion model for accurate human activity recognition.",
 "tags": ["Human Activity Recognition", "Deep Learning", "Hybrid Model"]
 },
@@ -45,7 +45,7 @@
 "authors": "MD Foysal Ahmed, et al.",
 "conference": "12th IFMBE APCMBE",
 "year": 2023,
-"doi": "10.1007/978-3-031-51485-2_6",
+"doi": "https://doi.org/10.1007/978-3-031-51485-2_6",
 "abstract": "Presents a YOLOv7-based approach for detecting and localizing surgical tools in laparoscopic videos.",
 "tags": ["YOLOv7", "Medical Imaging", "Object Detection"]
 },
@@ -55,7 +55,7 @@
 "authors": "MD Foysal Ahmed, et al.",
 "conference": "CISP-BMEI",
 "year": 2023,
-"doi": "10.1109/CISP-BMEI60920.2023.10373249",
+"doi": "https://doi.org/10.1109/CISP-BMEI60920.2023.10373249",
 "abstract": "Develops a real-time surgical instrument detection system using YOLOv5.",
 "tags": ["YOLOv5", "Medical Imaging", "Real-time Detection"]
 },
@@ -65,7 +65,7 @@
 "authors": "MD Foysal Ahmed, et al.",
 "conference": "EITCE",
 "year": 2021,
-"doi": "10.1145/3501409.3501690",
+"doi": "https://doi.org/10.1145/3501409.3501690",
 "abstract": "Derives closed-form expressions for evaluating ergodic capacity in MIMO ad-hoc networks.",
 "tags": ["MIMO", "Wireless Networks", "Communication Systems"]
 }
