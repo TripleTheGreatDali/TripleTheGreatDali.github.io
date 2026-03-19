@@ -382,6 +382,9 @@
     </footer>
 
     <script>
+        // Initialize publications as an empty array to prevent undefined errors
+        let publications = [];
+
         async function loadPublications() {
             try {
                 const response = await fetch('../assets/data/publications.json');
@@ -390,72 +393,7 @@
                     throw new Error(`Failed to load publications: ${response.status}`);
                 }
 
-                const publications = await response.json();
-                const container = document.getElementById('publications-list');
-
-                function renderPublications(filter = 'all') {
-                    let filtered = publications;
-
-                    if (filter !== 'all') {
-                        filtered = publications.filter(pub => 
-                            pub.tags && pub.tags.includes(filter)
-                        );
-                    }
-
-                    if (filtered.length === 0) {
-                        container.innerHTML = '<div class="no-results">No publications found for this filter.</div>';
-                        return;
-                    }
-
-                    const html = filtered.map(pub => `
-                        <div class="publication-item">
-                            <div class="publication-year">${pub.year || 'N/A'}</div>
-                            <div class="publication-title">${pub.title}</div>
-                            <div class="publication-authors">${pub.authors || 'Unknown'}</div>
-                            <div class="publication-venue">
-                                ${pub.journal || pub.conference || 'Unknown'}
-                            </div>
-                            <div class="publication-abstract">
-                                ${pub.abstract || 'No abstract available'}
-                            </div>
-                            <div class="publication-tags">
-                                ${pub.tags ? pub.tags.map(tag => 
-                                    `<span class="publication-tag">${tag}</span>`
-                                ).join('') : ''}
-                            </div>
-                            <div class="publication-links">
-                                ${pub.doi ? `
-                                    <a href="${pub.doi}" 
-                                       target="_blank" 
-                                       rel="noopener noreferrer" 
-                                       title="Open article in new window" 
-                                       class="doi-link">
-                                        <span class="link-icon">📄</span>
-                                        <span>Read Full Article</span>
-                                        <span class="external-icon">↗</span>
-                                    </a>
-                                ` : `<span style="color: #666;">DOI not available</span>`}
-                            </div>
-                        </div>
-                    `).join('');
-
-                    container.innerHTML = html;
-                }
-
-                // Initial render
-                renderPublications();
-
-                // Filter functionality
-                document.querySelectorAll('.filter-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        document.querySelectorAll('.filter-btn').forEach(b => {
-                            b.classList.remove('active');
-                        });
-                        this.classList.add('active');
-                        renderPublications(this.dataset.filter);
-                    });
-                });
-
+                publications = await response.json();
             } catch (error) {
                 console.error('Error loading publications:', error);
                 document.getElementById('publications-list').innerHTML = `
@@ -464,9 +402,79 @@
                         Please refresh the page or try again later.
                     </div>
                 `;
+                // Keep publications as an empty array so filter functions gracefully
+                publications = [];
             }
+
+            // Initial render
+            renderPublications('all');
+
+            // Filter functionality
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    renderPublications(this.dataset.filter);
+                });
+            });
         }
 
+        function renderPublications(filter) {
+            const container = document.getElementById('publications-list');
+            
+            // Filter publications based on selected tag
+            let filtered = publications;
+            if (filter !== 'all') {
+                filtered = publications.filter(pub => 
+                    pub.tags && Array.isArray(pub.tags) && pub.tags.includes(filter)
+                );
+            }
+
+            // Handle empty results
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="no-results">No publications found for this filter.</div>';
+                return;
+            }
+
+            // Generate HTML for each publication
+            const html = filtered.map(pub => `
+                <div class="publication-item">
+                    <div class="publication-year">${pub.year || 'N/A'}</div>
+                    <div class="publication-title">${pub.title}</div>
+                    <div class="publication-authors">${pub.authors || 'Unknown'}</div>
+                    <div class="publication-venue">
+                        ${pub.journal || pub.conference || 'Unknown'}
+                    </div>
+                    <div class="publication-abstract">
+                        ${pub.abstract || 'No abstract available'}
+                    </div>
+                    <div class="publication-tags">
+                        ${pub.tags ? pub.tags.map(tag => 
+                            `<span class="publication-tag">${tag}</span>`
+                        ).join('') : ''}
+                    </div>
+                    <div class="publication-links">
+                        ${pub.doi ? `
+                            <a href="${pub.doi}" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               title="Open article in new window" 
+                               class="doi-link">
+                                <span class="link-icon">📄</span>
+                                <span>Read Full Article</span>
+                                <span class="external-icon">↗</span>
+                            </a>
+                        ` : `<span style="color: #666;">DOI not available</span>`}
+                    </div>
+                </div>
+            `).join('');
+
+            container.innerHTML = html;
+        }
+
+        // Start loading publications when DOM is ready
         document.addEventListener('DOMContentLoaded', loadPublications);
     </script>
 </body>
