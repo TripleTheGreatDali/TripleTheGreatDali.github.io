@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/timeline.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/search-challenge.css">
+    <link rel="stylesheet" href="css/social-icons.css">
 </head>
 <body>
     <!-- Animated Background -->
@@ -235,10 +236,22 @@
                     </div>
                     
                     <div class="contact-socials">
-                        <a href="https://github.com/TripleTheGreatDali" target="_blank" class="social-link">GitHub</a>
-                        <a href="https://www.linkedin.com/in/md-foysal-ahmed-80909917a" target="_blank" class="social-link">LinkedIn</a>
-                        <a href="https://orcid.org/0000-0002-5933-8968" target="_blank" class="social-link">ORCID</a>
-                        <a href="https://www.webofscience.com/wos/author/record/LGY-3964-2024" target="_blank" class="social-link">Web of Science</a>
+                        <a href="https://github.com/TripleTheGreatDali" target="_blank" class="social-link github">
+                            <span class="social-link-icon">🐙</span>
+                            <span class="social-link-text">GitHub</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/md-foysal-ahmed-80909917a" target="_blank" class="social-link linkedin">
+                            <span class="social-link-icon">💼</span>
+                            <span class="social-link-text">LinkedIn</span>
+                        </a>
+                        <a href="https://orcid.org/0000-0002-5933-8968" target="_blank" class="social-link orcid">
+                            <span class="social-link-icon">🔗</span>
+                            <span class="social-link-text">ORCID</span>
+                        </a>
+                        <a href="https://www.webofscience.com/wos/author/record/LGY-3964-2024" target="_blank" class="social-link webofscience">
+                            <span class="social-link-icon">📊</span>
+                            <span class="social-link-text">Web of Science</span>
+                        </a>
                     </div>
                     
                     <p class="collaboration-note">
@@ -268,10 +281,29 @@
             <div class="footer-content">
                 <p><span class="accent-neon">&lt;</span> © 2026 Md Foysal Ahmed <span class="accent-neon">/&gt;</span></p>
                 <p>Built with passion for research and innovation</p>
+                <div class="footer-social-links">
+                    <a href="https://github.com/TripleTheGreatDali" target="_blank" title="GitHub">🐙</a>
+                    <a href="https://www.linkedin.com/in/md-foysal-ahmed-80909917a" target="_blank" title="LinkedIn">💼</a>
+                    <a href="https://orcid.org/0000-0002-5933-8968" target="_blank" title="ORCID">🔗</a>
+                    <a href="https://www.webofscience.com/wos/author/record/LGY-3964-2024" target="_blank" title="Web of Science">📊</a>
+                    <a href="mailto:contact@foylix.com" title="Email">✉️</a>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- CORE INFRASTRUCTURE SCRIPTS (must load first) -->
+    <script src="js/api-service.js"></script>
+    <script src="js/notification-system.js"></script>
+    <script src="js/loading-manager.js"></script>
+    <script src="js/enhanced-notifications.js"></script>
+    <script src="js/error-handler.js"></script>
+    <script src="js/form-validator.js"></script>
+    
+    <!-- ENHANCED DESIGN SYSTEM -->
+    <link rel="stylesheet" href="css/enhanced-design.css">
+    
+    <!-- APPLICATION SCRIPTS -->
     <script src="js/main.js"></script>
     <script src="js/animations.js"></script>
     <script src="js/search-challenge.js"></script>

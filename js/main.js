@@ -1,269 +1,497 @@
+/**
+ * MAIN APPLICATION CONTROLLER
+ * Uses centralized API service, loading manager, and notification system
+ * All data loading and UI interactions flow through this module
+ */
+
+// Global data cache
+const dataCache = {
+  publications: null,
+  news: null,
+  projects: null,
+  blog: null,
+  upcoming: null,
+  skills: null
+};
+
 // Load all data and initialize the portfolio
 document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    console.log('[App] Initializing application...');
+    
+    // Setup core functionality
     setupMobileMenu();
     setupNavigation();
-    await loadPublications();
-    await loadUpcomingResearch();
-    await loadNews();
-    await loadProjects();
-    await loadBlog();
     setupContactForm();
     setupScrollAnimations();
+    
+    // Setup API service listeners for global error handling
+    setupAPIServiceListeners();
+    
+    // Load all data in parallel
+    console.log('[App] Loading portfolio data...');
+    loadingManager.show('app-init', { 
+      message: 'Loading portfolio data...' 
+    });
+    
+    await loadAllData();
+    
+    loadingManager.hide('app-init');
+    
+    console.log('[App] Application initialized successfully');
+    notificationManager.success('Welcome!', 'Portfolio loaded successfully');
+  } catch (error) {
+    console.error('[App] Fatal error during initialization:', error);
+    loadingManager.hideAll();
+    notificationManager.error(
+      'Application Error',
+      'Failed to initialize application. Please refresh the page.',
+      error.code
+    );
+  }
 });
 
-// Mobile Menu Toggle
+/**
+ * Setup API service global listeners
+ */
+function setupAPIServiceListeners() {
+  // Loading states are handled by loadingManager automatically
+  apiService.onLoading((endpoint, isLoading) => {
+    if (isLoading && endpoint.includes('/api/')) {
+      loadingManager.show(endpoint, { message: 'Loading...' });
+    } else {
+      loadingManager.hide(endpoint);
+    }
+  });
+
+  // Errors are already shown as notifications by apiService
+  
+  // Retry feedback
+  apiService.onRetry((endpoint, attempt, total, error) => {
+    console.warn(`[API Retry] ${endpoint} attempt ${attempt}/${total}`);
+  });
+}
+
+/**
+ * Load all portfolio data in parallel
+ */
+async function loadAllData() {
+  try {
+    const { results, errors } = await apiService.batch([
+      { endpoint: '/assets/data/publications.json', options: { useCache: true } },
+      { endpoint: '/assets/data/news.json', options: { useCache: true } },
+      { endpoint: '/assets/data/projects.json', options: { useCache: true } },
+      { endpoint: '/assets/data/blog.json', options: { useCache: true } },
+      { endpoint: '/assets/data/upcoming.json', options: { useCache: true } },
+      { endpoint: '/assets/data/skills.json', options: { useCache: true } }
+    ]);
+
+    // Process results
+    for (const result of results) {
+      if (result.success) {
+        if (result.endpoint.includes('publications')) {
+          dataCache.publications = result.data;
+          loadPublications();
+        } else if (result.endpoint.includes('news')) {
+          dataCache.news = result.data;
+          loadNews();
+        } else if (result.endpoint.includes('projects')) {
+          dataCache.projects = result.data;
+          loadProjects();
+        } else if (result.endpoint.includes('blog')) {
+          dataCache.blog = result.data;
+          loadBlog();
+        } else if (result.endpoint.includes('upcoming')) {
+          dataCache.upcoming = result.data;
+          loadUpcomingResearch();
+        } else if (result.endpoint.includes('skills')) {
+          dataCache.skills = result.data;
+        }
+      }
+    }
+
+    // Report on errors
+    if (errors.length > 0) {
+      console.warn(`[App] ${errors.length} data source(s) failed to load`);
+      errors.forEach(err => {
+        console.error(`[App] Failed to load ${err.endpoint}:`, err.error.message);
+      });
+    }
+  } catch (error) {
+    console.error('[App] Batch data loading failed:', error);
+    throw error;
+  }
+}
+
+/**
+ * MOBILE MENU SETUP
+ */
 function setupMobileMenu() {
-    const toggle = document.querySelector('.mobile-menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    
-    if (toggle) {
-        toggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+  const toggle = document.querySelector('.mobile-menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  
+  if (!toggle) return;
+  
+  toggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    toggle.setAttribute('aria-expanded', navLinks.classList.contains('active'));
+  });
 
-        // Close menu on link click
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-        });
-    }
+  // Close menu on link click
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('active');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
 }
 
-// Setup Navigation Active States
+/**
+ * SETUP NAVIGATION ACTIVE STATES
+ */
 function setupNavigation() {
-    const navLinks = document.querySelectorAll('.nav-link');
+  const navLinks = document.querySelectorAll('.nav-link');
+  
+  window.addEventListener('scroll', () => {
+    let current = '';
+    const sections = document.querySelectorAll('section[id]');
     
-    window.addEventListener('scroll', () => {
-        let current = '';
-        const sections = document.querySelectorAll('section[id]');
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (pageYOffset >= sectionTop - 200) {
-                current = section.getAttribute('id');
-            }
-        });
-        
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').slice(1) === current) {
-                link.classList.add('active');
-            }
-        });
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (pageYOffset >= sectionTop - 200) {
+        current = section.getAttribute('id');
+      }
     });
+    
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href').slice(1) === current) {
+        link.classList.add('active');
+      }
+    });
+  });
 }
 
-// Load Publications
-async function loadPublications() {
-    try {
-        const response = await fetch('assets/data/publications.json');
-        const publications = await response.json();
-        const container = document.getElementById('publications-container');
-        
-        function renderPublications(year = 'all') {
-            let filtered = publications;
-            
-            if (year !== 'all') {
-                filtered = publications.filter(pub => pub.year === parseInt(year));
-            }
-            
-            const html = filtered.map(pub => `
-                <div class="publication-card">
-                    <div class="publication-year">${pub.year}</div>
-                    <div class="publication-title">${pub.title}</div>
-                    <div class="publication-venue">${pub.journal || pub.conference}</div>
-                    <div class="publication-abstract">${pub.abstract}</div>
-                    <div class="publication-tags">
-                        ${pub.tags.map(tag => `<span class="publication-tag">${tag}</span>`).join('')}
-                    </div>
-                    ${pub.doi ? `<div class="publication-links" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);"><a href="${pub.doi}" target="_blank" rel="noopener noreferrer" title="Open article in new window" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; background: linear-gradient(135deg, var(--accent-neon), rgba(31, 78, 121, 0.8)); color: var(--bg-dark); border-radius: 8px; text-decoration: none; font-weight: 700; transition: all 0.3s ease; cursor: pointer; font-size: 0.95em; box-shadow: 0 4px 12px rgba(0, 217, 255, 0.3);"><span style="font-size: 1.1em;">📄</span><span>Read Article</span><span style="font-size: 0.85em;">↗</span></a></div>` : ''}
-                </div>
-            `).join('');
-            
-            container.innerHTML = html;
-        }
-        
-        renderPublications();
-        
-        // Filter buttons
-        document.querySelectorAll('.publications-filter .filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.publications-filter .filter-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                renderPublications(this.dataset.filter);
-            });
-        });
-        
-    } catch (error) {
-        console.error('Error loading publications:', error);
+/**
+ * LOAD PUBLICATIONS
+ */
+function loadPublications() {
+  try {
+    const publications = dataCache.publications;
+    if (!publications) {
+      throw new Error('No publications data available');
     }
-}
 
-// Load Upcoming Research
-async function loadUpcomingResearch() {
-    try {
-        const response = await fetch('assets/data/upcoming.json');
-        const upcoming = await response.json();
-        const container = document.getElementById('upcoming-container');
-        
-        const html = upcoming.map(item => `
-            <div class="upcoming-card">
-                <div class="status-badge">${item.status}</div>
-                <h3>${item.title}</h3>
-                <p>${item.description}</p>
-                <div class="publication-tags">
-                    ${item.keywords.map(kw => `<span class="publication-tag">${kw}</span>`).join('')}
-                </div>
-                ${item.targetConference ? `<p style="margin-top: 12px; color: var(--accent-neon);"><strong>Target:</strong> ${item.targetConference}</p>` : ''}
-                ${item.expectedDate ? `<p style="color: var(--text-secondary);">Expected: ${item.expectedDate}</p>` : ''}
-            </div>
-        `).join('');
-        
-        container.innerHTML = html;
-    } catch (error) {
-        console.error('Error loading upcoming research:', error);
+    const container = document.getElementById('publications-container');
+    if (!container) return;
+
+    function renderPublications(year = 'all') {
+      let filtered = publications;
+      
+      if (year !== 'all') {
+        filtered = publications.filter(pub => pub.year === parseInt(year));
+      }
+      
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="no-results">No publications for this year</div>';
+        return;
+      }
+      
+      const html = filtered.map(pub => `
+        <div class="publication-card" role="article">
+          <div class="publication-year">${pub.year}</div>
+          <div class="publication-title">${this._escape(pub.title)}</div>
+          <div class="publication-venue">${this._escape(pub.journal || pub.conference)}</div>
+          <div class="publication-abstract">${this._escape(pub.abstract)}</div>
+          <div class="publication-tags">
+            ${pub.tags.map(tag => `<span class="publication-tag">${this._escape(tag)}</span>`).join('')}
+          </div>
+          ${pub.doi ? `<div class="publication-links" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);"><a href="${pub.doi}" target="_blank" rel="noopener noreferrer" title="Open article in new window" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; background: linear-gradient(135deg, var(--accent-neon), rgba(31, 78, 121, 0.8)); color: var(--bg-dark); border-radius: 8px; text-decoration: none; font-weight: 700; transition: all 0.3s ease; cursor: pointer; font-size: 0.95em; box-shadow: 0 4px 12px rgba(0, 217, 255, 0.3);"><span style="font-size: 1.1em;">📄</span><span>Read Article</span><span style="font-size: 0.85em;">↗</span></a></div>` : ''}
+        </div>
+      `).join('');
+      
+      container.innerHTML = html;
     }
+
+    // Bind render function with 'this' context
+    renderPublications = renderPublications.bind({
+      _escape: (text) => {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+    });
+    
+    renderPublications();
+    
+    // Filter buttons
+    document.querySelectorAll('.publications-filter .filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.publications-filter .filter-btn').forEach(b => 
+          b.classList.remove('active')
+        );
+        this.classList.add('active');
+        renderPublications(this.dataset.filter);
+      });
+    });
+    
+    console.log(`[App] Loaded ${publications.length} publications`);
+  } catch (error) {
+    console.error('[App] Error loading publications:', error);
+    notificationManager.error(
+      'Publications Error',
+      'Failed to load publications',
+      error.code
+    );
+  }
 }
 
-// Load News & Updates
-async function loadNews() {
-    try {
-        const response = await fetch('assets/data/news.json');
-        const news = await response.json();
-        const container = document.getElementById('news-container');
-        
-        const html = news.map((item, index) => `
-            <div class="news-item" style="animation-delay: ${index * 0.1}s; cursor: pointer;" onclick="window.location.href='pages/news-detail.html?id=${index}'">
-                <div class="news-content">
-                    <div class="news-date">${item.date} • ${item.icon} ${item.category}</div>
-                    <div class="news-title">${item.title}</div>
-                    <div class="news-description">${item.description}</div>
-                    <span style="color: #1F4E79; font-weight: 600; margin-top: 10px; display: inline-block;">Read More →</span>
-                </div>
-            </div>
-        `).join('');
-        
-        container.innerHTML = html;
-    } catch (error) {
-        console.error('Error loading news:', error);
+/**
+ * LOAD UPCOMING RESEARCH
+ */
+function loadUpcomingResearch() {
+  try {
+    const upcoming = dataCache.upcoming;
+    if (!upcoming) {
+      throw new Error('No upcoming research data available');
     }
+
+    const container = document.getElementById('upcoming-container');
+    if (!container) return;
+
+    const html = upcoming.map(item => `
+      <div class="upcoming-card" role="article">
+        <div class="status-badge">${this._escape(item.status)}</div>
+        <h3>${this._escape(item.title)}</h3>
+        <p>${this._escape(item.description)}</p>
+        <div class="publication-tags">
+          ${item.keywords.map(kw => `<span class="publication-tag">${this._escape(kw)}</span>`).join('')}
+        </div>
+        ${item.targetConference ? `<p style="margin-top: 12px; color: var(--accent-neon);"><strong>Target:</strong> ${this._escape(item.targetConference)}</p>` : ''}
+        ${item.expectedDate ? `<p style="color: var(--text-secondary);">Expected: ${this._escape(item.expectedDate)}</p>` : ''}
+      </div>
+    `).join('');
+    
+    container.innerHTML = html;
+    console.log(`[App] Loaded ${upcoming.length} upcoming research items`);
+  } catch (error) {
+    console.error('[App] Error loading upcoming research:', error);
+  }
 }
 
-// Load Projects
-async function loadProjects() {
-    try {
-        const response = await fetch('assets/data/projects.json');
-        const projects = await response.json();
-        const container = document.getElementById('projects-container');
-        
-        const html = projects.slice(0, 6).map(project => `
-            <div class="project-card">
-                <div class="project-image">${project.icon}</div>
-                <div class="project-content">
-                    <h3 class="project-title">${project.title}</h3>
-                    <p class="project-description">${project.description}</p>
-                    <div class="project-tags">
-                        ${project.technologies.map(tech => `<span class="project-tag">${tech}</span>`).join('')}
-                    </div>
-                    <div class="project-links">
-                        ${project.github ? `<a href="${project.github}" target="_blank">GitHub</a>` : ''}
-                        ${project.demo ? `<a href="${project.demo}" target="_blank">Demo</a>` : ''}
-                    </div>
-                </div>
-            </div>
-        `).join('');
-        
-        container.innerHTML = html;
-    } catch (error) {
-        console.error('Error loading projects:', error);
+/**
+ * LOAD NEWS & UPDATES
+ */
+function loadNews() {
+  try {
+    const news = dataCache.news;
+    if (!news) {
+      throw new Error('No news data available');
     }
+
+    const container = document.getElementById('news-container');
+    if (!container) return;
+
+    const html = news.map((item, index) => `
+      <div class="news-item" style="animation-delay: ${index * 0.1}s; cursor: pointer;" 
+           onclick="window.location.href='pages/news-detail.html?id=${index}'"
+           role="article" tabindex="0"
+           onkeypress="if(event.key==='Enter') window.location.href='pages/news-detail.html?id=${index}'">
+        <div class="news-content">
+          <div class="news-date">${this._escape(item.date)} • ${item.icon} ${this._escape(item.category)}</div>
+          <div class="news-title">${this._escape(item.title)}</div>
+          <div class="news-description">${this._escape(item.description)}</div>
+          <span style="color: #1F4E79; font-weight: 600; margin-top: 10px; display: inline-block;">Read More →</span>
+        </div>
+      </div>
+    `).join('');
+    
+    container.innerHTML = html;
+    console.log(`[App] Loaded ${news.length} news items`);
+  } catch (error) {
+    console.error('[App] Error loading news:', error);
+  }
 }
 
-// Load Blog Posts
-async function loadBlog() {
-    try {
-        const response = await fetch('assets/data/blog.json');
-        const blog = await response.json();
-        const container = document.getElementById('blog-container');
-        
-        const html = blog.slice(0, 6).map((post, index) => `
-            <div class="blog-card" style="cursor: pointer;" onclick="window.location.href='pages/blog-post.html?id=${index}'">
-                <div class="blog-date">${post.date}</div>
-                <div class="blog-title">${post.title}</div>
-                <div class="blog-excerpt">${post.excerpt}</div>
-                <a href="pages/blog-post.html?id=${index}" class="blog-readmore" onclick="event.stopPropagation();">Read More →</a>
-            </div>
-        `).join('');
-        
-        container.innerHTML = html;
-    } catch (error) {
-        console.error('Error loading blog:', error);
+/**
+ * LOAD PROJECTS
+ */
+function loadProjects() {
+  try {
+    const projects = dataCache.projects;
+    if (!projects) {
+      throw new Error('No projects data available');
     }
+
+    const container = document.getElementById('projects-container');
+    if (!container) return;
+
+    const html = projects.slice(0, 6).map(project => `
+      <div class="project-card" role="article">
+        <div class="project-image">${project.icon}</div>
+        <div class="project-content">
+          <h3 class="project-title">${this._escape(project.title)}</h3>
+          <p class="project-description">${this._escape(project.description)}</p>
+          <div class="project-tags">
+            ${project.technologies.map(tech => `<span class="project-tag">${this._escape(tech)}</span>`).join('')}
+          </div>
+          <div class="project-links">
+            ${project.github ? `<a href="${project.github}" target="_blank" rel="noopener noreferrer">GitHub</a>` : ''}
+            ${project.demo ? `<a href="${project.demo}" target="_blank" rel="noopener noreferrer">Demo</a>` : ''}
+          </div>
+        </div>
+      </div>
+    `).join('');
+    
+    container.innerHTML = html;
+    console.log(`[App] Loaded ${projects.length} projects`);
+  } catch (error) {
+    console.error('[App] Error loading projects:', error);
+  }
 }
 
-// Setup Contact Form
+/**
+ * LOAD BLOG POSTS
+ */
+function loadBlog() {
+  try {
+    const blog = dataCache.blog;
+    if (!blog) {
+      throw new Error('No blog data available');
+    }
+
+    const container = document.getElementById('blog-container');
+    if (!container) return;
+
+    const html = blog.slice(0, 6).map((post, index) => `
+      <div class="blog-card" style="cursor: pointer;" 
+           onclick="window.location.href='pages/blog-post.html?id=${index}'"
+           role="article" tabindex="0"
+           onkeypress="if(event.key==='Enter') window.location.href='pages/blog-post.html?id=${index}'">
+        <div class="blog-date">${this._escape(post.date)}</div>
+        <div class="blog-title">${this._escape(post.title)}</div>
+        <div class="blog-excerpt">${this._escape(post.excerpt)}</div>
+        <a href="pages/blog-post.html?id=${index}" class="blog-readmore" onclick="event.stopPropagation();">Read More →</a>
+      </div>
+    `).join('');
+    
+    container.innerHTML = html;
+    console.log(`[App] Loaded ${blog.length} blog posts`);
+  } catch (error) {
+    console.error('[App] Error loading blog:', error);
+  }
+}
+
+/**
+ * SETUP CONTACT FORM
+ */
 function setupContactForm() {
-    const form = document.getElementById('contact-form');
-    
-    if (form) {
-        form.addEventListener('submit', handleContactSubmit);
+  const form = document.getElementById('contact-form');
+  
+  if (form) {
+    form.addEventListener('submit', handleContactSubmit);
+  }
+}
+
+/**
+ * HANDLE CONTACT FORM SUBMISSION
+ * Uses centralized API service with proper error handling
+ */
+async function handleContactSubmit(e) {
+  e.preventDefault();
+  
+  const form = e.target;
+  const formData = new FormData(form);
+  const data = {
+    name: formData.get('name'),
+    email: formData.get('email'),
+    message: formData.get('message')
+  };
+
+  // Validate data
+  if (!data.name || !data.email || !data.message) {
+    notificationManager.warning(
+      'Validation Error',
+      'Please fill in all fields'
+    );
+    return;
+  }
+
+  try {
+    loadingManager.show('contact-submit', { message: 'Sending message...' });
+
+    const response = await apiService.post('/api/contact', data, {
+      timeout: 20000,
+      retry: 2
+    });
+
+    loadingManager.hide('contact-submit');
+
+    notificationManager.success(
+      'Message Sent',
+      'Thank you! Your message has been sent to contact@foylix.com. I\'ll get back to you soon.',
+      'SUCCESS'
+    );
+
+    form.reset();
+  } catch (error) {
+    loadingManager.hide('contact-submit');
+
+    if (!navigator.onLine) {
+      notificationManager.error(
+        'Network Error',
+        'You are offline. Please check your connection and try again.',
+        'OFFLINE'
+      );
+    } else if (error.code === 'TIMEOUT') {
+      notificationManager.warning(
+        'Request Timeout',
+        'The request took too long. Your message may still have been received. Please try again if needed.',
+        error.code
+      );
+    } else {
+      notificationManager.error(
+        'Send Failed',
+        error.message || 'Failed to send your message. Please try again.',
+        error.code
+      );
     }
+
+    console.error('[App] Contact submission error:', error);
+  }
 }
 
-// Handle Contact Form Submission
-function handleContactSubmit(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(e.target);
-    const data = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        message: formData.get('message')
-    };
-    
-    // Send to backend
-    fetch('http://localhost:5000/api/contact', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => {
-        if (response.ok) {
-            alert('Thank you for your message! I will get back to you soon. Email sent to contact@foylix.com');
-            e.target.reset();
-            return response.json();
-        } else {
-            throw new Error('Failed to send message');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Thank you! Your message has been recorded. (Backend email service not available)');
-        e.target.reset();
-    });
-}
-
-// Setup Scroll Animations
+/**
+ * SETUP SCROLL ANIMATIONS
+ */
 function setupScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.animation = 'fadeInUp 0.6s ease-out';
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-    
-    // Observe all cards
-    document.querySelectorAll('.publication-card, .project-card, .blog-card, .upcoming-card, .timeline-item').forEach(el => {
-        observer.observe(el);
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animation = 'fadeInUp 0.6s ease-out';
+        observer.unobserve(entry.target);
+      }
     });
+  }, observerOptions);
+  
+  // Observe all cards
+  document.querySelectorAll('.publication-card, .project-card, .blog-card, .upcoming-card, .timeline-item')
+    .forEach(el => {
+      observer.observe(el);
+    });
+}
+
+/**
+ * UTILITY HELPER FUNCTION
+ * Escapes HTML to prevent XSS
+ */
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
 }

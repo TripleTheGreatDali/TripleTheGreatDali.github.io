@@ -6,11 +6,14 @@
     <title>Contact | MD Foysal Ahmed</title>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/social-icons.css">
     <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/enhanced-design.css">
     <style>
         .contact-page {
             padding: 80px 20px;
-            background-color: #f9f9f9;
+            background: linear-gradient(135deg, rgba(10, 14, 39, 0.8) 0%, rgba(5, 8, 19, 0.9) 100%);
+            min-height: calc(100vh - 80px);
         }
         
         .contact-container {
@@ -22,8 +25,10 @@
         }
         
         .contact-info-section h3 {
-            color: #1F4E79;
+            color: var(--accent-neon);
             margin-bottom: 20px;
+            font-size: 1.3em;
+            letter-spacing: 1px;
         }
         
         .contact-info-item {
@@ -31,23 +36,26 @@
         }
         
         .contact-info-item h4 {
-            color: #2E75B6;
+            color: var(--accent-cyan);
             margin-bottom: 10px;
             font-size: 1.1em;
         }
         
         .contact-info-item p {
-            color: #666;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
         
         .contact-info-item a {
-            color: #1F4E79;
+            color: var(--accent-neon);
             text-decoration: none;
             font-weight: 600;
+            transition: all 0.3s ease;
         }
         
         .contact-info-item a:hover {
-            text-decoration: underline;
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
         }
         
         .social-links-contact {
@@ -58,104 +66,71 @@
         }
         
         .social-links-contact a {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            background: #1F4E79;
-            color: white;
-            border-radius: 50%;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-neon), var(--accent-cyan));
+            color: #000;
+            border-radius: 50%;
             text-decoration: none;
             font-weight: bold;
-            transition: all 0.3s ease;
+            font-size: 1.3em;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 5px 15px rgba(0, 217, 255, 0.3);
         }
         
         .social-links-contact a:hover {
-            background: #2E75B6;
-            transform: translateY(-3px);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(0, 217, 255, 0.5);
         }
         
         .contact-form-section {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            background: linear-gradient(135deg, rgba(10, 14, 39, 0.8) 0%, rgba(5, 8, 19, 0.9) 100%);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                        0 0 1px rgba(0, 217, 255, 0.1),
+                        inset 0 0 1px rgba(0, 217, 255, 0.05);
+            backdrop-filter: blur(10px);
         }
         
         .contact-form-section h3 {
-            color: #1F4E79;
-            margin-bottom: 20px;
+            color: var(--accent-neon);
+            margin-bottom: 30px;
+            font-size: 1.3em;
+            letter-spacing: 1px;
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
         
-        .form-group label {
+        .form-label {
             display: block;
-            margin-bottom: 8px;
-            color: #333;
+            margin-bottom: 10px;
+            color: var(--text-primary);
             font-weight: 600;
+            font-size: 0.95em;
         }
         
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 5px;
-            font-family: inherit;
-            font-size: 1em;
-            transition: all 0.3s ease;
-        }
-        
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #1F4E79;
-            box-shadow: 0 0 0 3px rgba(31, 78, 121, 0.1);
-        }
-        
-        .form-group textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
-        
-        .submit-btn {
-            width: 100%;
-            padding: 12px;
-            background: #1F4E79;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .submit-btn:hover {
-            background: #2E75B6;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(31, 78, 121, 0.3);
-        }
-        
-        .success-message {
-            display: none;
-            background: #4caf50;
-            color: white;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            text-align: center;
+        .form-hint {
+            margin-top: 6px;
+            color: var(--text-secondary);
+            font-size: 0.85em;
+            opacity: 0.8;
         }
         
         @media (max-width: 768px) {
             .contact-container {
                 grid-template-columns: 1fr;
                 gap: 30px;
+            }
+            
+            .contact-form-section {
+                padding: 24px;
             }
         }
     </style>
@@ -206,10 +181,18 @@
                     <div class="contact-info-item">
                         <h4>🔗 Social Links</h4>
                         <div class="social-links-contact">
-                            <a href="https://github.com/TripleTheGreatDali" target="_blank" title="GitHub">GH</a>
-                            <a href="https://www.linkedin.com/in/md-foysal-ahmed/" target="_blank" title="LinkedIn">LI</a>
-                            <a href="https://orcid.org/0000-0002-5933-8968" target="_blank" title="ORCID">OR</a>
-                            <a href="https://www.webofscience.com/wos/author/record/LGY-3964-2024" target="_blank" title="Web of Science">WS</a>
+                            <a href="https://github.com/TripleTheGreatDali" target="_blank" title="GitHub" class="social-link github">
+                                <span class="social-link-icon">🐙</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/md-foysal-ahmed/" target="_blank" title="LinkedIn" class="social-link linkedin">
+                                <span class="social-link-icon">💼</span>
+                            </a>
+                            <a href="https://orcid.org/0000-0002-5933-8968" target="_blank" title="ORCID" class="social-link orcid">
+                                <span class="social-link-icon">🔗</span>
+                            </a>
+                            <a href="https://www.webofscience.com/wos/author/record/LGY-3964-2024" target="_blank" title="Web of Science" class="social-link webofscience">
+                                <span class="social-link-icon">📊</span>
+                            </a>
                         </div>
                     </div>
                     
@@ -224,33 +207,64 @@
                 
                 <!-- Contact Form -->
                 <div class="contact-form-section">
-                    <h3>Send a Message</h3>
-                    <form id="contact-form" onsubmit="handleSubmit(event)">
-                        <div class="success-message" id="success-message">
-                            ✓ Thank you for your message! I'll get back to you soon.
+                    <h3>📨 Send a Message</h3>
+                    <form id="contact-form" class="form-container" onsubmit="handleContactSubmit(event)">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Your Name <span class="required">*</span></label>
+                            <input 
+                                type="text" 
+                                id="name" 
+                                name="name" 
+                                class="form-field-enhanced"
+                                placeholder="Enter your full name"
+                                aria-describedby="name-hint"
+                            >
+                            <span class="form-hint" id="name-hint">Your full name</span>
                         </div>
                         
                         <div class="form-group">
-                            <label for="name">Your Name *</label>
-                            <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                            <label for="email" class="form-label">Your Email <span class="required">*</span></label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                class="form-field-enhanced"
+                                placeholder="your.email@example.com"
+                                aria-describedby="email-hint"
+                            >
+                            <span class="form-hint" id="email-hint">We'll never share your email</span>
                         </div>
                         
                         <div class="form-group">
-                            <label for="email">Your Email *</label>
-                            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                            <label for="subject" class="form-label">Subject <span class="required">*</span></label>
+                            <input 
+                                type="text" 
+                                id="subject" 
+                                name="subject" 
+                                class="form-field-enhanced"
+                                placeholder="What is this about?"
+                                aria-describedby="subject-hint"
+                            >
+                            <span class="form-hint" id="subject-hint">Be specific about your inquiry</span>
                         </div>
                         
                         <div class="form-group">
-                            <label for="subject">Subject *</label>
-                            <input type="text" id="subject" name="subject" required placeholder="Message subject">
+                            <label for="message" class="form-label">Message <span class="required">*</span></label>
+                            <textarea 
+                                id="message" 
+                                name="message" 
+                                class="form-field-enhanced"
+                                placeholder="Tell me more about your inquiry..."
+                                aria-describedby="message-hint"
+                                rows="6"
+                            ></textarea>
+                            <span class="form-hint" id="message-hint">Minimum 10 characters</span>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="message">Message *</label>
-                            <textarea id="message" name="message" required placeholder="Your message here..."></textarea>
-                        </div>
-                        
-                        <button type="submit" class="submit-btn">Send Message</button>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            <span>Send Message</span>
+                            <span class="send-icon">✉️</span>
+                        </button>
                     </form>
                 </div>
             </div>
@@ -260,35 +274,203 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 MD Foysal Ahmed. All rights reserved.</p>
+            <div class="footer-content">
+                <p><span class="accent-neon">&lt;</span> © 2026 Md Foysal Ahmed <span class="accent-neon">/&gt;</span></p>
+                <p>Built with passion for research and innovation</p>
+                <div class="footer-social-links">
+                    <a href="https://github.com/TripleTheGreatDali" target="_blank" title="GitHub">🐙</a>
+                    <a href="https://www.linkedin.com/in/md-foysal-ahmed-80909917a" target="_blank" title="LinkedIn">💼</a>
+                    <a href="https://orcid.org/0000-0002-5933-8968" target="_blank" title="ORCID">🔗</a>
+                    <a href="https://www.webofscience.com/wos/author/record/LGY-3964-2024" target="_blank" title="Web of Science">📊</a>
+                    <a href="mailto:contact@foylix.com" title="Email">✉️</a>
+                </div>
+            </div>
         </div>
     </footer>
 
+    <!-- CORE INFRASTRUCTURE -->
+    <script src="../js/api-service.js"></script>
+    <script src="../js/notification-system.js"></script>
+    <script src="../js/loading-manager.js"></script>
+    <script src="../js/enhanced-notifications.js"></script>
+    <script src="../js/error-handler.js"></script>
+    <script src="../js/form-validator.js"></script>
+
     <script>
-        function handleSubmit(e) {
-            e.preventDefault();
+        /**
+         * CONTACT FORM HANDLER
+         * Uses advanced form validation and error handling
+         */
+        
+        let contactFormValidator;
+        
+        document.addEventListener('DOMContentLoaded', () => {
+          // Initialize form validator
+          contactFormValidator = new FormValidator('#contact-form', {
+            showErrorMessages: true,
+            realTimeValidation: true,
+            highlightErrors: true,
+            focusFirstError: true,
+            animateErrors: true
+          });
+          
+          // Add validation rules
+          contactFormValidator.addRules('name', [
+            {
+              condition: ValidationRules.required,
+              message: '👤 Please enter your name'
+            },
+            {
+              condition: ValidationRules.minLength(2),
+              message: '👤 Name must be at least 2 characters'
+            },
+            {
+              condition: ValidationRules.maxLength(100),
+              message: '👤 Name must be less than 100 characters'
+            }
+          ]);
+          
+          contactFormValidator.addRules('email', [
+            {
+              condition: ValidationRules.required,
+              message: '📧 Please enter your email'
+            },
+            {
+              condition: ValidationRules.email,
+              message: '📧 Please enter a valid email address'
+            }
+          ]);
+          
+          contactFormValidator.addRules('subject', [
+            {
+              condition: ValidationRules.required,
+              message: '📝 Please enter a subject'
+            },
+            {
+              condition: ValidationRules.minLength(3),
+              message: '📝 Subject must be at least 3 characters'
+            },
+            {
+              condition: ValidationRules.maxLength(100),
+              message: '📝 Subject must be less than 100 characters'
+            }
+          ]);
+          
+          contactFormValidator.addRules('message', [
+            {
+              condition: ValidationRules.required,
+              message: '💬 Please enter a message'
+            },
+            {
+              condition: ValidationRules.minLength(10),
+              message: '💬 Message must be at least 10 characters'
+            },
+            {
+              condition: ValidationRules.maxLength(5000),
+              message: '💬 Message must be less than 5000 characters'
+            }
+          ]);
+          
+          console.log('✅ Contact form initialized with validation');
+        });
+        
+        async function handleContactSubmit(event) {
+          event.preventDefault();
+          
+          try {
+            // Validate form first
+            if (!contactFormValidator.validateForm()) {
+              window.enhancedNotificationManager.error(
+                '❌ Validation Error',
+                'Please fix the errors below before submitting',
+                'ERR_VALIDATION'
+              );
+              return;
+            }
             
-            const form = e.target;
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                subject: document.getElementById('subject').value,
-                message: document.getElementById('message').value
-            };
+            // Get validated data
+            const formData = contactFormValidator.getFormData();
             
-            console.log('Form submitted:', formData);
+            // Disable form during submission
+            contactFormValidator.disable();
             
-            // Show success message
-            const successMessage = document.getElementById('success-message');
-            successMessage.style.display = 'block';
+            // Show loading
+            loadingManager.show('contact-submit', { message: 'Sending your message...' });
+            window.enhancedNotificationManager.loading('📨 Sending', 'Your message is being sent...');
+            
+            // Submit form
+            const response = await apiService.post('/api/contact', formData, {
+              timeout: 20000,
+              retry: 2
+            });
+            
+            // Hide loading
+            loadingManager.hide('contact-submit');
+            
+            // Show success
+            window.enhancedNotificationManager.success(
+              '✅ Message Sent',
+              'Thank you for reaching out! I\'ll get back to you soon.',
+              { duration: 5000 }
+            );
             
             // Reset form
-            form.reset();
+            contactFormValidator.reset();
+            contactFormValidator.enable();
             
-            // Hide message after 5 seconds
-            setTimeout(() => {
-                successMessage.style.display = 'none';
-            }, 5000);
+            console.log('✅ Message sent successfully');
+            
+          } catch (error) {
+            // Hide loading
+            loadingManager.hideAll();
+            contactFormValidator.enable();
+            
+            // Categorize error
+            const errorCode = error.code || 'ERR_UNKNOWN';
+            let errorTitle = '❌ Error Sending Message';
+            let errorMessage = 'Unable to send your message. Please try again.';
+            let suggestion = '';
+            
+            if (errorCode === 'ERR_OFFLINE') {
+              errorTitle = '🔌 Offline';
+              errorMessage = 'You are currently offline.';
+              suggestion = 'Please check your internet connection and try again.';
+            } else if (errorCode === 'ERR_TIMEOUT') {
+              errorTitle = '⏱️ Request Timeout';
+              errorMessage = 'The request took too long.';
+              suggestion = 'Your internet connection may be slow. Please try again.';
+            } else if (errorCode === 'ERR_SERVER') {
+              errorTitle = '⚠️ Server Error';
+              errorMessage = 'The server encountered an error.';
+              suggestion = 'Please try again later.';
+            } else if (errorCode === 'ERR_NOT_FOUND') {
+              errorTitle = '🔍 Not Found';
+              errorMessage = 'The contact endpoint could not be found.';
+              suggestion = 'Please contact support.';
+            }
+            
+            window.enhancedNotificationManager.error(
+              errorTitle,
+              errorMessage,
+              errorCode,
+              {
+                duration: 7000,
+                closable: true
+              }
+            );
+            
+            if (suggestion) {
+              console.warn('💡 Suggestion:', suggestion);
+            }
+            
+            window.errorHandler.handleError({
+              type: 'ContactFormError',
+              message: error.message,
+              code: errorCode,
+              severity: 'warning',
+              recoverable: true
+            });
+          }
         }
     </script>
 </body>
