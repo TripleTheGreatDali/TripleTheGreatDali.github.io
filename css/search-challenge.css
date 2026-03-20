@@ -283,6 +283,42 @@
     margin-bottom: 15px;
 }
 
+.challenge-timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, rgba(31, 78, 121, 0.1), rgba(0, 217, 255, 0.1));
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #00D9FF;
+    font-weight: 600;
+    color: #1F4E79;
+    animation: slideDown 0.3s ease;
+}
+
+.challenge-timer span {
+    font-size: 1.3em;
+    font-weight: 700;
+    min-width: 40px;
+    text-align: center;
+    padding: 4px 8px;
+    background: rgba(0, 217, 255, 0.2);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+/* Timer warning colors */
+.challenge-timer span[style*="color: rgb(255, 0, 110)"] {
+    background: rgba(255, 0, 110, 0.2);
+    animation: pulse 0.8s ease infinite;
+}
+
+.challenge-timer span[style*="color: rgb(255, 193, 7)"] {
+    background: rgba(255, 193, 7, 0.2);
+}
+
 /* ==================== ANIMATIONS ==================== */
 
 @keyframes fadeIn {
@@ -313,6 +349,26 @@
     to {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
     }
 }
 

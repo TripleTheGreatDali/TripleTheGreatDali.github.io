@@ -192,6 +192,8 @@ const challenges = [
 
 let currentChallenge = null;
 let challengeUnlocked = localStorage.getItem('profileUnlocked') === 'true';
+let challengeTimer = null;
+let timeUntilNextChallenge = 60;
 
 function initializeChallengeButton() {
     // Create challenge button
@@ -213,6 +215,9 @@ function initializeChallengeButton() {
                 <h2>Calculus Challenge 🧮</h2>
                 <p>Solve this problem to unlock my profile picture</p>
                 <span class="challenge-difficulty">CRITICAL</span>
+            </div>
+            <div class="challenge-timer" id="challenge-timer" style="text-align: center; margin-bottom: 15px; font-size: 0.9em; color: var(--text-secondary);">
+                ⏱️ Next question in: <span id="timer-countdown">60</span>s
             </div>
             <div class="challenge-problem" id="challenge-problem"></div>
             <form class="challenge-form" id="challenge-form" onsubmit="checkChallenge(event)">
@@ -254,6 +259,61 @@ function loadNewChallenge() {
     document.getElementById('challenge-answer').value = '';
     document.getElementById('challenge-feedback').innerHTML = '';
     document.getElementById('challenge-answer').focus();
+    
+    // Reset timer for next question
+    timeUntilNextChallenge = 60;
+    updateTimer();
+    
+    // Clear any previous timer
+    if (challengeTimer) {
+        clearInterval(challengeTimer);
+    }
+    
+    // Start countdown to next challenge
+    startChallengeTimer();
+}
+
+function startChallengeTimer() {
+    // Every second, decrease countdown
+    challengeTimer = setInterval(() => {
+        timeUntilNextChallenge--;
+        updateTimer();
+        
+        // When time reaches 0, automatically load new challenge
+        if (timeUntilNextChallenge <= 0) {
+            clearInterval(challengeTimer);
+            
+            // Only auto-load if modal is still open
+            if (document.getElementById('challenge-modal').classList.contains('active')) {
+                // Show transition
+                const problemDiv = document.getElementById('challenge-problem');
+                problemDiv.style.opacity = '0.5';
+                
+                // Load new challenge after brief delay for visual effect
+                setTimeout(() => {
+                    loadNewChallenge();
+                    problemDiv.style.opacity = '1';
+                }, 500);
+            }
+        }
+    }, 1000);
+}
+
+function updateTimer() {
+    const timerDisplay = document.getElementById('timer-countdown');
+    if (timerDisplay) {
+        timerDisplay.textContent = timeUntilNextChallenge;
+        
+        // Change color as time runs out
+        if (timeUntilNextChallenge <= 10) {
+            timerDisplay.style.color = '#ff006e';
+            timerDisplay.style.fontWeight = 'bold';
+        } else if (timeUntilNextChallenge <= 30) {
+            timerDisplay.style.color = '#ffc107';
+        } else {
+            timerDisplay.style.color = 'var(--text-secondary)';
+        }
+    }
 }
 
 function openChallengeModal() {
@@ -261,13 +321,24 @@ function openChallengeModal() {
     if (challengeUnlocked) {
         document.getElementById('challenge-form').style.display = 'none';
         document.getElementById('profile-unlock').classList.add('revealed');
+        // Still show timer div but it won't cycle since challenge is unlocked
+        const timerDiv = document.getElementById('challenge-timer');
+        if (timerDiv) timerDiv.style.display = 'none';
     } else {
         loadNewChallenge();
+        // Ensure timer div is visible
+        const timerDiv = document.getElementById('challenge-timer');
+        if (timerDiv) timerDiv.style.display = 'flex';
     }
 }
 
 function closeChallengeModal() {
     document.getElementById('challenge-modal').classList.remove('active');
+    // Clear the timer when modal closes to prevent timer running in background
+    if (challengeTimer) {
+        clearInterval(challengeTimer);
+        challengeTimer = null;
+    }
 }
 
 function checkChallenge(e) {
@@ -290,6 +361,12 @@ function checkChallenge(e) {
         feedback.classList.add('success');
         feedback.textContent = '✅ Correct! You solved it!';
         
+        // Clear the auto-cycle timer since challenge is solved
+        if (challengeTimer) {
+            clearInterval(challengeTimer);
+            challengeTimer = null;
+        }
+        
         // Unlock profile
         challengeUnlocked = true;
         localStorage.setItem('profileUnlocked', 'true');
@@ -297,6 +374,7 @@ function checkChallenge(e) {
         // Show profile picture
         setTimeout(() => {
             document.getElementById('challenge-form').style.display = 'none';
+            document.getElementById('challenge-timer').style.display = 'none';
             profileUnlock.classList.add('revealed');
         }, 500);
 
