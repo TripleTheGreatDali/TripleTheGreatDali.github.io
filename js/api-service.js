@@ -133,7 +133,10 @@ class APIService {
    */
   async _makeRequest(endpoint, options, requestId) {
     const { method, body, headers, timeout } = options;
-    const url = `${this.baseURL}${endpoint}`;
+    
+    // For direct file paths (e.g., /assets/data/...), don't prepend baseURL
+    // For API endpoints (e.g., /api/...), prepend baseURL
+    const url = endpoint.startsWith('/assets/') ? endpoint : `${this.baseURL}${endpoint}`;
     
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeout);
