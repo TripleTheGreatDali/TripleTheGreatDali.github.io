@@ -16,36 +16,92 @@ const dataCache = {
 
 // Load all data and initialize the portfolio
 document.addEventListener('DOMContentLoaded', async () => {
+  // Add immediate debug output
+  const debugEl = document.createElement('div');
+  debugEl.id = 'debug-status';
+  debugEl.style.cssText = `
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.8);
+    color: #0d9;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 11px;
+    z-index: 10000;
+    max-width: 300px;
+    word-wrap: break-word;
+  `;
+  debugEl.textContent = '⏳ Loading...';
+  document.body.appendChild(debugEl);
+  
+  const updateDebug = (msg) => {
+    debugEl.textContent = msg;
+    console.log('[DEBUG]', msg);
+  };
+  
+  // Safety timeout - force show page after 8 seconds
+  const forceShowTimeout = setTimeout(() => {
+    console.error('[App] TIMEOUT: Forcing page to show after 8 seconds');
+    updateDebug('⚠️ Timeout - showing page anyway');
+    loadingManager.hideAll();
+  }, 8000);
+  
   try {
     console.log('[App] Initializing application...');
+    console.log('[App] Window location:', window.location.href);
+    console.log('[App] Protocol:', window.location.protocol);
+    updateDebug('🚀 Initializing...');
     
     // Setup core functionality
     setupMobileMenu();
     setupNavigation();
     setupContactForm();
     setupScrollAnimations();
+    updateDebug('✓ Core setup done');
     
     // Setup API service listeners for global error handling
     setupAPIServiceListeners();
+    updateDebug('✓ API listeners ready');
     
     // Load all data in parallel
     console.log('[App] Loading portfolio data...');
     loadingManager.show('app-init', { 
       message: 'Loading portfolio data...' 
     });
+    updateDebug('⏳ Loading data files...');
     
-    await loadAllData();
+    try {
+      await loadAllData();
+      updateDebug('✓ Data loaded!');
+    } catch (loadError) {
+      console.error('[App] Data loading failed, attempting recovery:', loadError);
+      updateDebug('⚠️ Data load failed, showing page anyway');
+      // Continue anyway, show page with whatever data loaded
+    }
     
+    clearTimeout(forceShowTimeout);
     loadingManager.hide('app-init');
+    updateDebug('✓ Ready!');
     
     console.log('[App] Application initialized successfully');
     notificationManager.success('Welcome!', 'Portfolio loaded successfully');
+    
+    // Remove debug after 3 seconds if successful
+    setTimeout(() => {
+      if (debugEl.textContent === '✓ Ready!') {
+        debugEl.remove();
+      }
+    }, 3000);
   } catch (error) {
     console.error('[App] Fatal error during initialization:', error);
+    updateDebug('❌ Error: ' + (error.message || 'Unknown error'));
+    clearTimeout(forceShowTimeout);
     loadingManager.hideAll();
     notificationManager.error(
       'Application Error',
-      'Failed to initialize application. Please refresh the page.',
+      'Failed to initialize application. Check console for details.',
       error.code
     );
   }
@@ -77,6 +133,7 @@ function setupAPIServiceListeners() {
  */
 async function loadAllData() {
   try {
+    console.log('[App] Starting batch data load...');
     const { results, errors } = await apiService.batch([
       { endpoint: '/assets/data/publications.json', options: { useCache: true } },
       { endpoint: '/assets/data/news.json', options: { useCache: true } },
@@ -86,9 +143,14 @@ async function loadAllData() {
       { endpoint: '/assets/data/skills.json', options: { useCache: true } }
     ]);
 
+    console.log('[App] Batch complete. Results:', { total: results.length, failed: errors.length });
+
     // Process results
+    let successCount = 0;
     for (const result of results) {
       if (result.success) {
+        console.log('[App] Successfully loaded:', result.endpoint);
+        successCount++;
         if (result.endpoint.includes('publications')) {
           dataCache.publications = result.data;
           loadPublications();
@@ -114,8 +176,14 @@ async function loadAllData() {
     if (errors.length > 0) {
       console.warn(`[App] ${errors.length} data source(s) failed to load`);
       errors.forEach(err => {
-        console.error(`[App] Failed to load ${err.endpoint}:`, err.error.message);
+        console.error(`[App] Failed to load ${err.endpoint}:`, err.error?.message || err.error);
       });
+    }
+
+    console.log('[App] Data loading complete. Success:', successCount, 'Failed:', errors.length);
+    
+    if (successCount === 0 && errors.length > 0) {
+      throw new Error('Failed to load any data files. Check console for details.');
     }
   } catch (error) {
     console.error('[App] Batch data loading failed:', error);

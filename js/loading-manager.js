@@ -191,6 +191,12 @@ class LoadingStateManager {
    */
   hideAll() {
     this.indicators.forEach((_, identifier) => this.hide(identifier));
+    // Force remove any remaining loading overlays
+    document.querySelectorAll('.loading-indicator-overlay').forEach(el => el.remove());
+    // Ensure body is visible
+    if (document.body.style.display === 'none') {
+      document.body.style.display = 'block';
+    }
   }
 
   /**

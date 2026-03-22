@@ -11,7 +11,7 @@ class APIService {
     // Configuration
     this.baseURL = config.baseURL || 'http://localhost:5000';
     this.timeout = config.timeout || 10000;
-    this.retryAttempts = config.retryAttempts || 3;
+    this.retryAttempts = 1; // Disable retry for file requests
     this.retryDelay = config.retryDelay || 1000;
     
     // State management
@@ -138,6 +138,8 @@ class APIService {
     // For API endpoints (e.g., /api/...), prepend baseURL
     const url = endpoint.startsWith('/assets/') ? endpoint : `${this.baseURL}${endpoint}`;
     
+    console.log(`[API] Fetching from: ${url}`);
+    
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeout);
 
@@ -154,6 +156,7 @@ class APIService {
 
       if (body) config.body = JSON.stringify(body);
 
+      console.log(`[API] Making ${method} request to: ${url}`);
       const response = await fetch(url, config);
 
       if (!response.ok) {
@@ -161,12 +164,15 @@ class APIService {
         const error = new Error(errorData.message || `HTTP ${response.status}`);
         error.status = response.status;
         error.data = errorData;
+        console.error(`[API] HTTP Error: ${response.status} for ${url}`, errorData);
         throw error;
       }
 
       const data = await this._parseResponse(response);
+      console.log(`[API] Successfully fetched: ${url}`, data);
       return { status: response.status, data };
     } catch (error) {
+      console.error(`[API] Fetch error for ${url}:`, error);
       if (error.name === 'AbortError') {
         throw new APIError('Request timeout', 'TIMEOUT');
       }
@@ -417,10 +423,48 @@ class APIError extends Error {
 const apiService = new APIService({
   baseURL: 'http://localhost:5000',
   timeout: 15000,
-  retryAttempts: 3,
+  retryAttempts: 1,
   cacheDuration: 5 * 60 * 1000, // 5 minutes
   rateLimitDelay: 100
 });
+
+// Add diagnostic info to window for debugging
+window.apiDiagnostics = {
+  testFetch: async function() {
+    console.log('=== Testing Data File Access ===');
+    const files = [
+      '/assets/data/publications.json',
+      '/assets/data/news.json',
+      '/assets/data/projects.json',
+      '/assets/data/blog.json',
+      '/assets/data/upcoming.json',
+      '/assets/data/skills.json'
+    ];
+    
+    for (const file of files) {
+      try {
+        console.log(`Testing: ${file}`);
+        const response = await fetch(file);
+        console.log(`✓ ${file}: ${response.status} ${response.ok ? 'OK' : 'FAILED'}`);
+        if (!response.ok) {
+          console.log(`  Error: HTTP ${response.status}`);
+        }
+      } catch (error) {
+        console.error(`✗ ${file}: ${error.message}`);
+      }
+    }
+  },
+  showStatus: function() {
+    console.log('=== API Service Status ===');
+    console.log('Base URL:', this.baseURL);
+    console.log('Protocol:', window.location.protocol);
+    console.log('Host:', window.location.host);
+    console.log('API Online:', apiService.isOnline);
+  }
+};
+
+// Make it easily accessible in console
+console.log('Diagnostic tools available: window.apiDiagnostics.testFetch() and window.apiDiagnostics.showStatus()');
 
 /**
  * GLOBAL ERROR HANDLING
