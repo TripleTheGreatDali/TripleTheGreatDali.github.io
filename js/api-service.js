@@ -8,8 +8,13 @@
 
 class APIService {
   constructor(config = {}) {
+    // Auto-detect environment
+    const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const protocol = window.location.protocol;
+    
     // Configuration
-    this.baseURL = config.baseURL || 'http://localhost:5000';
+    this.baseURL = config.baseURL || (isDev ? 'http://localhost:5000' : '');
+    this.isProduction = !isDev;
     this.timeout = config.timeout || 10000;
     this.retryAttempts = 1; // Disable retry for file requests
     this.retryDelay = config.retryDelay || 1000;
@@ -134,11 +139,20 @@ class APIService {
   async _makeRequest(endpoint, options, requestId) {
     const { method, body, headers, timeout } = options;
     
-    // For direct file paths (e.g., /assets/data/...), don't prepend baseURL
-    // For API endpoints (e.g., /api/...), prepend baseURL
-    const url = endpoint.startsWith('/assets/') ? endpoint : `${this.baseURL}${endpoint}`;
+    // Determine URL:
+    // - Direct file paths (/assets/data/*) can be fetched directly
+    // - API endpoints (/api/*) use baseURL if available
+    let url;
+    if (endpoint.startsWith('/assets/')) {
+      url = endpoint;
+    } else if (this.baseURL) {
+      url = `${this.baseURL}${endpoint}`;
+    } else {
+      // No server available, try direct fetch
+      url = endpoint;
+    }
     
-    console.log(`[API] Fetching from: ${url}`);
+    console.log(`[API] Fetching from: ${url} (baseURL: ${this.baseURL || 'none'})`);
     
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeout);
@@ -160,8 +174,14 @@ class APIService {
       const response = await fetch(url, config);
 
       if (!response.ok) {
-        const errorData = await this._parseResponse(response);
-        const error = new Error(errorData.message || `HTTP ${response.status}`);
+        // Attempt to parse error response
+        let errorData;
+        try {
+          errorData = await this._parseResponse(response);
+        } catch {
+          errorData = { message: `HTTP ${response.status}` };
+        }
+        const error = new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
         error.status = response.status;
         error.data = errorData;
         console.error(`[API] HTTP Error: ${response.status} for ${url}`, errorData);
@@ -240,27 +260,24 @@ class APIService {
   }
 
   /**
-   * BATCH REQUEST - Execute multiple requests efficiently
+   * BATCH REQUEST - Execute multiple requests efficiently in PARALLEL
    */
   async batch(requests) {
-    // Execute requests in parallel but with rate limiting
-    const results = [];
-    const errors = [];
+    // Execute ALL requests in parallel using Promise.all with error handling
+    const promises = requests.map(req =>
+      this.request(req.endpoint, req.options)
+        .then(data => ({ success: true, data, endpoint: req.endpoint }))
+        .catch(error => ({ success: false, error, endpoint: req.endpoint }))
+    );
 
-    for (const req of requests) {
-      try {
-        const result = await this.request(req.endpoint, req.options);
-        results.push({ success: true, data: result, endpoint: req.endpoint });
-      } catch (error) {
-        errors.push({ success: false, error, endpoint: req.endpoint });
-        results.push({ success: false, error, endpoint: req.endpoint });
-      }
-    }
+    const results = await Promise.all(promises);
+    const errors = results.filter(r => !r.success);
 
     if (errors.length > 0) {
       console.warn(`[API] Batch request: ${errors.length}/${requests.length} requests failed`);
     }
 
+    console.log(`[API] Batch complete: ${results.length - errors.length}/${requests.length} successful`);
     return { results, errors, successful: requests.length - errors.length };
   }
 
@@ -421,11 +438,11 @@ class APIError extends Error {
 
 // Initialize global API service instance
 const apiService = new APIService({
-  baseURL: 'http://localhost:5000',
-  timeout: 15000,
-  retryAttempts: 1,
+  // baseURL will be auto-detected in constructor
+  timeout: 5000, // Reduced timeout - fail fast to avoid long waits
+  retryAttempts: 0, // No retries for production - files should be there or not
   cacheDuration: 5 * 60 * 1000, // 5 minutes
-  rateLimitDelay: 100
+  rateLimitDelay: 50 // Faster rate limiting
 });
 
 // Add diagnostic info to window for debugging
