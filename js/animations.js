@@ -8,33 +8,24 @@ document.addEventListener('DOMContentLoaded', () => {
     setupGlitchAnimation();
 });
 
-// Particle Animation
+// Particle Animation (disabled for performance)
 function setupParticleAnimation() {
-    const particles = document.querySelectorAll('.particle');
-    
-    particles.forEach((particle, index) => {
-        const randomDuration = 15 + Math.random() * 10;
-        particle.style.setProperty('--duration', `${randomDuration}s`);
-    });
+    // Disabled - particles with blur filters are too expensive for performance
+    // const particles = document.querySelectorAll('.particle');
+    // particles.forEach((particle, index) => {
+    //     const randomDuration = 15 + Math.random() * 10;
+    //     particle.style.setProperty('--duration', `${randomDuration}s`);
+    // });
 }
 
-// Card Hover Effects
+// Card Hover Effects (disabled for performance)
 function setupCardHoverEffects() {
-    const cards = document.querySelectorAll('.publication-card, .project-card, .blog-card, .upcoming-card');
-    
-    cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            card.style.setProperty('--mouse-x', `${x}px`);
-            card.style.setProperty('--mouse-y', `${y}px`);
-        });
-    });
+    // Disabled - mousemove listeners cause constant redraws
+    // const cards = document.querySelectorAll('.publication-card, .project-card, .blog-card, .upcoming-card');
+    // cards.forEach(card => { ... });
 }
 
-// Scroll to Top Button
+// Scroll to Top Button (optimized with throttling)
 function setupScrollToTopButton() {
     const button = document.createElement('button');
     button.innerHTML = '↑';
@@ -60,15 +51,24 @@ function setupScrollToTopButton() {
     
     document.body.appendChild(button);
     
+    // Throttled scroll listener (fires max every 200ms instead of every scroll pixel)
+    let lastScrollCheck = 0;
+    const scrollThrottle = 200;
+    const visibilityThreshold = 300;
+    
     window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 300) {
+        const now = Date.now();
+        if (now - lastScrollCheck < scrollThrottle) return;
+        lastScrollCheck = now;
+        
+        if (window.pageYOffset > visibilityThreshold) {
             button.style.opacity = '1';
             button.style.pointerEvents = 'auto';
         } else {
             button.style.opacity = '0';
             button.style.pointerEvents = 'none';
         }
-    });
+    }, { passive: true });
     
     button.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -85,19 +85,14 @@ function setupScrollToTopButton() {
     });
 }
 
-// Glitch Animation Effect
+// Glitch Animation Effect (disabled for performance)
 function setupGlitchAnimation() {
-    const glitchElement = document.querySelector('.glitch');
-    
-    if (glitchElement) {
-        // Add random glitch trigger every 3-5 seconds
-        setInterval(() => {
-            glitchElement.style.animation = 'none';
-            setTimeout(() => {
-                glitchElement.style.animation = 'glitch-animation 2s ease-in-out';
-            }, 10);
-        }, 3000 + Math.random() * 2000);
-    }
+    // Disabled - frequent redraws hurt performance
+    // const glitchElement = document.querySelector('.glitch');
+    // if (glitchElement) {
+    //     setInterval(() => { ... }, 3000 + Math.random() * 2000);
+    // }
+}
 }
 
 // Add smooth parallax effect on scroll

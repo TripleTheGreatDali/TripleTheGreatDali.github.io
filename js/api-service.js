@@ -15,9 +15,9 @@ class APIService {
     // Configuration
     this.baseURL = config.baseURL || (isDev ? 'http://localhost:5000' : '');
     this.isProduction = !isDev;
-    this.timeout = config.timeout || 10000;
+    this.timeout = config.timeout || 5000;  // Reduced from 10s to 5s for faster fail
     this.retryAttempts = 1; // Disable retry for file requests
-    this.retryDelay = config.retryDelay || 1000;
+    this.retryDelay = config.retryDelay || 500; // Reduced from 1s to 500ms
     
     // State management
     this.cache = new Map();

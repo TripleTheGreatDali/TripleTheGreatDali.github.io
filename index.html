@@ -4,8 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Md Foysal Ahmed - AI Research Engineer & Computer Vision Expert">
+    <meta name="theme-color" content="#0a0e27">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Performance Optimization Meta Tags -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https: fonts.googleapis.com; font-src 'self' https: fonts.gstatic.com">
+    <meta http-equiv="permissions-policy" content="geolocation=(), microphone=(), camera=()">
+    
+    <!-- DNS Prefetch & Resource Hints for Performance -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="prefetch" href="assets/data/blog.json">
+    <link rel="prefetch" href="assets/data/news.json">
+    <link rel="prefetch" href="assets/data/projects.json">
+    <link rel="prefetch" href="assets/data/publications.json">
+    <link rel="prefetch" href="assets/data/skills.json">
+    
+    <!-- Fonts - Load with font-display: swap to prevent FOUT -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap">
+    
     <title>Md Foysal Ahmed | AI Research & Computer Vision</title>
     
+    <!-- Critical CSS for Instant Rendering -->
+    <link rel="stylesheet" href="css/critical.css">
+    
+    <!-- Main Stylesheets - Load in optimal order -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/projects.css">
@@ -304,9 +331,60 @@
     <!-- ENHANCED DESIGN SYSTEM -->
     <link rel="stylesheet" href="css/enhanced-design.css">
     
+    <!-- PERFORMANCE OPTIMIZATION SCRIPTS -->
+    <!-- Performance Monitoring -->
+    <script src="js/performance-monitor.js" defer></script>
+    
+    <!-- Image Lazy Loading for faster page load -->
+    <script src="js/lazy-loader.js" defer></script>
+    
     <!-- APPLICATION SCRIPTS -->
     <script src="js/main.js"></script>
     <script src="js/animations.js"></script>
     <script src="js/search-challenge.js"></script>
+    
+    <!-- Service Worker for GitHub Pages: Offline support & caching -->
+    <script>
+        // Register Service Worker for instant offline support and caching
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('✅ Service Worker registered successfully', registration);
+                    })
+                    .catch(error => {
+                        console.log('⚠️ Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // Performance optimization: Prefetch data files on idle
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+                const dataFiles = [
+                    'assets/data/blog.json',
+                    'assets/data/news.json',
+                    'assets/data/projects.json',
+                    'assets/data/publications.json',
+                    'assets/data/skills.json'
+                ];
+                dataFiles.forEach(file => {
+                    const link = document.createElement('link');
+                    link.rel = 'prefetch';
+                    link.href = file;
+                    document.head.appendChild(link);
+                });
+            });
+        }
+
+        // Report performance metrics when page is fully loaded
+        window.addEventListener('load', () => {
+            if (window.performanceMonitor) {
+                setTimeout(() => {
+                    const summary = window.performanceMonitor.logPerformanceSummary();
+                }, 0);
+            }
+        });
+    </script>
 </body>
 </html>
