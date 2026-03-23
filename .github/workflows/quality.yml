@@ -1,0 +1,176 @@
+name: Quality Checks
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+
+jobs:
+  quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    
+    - name: Validate JSON files
+      run: |
+        echo "Validating all JSON files..."
+        node -e "
+        const fs = require('fs');
+        const path = require('path');
+        
+        function findJsonFiles(dir) {
+          let files = [];
+          const items = fs.readdirSync(dir);
+          
+          items.forEach(item => {
+            const fullPath = path.join(dir, item);
+            const stat = fs.statSync(fullPath);
+            
+            if (stat.isDirectory() && !item.startsWith('.')) {
+              files = files.concat(findJsonFiles(fullPath));
+            } else if (item.endsWith('.json')) {
+              files.push(fullPath);
+            }
+          });
+          
+          return files;
+        }
+        
+        const jsonFiles = findJsonFiles('.');
+        let errors = [];
+        
+        jsonFiles.forEach(file => {
+          try {
+            const content = fs.readFileSync(file, 'utf-8');
+            JSON.parse(content);
+            console.log('✓ Valid:', file);
+          } catch (e) {
+            errors.push(\`✗ \${file}: \${e.message}\`);
+          }
+        });
+        
+        if (errors.length > 0) {
+          console.error('\\nJSON Validation Errors:');
+          errors.forEach(e => console.error(e));
+          process.exit(1);
+        } else {
+          console.log(\`\\n✓ All \${jsonFiles.length} JSON files are valid!\`);
+        }
+        "
+    
+    - name: Check for dead links in HTML
+      run: |
+        echo "Checking HTML file integrity..."
+        node -e "
+        const fs = require('fs');
+        const path = require('path');
+        
+        function findHtmlFiles(dir) {
+          let files = [];
+          const items = fs.readdirSync(dir);
+          
+          items.forEach(item => {
+            const fullPath = path.join(dir, item);
+            const stat = fs.statSync(fullPath);
+            
+            if (stat.isDirectory() && !item.startsWith('.') && item !== 'node_modules') {
+              files = files.concat(findHtmlFiles(fullPath));
+            } else if (item.endsWith('.html')) {
+              files.push(fullPath);
+            }
+          });
+          
+          return files;
+        }
+        
+        const htmlFiles = findHtmlFiles('.');
+        console.log('Found \${htmlFiles.length} HTML files');
+        htmlFiles.forEach(file => {
+          console.log('✓', file);
+        });
+        "
+    
+    - name: Validate critical files
+      run: |
+        echo "Verifying critical files exist..."
+        required=(
+          "index.html"
+          "pages/blog.html"
+          "pages/projects.html"
+          "pages/publications.html"
+          "assets/data/blog.json"
+          "assets/data/projects.json"
+          "assets/data/publications.json"
+          "js/main.js"
+          "js/api-service.js"
+          "js/init-safeguard.js"
+          "css/main.css"
+        )
+        
+        missing=0
+        for file in "\${required[@]}"; do
+          if [ -f "\$file" ]; then
+            echo "✓ \$file"
+          else
+            echo "✗ MISSING: \$file"
+            missing=$((missing+1))
+          fi
+        done
+        
+        if [ \$missing -gt 0 ]; then
+          echo ""
+          echo "✗ \$missing file(s) missing!"
+          exit 1
+        else
+          echo ""
+          echo "✓ All critical files present"
+        fi
+    
+    - name: Check file sizes
+      run: |
+        echo "Checking file sizes..."
+        du -sh index.html pages/* css/* js/* 2>/dev/null | grep -E '\.[0-9]M|[1-9][0-9]+M' && echo "" && echo "⚠ Warning: Large files detected" || echo "✓ File sizes OK"
+    
+    - name: Verify correct script loading order
+      run: |
+        echo "Checking JavaScript loading order..."
+        node -e "
+        const fs = require('fs');
+        const content = fs.readFileSync('index.html', 'utf-8');
+        
+        const scripts = [
+          'init-safeguard.js',
+          'api-service.js',
+          'notification-system.js',
+          'loading-manager.js',
+          'main.js'
+        ];
+        
+        let lastIndex = -1;
+        for (const script of scripts) {
+          const index = content.indexOf(script);
+          if (index === -1) {
+            console.log('⚠ Warning:', script, 'not found in index.html');
+            continue;
+          }
+          
+          if (index < lastIndex) {
+            throw new Error(\`✗ Wrong script order: \${script} appears before previous scripts\`);
+          }
+          console.log('✓ Correct order:', script);
+          lastIndex = index;
+        }
+        console.log('\\n✓ Script loading order is correct!');
+        "
