@@ -1,0 +1,20 @@
+[
+  {
+    "year": "2025",
+    "title": "Master of Science in Computer Science",
+    "institution": "Top University",
+    "description": "Focus on AI Research, Deep Learning, and Computer Vision"
+  },
+  {
+    "year": "2023",
+    "title": "Bachelor of Science in Computer Science",
+    "institution": "Technology Institute",
+    "description": "Specialized in Artificial Intelligence and Machine Learning"
+  },
+  {
+    "year": "2020",
+    "title": "High School Diploma",
+    "institution": "Science Academy",
+    "description": "Advanced placement in Mathematics and Physics"
+  }
+]

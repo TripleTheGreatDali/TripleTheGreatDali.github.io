@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Foylix Blog - AI Research, Deep Learning, and Computer Vision Insights">
+    <title>Foylix Blog | MD Foysal Ahmed</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/social-icons.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .blog-container {
+            max-width: 900px;
+            margin: 100px auto;
+            padding: 20px;
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #1F4E79;
+        }
+
+        .blog-header h1 {
+            font-size: 3em;
+            color: #1F4E79;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .blog-header p {
+            font-size: 1.1em;
+            color: #666;
+        }
+
+        .blog-posts {
+            display: grid;
+            gap: 30px;
+        }
+
+        .blog-post-card {
+            padding: 25px;
+            border-left: 4px solid #1F4E79;
+            background: #f9f9f9;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .blog-post-card:hover {
+            background: #f0f0f0;
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(31, 78, 121, 0.2);
+        }
+
+        .blog-post-card a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .blog-date {
+            font-size: 0.9em;
+            color: #1F4E79;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .blog-title {
+            font-size: 1.5em;
+            color: #1F4E79;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .blog-excerpt {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            display: inline-block;
+            color: #1F4E79;
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 2px solid #1F4E79;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            padding-bottom: 3px;
+            color: #0a2e47;
+        }
+
+        .nav-links a {
+            color: #1F4E79;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            border-bottom: 2px solid #1F4E79;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: #1F4E79;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-accent">&gt;</span> Md Foysal Ahmed
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../pages/education.html">Education</a></li>
+                <li><a href="../pages/publications.html">Publications</a></li>
+                <li><a href="../pages/research.html">Research</a></li>
+                <li><a href="../pages/projects.html">Projects</a></li>
+                <li><a href="../pages/news.html">News</a></li>
+                <li><a href="../pages/blog.html">Blog</a></li>
+                <li><a href="../pages/contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="particle" style="--x: 10%; --y: 20%;"></div>
+        <div class="particle" style="--x: 80%; --y: 60%;"></div>
+        <div class="particle" style="--x: 40%; --y: 80%;"></div>
+        <div class="particle" style="--x: 70%; --y: 30%;"></div>
+        <div class="particle" style="--x: 20%; --y: 70%;"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="blog-container">
+        <a href="../index.html" class="back-link">← Back to Home</a>
+        
+        <div class="blog-header">
+            <h1>Foylix Blog</h1>
+            <p>Insights on AI Research, Deep Learning, and Computer Vision</p>
+        </div>
+
+        <div class="blog-posts" id="blogPosts">
+            <!-- Blog posts will be loaded here by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p><span class="accent-neon">&lt;</span> © 2026 Md Foysal Ahmed <span class="accent-neon">/&gt;</span></p>
+                <p>Built with passion for research and innovation</p>
+                <div class="footer-social-links">
+                    <a href="https://github.com/TripleTheGreatDali" target="_blank" title="GitHub">🐙</a>
+                    <a href="https://www.linkedin.com/in/md-foysal-ahmed-80909917a" target="_blank" title="LinkedIn">💼</a>
+                    <a href="https://orcid.org/0000-0002-5933-8968" target="_blank" title="ORCID">🔗</a>
+                    <a href="https://www.webofscience.com/wos/author/record/LGY-3964-2024" target="_blank" title="Web of Science">📊</a>
+                    <a href="mailto:contact@foylix.com" title="Email">✉️</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CORE INFRASTRUCTURE SCRIPTS -->
+    <script src="../js/init-safeguard.js"></script>
+    <script src="../js/api-service.js"></script>
+    <script src="../js/notification-system.js"></script>
+    <script src="../js/loading-manager.js"></script>
+    <script src="../js/enhanced-notifications.js"></script>
+    <script src="../js/error-handler.js"></script>
+    <script src="../js/form-validator.js"></script>
+    
+    <!-- ENHANCED DESIGN SYSTEM -->
+    <link rel="stylesheet" href="../css/enhanced-design.css">
+
+    <script>
+        // Load blog posts from JSON
+        async function loadBlogPosts() {
+            try {
+                const response = await fetch('../assets/data/blog.json');
+                const posts = await response.json();
+                const postsContainer = document.getElementById('blogPosts');
+                
+                posts.forEach((post, index) => {
+                    const postCard = document.createElement('div');
+                    postCard.className = 'blog-post-card';
+                    postCard.innerHTML = `
+                        <a href="blog-post.html?id=${index}">
+                            <div class="blog-date">${post.date}</div>
+                            <h2 class="blog-title">${post.title}</h2>
+                            <p class="blog-excerpt">${post.excerpt}</p>
+                            <span class="read-more">Read More →</span>
+                        </a>
+                    `;
+                    postsContainer.appendChild(postCard);
+                });
+            } catch (error) {
+                console.error('Error loading blog posts:', error);
+                document.getElementById('blogPosts').innerHTML = 
+                    '<p style="color: red;">Error loading blog posts. Please try again later.</p>';
+            }
+        }
+
+        // Load posts on page load
+        document.addEventListener('DOMContentLoaded', loadBlogPosts);
+    </script>
+</body>
+</html>

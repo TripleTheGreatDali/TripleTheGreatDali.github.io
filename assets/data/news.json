@@ -1,0 +1,44 @@
+[
+  {
+    "date": "March 15, 2026",
+    "category": "Paper Accepted",
+    "icon": "🎉",
+    "title": "Deep Learning for Medical Imaging Accepted at IEEE TMI",
+    "description": "Our paper on hybrid intelligence systems for medical image segmentation has been accepted for publication in IEEE Transactions on Medical Image Analysis."
+  },
+  {
+    "date": "March 10, 2026",
+    "category": "Conference",
+    "icon": "🌍",
+    "title": "Presenting at ICCV 2026",
+    "description": "Excited to present our latest work on computer vision at the International Conference on Computer Vision in Paris."
+  },
+  {
+    "date": "March 1, 2026",
+    "category": "Collaboration",
+    "icon": "🤝",
+    "title": "New Research Collaboration",
+    "description": "Started a new collaboration with researchers at Beijing Institute of Technology on real-time activity recognition systems."
+  },
+  {
+    "date": "February 20, 2026",
+    "category": "Achievement",
+    "icon": "⭐",
+    "title": "h-index Reaches 12",
+    "description": "Our research portfolio continues to grow with 45+ citations across multiple publications in computer vision and AI."
+  },
+  {
+    "date": "February 10, 2026",
+    "category": "Code Release",
+    "icon": "💻",
+    "title": "Open Source: ViT-Med Framework",
+    "description": "Released an open-source PyTorch framework for Vision Transformers in medical imaging on GitHub."
+  },
+  {
+    "date": "January 25, 2026",
+    "category": "Award",
+    "icon": "🏆",
+    "title": "Best Paper Award",
+    "description": "Awarded the Best Paper Award at the AI for Healthcare Systems Conference for our work on model interpretability."
+  }
+]

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Md Foysal Ahmed - AI Research Engineer & Computer Vision Expert">
+    <meta name="theme-color" content="#0a0e27">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Performance Optimization Meta Tags -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https: fonts.googleapis.com; font-src 'self' https: fonts.gstatic.com">
+    <meta http-equiv="permissions-policy" content="geolocation=(), microphone=(), camera=()">
+    
+    <!-- DNS Prefetch & Resource Hints for Performance -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="prefetch" href="assets/data/blog.json">
+    <link rel="prefetch" href="assets/data/news.json">
+    <link rel="prefetch" href="assets/data/projects.json">
+    <link rel="prefetch" href="assets/data/publications.json">
+    <link rel="prefetch" href="assets/data/skills.json">
+    
+    <!-- Fonts - Load with font-display: swap to prevent FOUT -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap">
+    
+    <title>Md Foysal Ahmed | AI Research & Computer Vision</title>
+    
+    <!-- Critical CSS for Instant Rendering -->
+    <link rel="stylesheet" href="css/critical.css">
+    
+    <!-- Main Stylesheets - Load in optimal order -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/projects.css">
+    <link rel="stylesheet" href="css/timeline.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/search-challenge.css">
+    <link rel="stylesheet" href="css/social-icons.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="particle" style="--x: 10%; --y: 20%;"></div>
+        <div class="particle" style="--x: 80%; --y: 60%;"></div>
+        <div class="particle" style="--x: 40%; --y: 80%;"></div>
+        <div class="particle" style="--x: 70%; --y: 30%;"></div>
+        <div class="particle" style="--x: 20%; --y: 70%;"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-accent">&gt;</span> Md Foysal Ahmed
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="pages/education.html" class="nav-link">Education</a></li>
+                <li><a href="pages/publications.html" class="nav-link">Publications</a></li>
+                <li><a href="pages/research.html" class="nav-link">Research</a></li>
+                <li><a href="pages/projects.html" class="nav-link">Projects</a></li>
+                <li><a href="pages/news.html" class="nav-link">News</a></li>
+                <li><a href="pages/blog.html" class="nav-link">Blog</a></li>
+                <li><a href="pages/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1 class="glitch" data-text="AI RESEARCHER">AI RESEARCHER</h1>
+            <div class="subtitle">
+                <span class="accent-neon">Machine Learning</span> • 
+                <span class="accent-neon">Deep Learning</span> • 
+                <span class="accent-neon">Hybrid Intelligence</span> • 
+                <span class="accent-purple">Computer Vision</span> • 
+                <span class="accent-cyan">Computer Science</span>
+            </div>
+            <p class="description">
+                Exploring the intersection of symbolic AI and deep learning to build interpretable, 
+                robust intelligent systems. Passionate about medical imaging, real-time processing, and research excellence.
+            </p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="document.getElementById('publications').scrollIntoView({behavior: 'smooth'})">
+                    Explore My Work
+                </button>
+                <button class="btn btn-secondary" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+                    Collaborate With Me
+                </button>
+            </div>
+            <div class="scroll-indicator">
+                <span>Scroll to explore</span>
+                <div class="scroll-arrow"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Bar Section -->
+    <section style="padding: 30px 20px; background: rgba(31, 78, 121, 0.05);">
+        <div class="container">
+            <div class="search-container" id="search-container">
+                <input 
+                    type="text" 
+                    class="search-bar" 
+                    id="search-bar" 
+                    placeholder="🔍 Search blog posts, news, projects, skills, research..."
+                >
+                <div class="search-results" id="search-results"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Timeline -->
+    <section id="education" class="education">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="accent-cyan">&lt;</span> Education <span class="accent-cyan">/&gt;</span>
+            </h2>
+            <div class="timeline">
+                <div class="timeline-item" data-year="2025">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-dot"></div>
+                        <h3>M.Eng. Software Engineering</h3>
+                        <p class="institution">Southwest University of Technology (SWUST)</p>
+                        <p class="timeline-year">2025</p>
+                        <p class="focus">Focus: Hybrid Model, Deep Learning Systems & Hybrid Intelligence</p>
+                        <ul class="achievements">
+                            <li>Advanced neural architecture research</li>
+                            <li>Collaboration on medical imaging systems</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-year="2023">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-dot"></div>
+                        <h3>B.Eng. Computer Science & Engineering</h3>
+                        <p class="institution">Southwest University of Technology (SWUST)</p>
+                        <p class="timeline-year">2023</p>
+                        <p class="focus">Focus: AI, Computer Vision & Signal Processing</p>
+                        <ul class="achievements">
+                            <li>Laparoscopic Surgical Systems</li>
+                            <li>Published 3 papers during undergraduate</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item" data-year="2026">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-dot"></div>
+                        <h3>Ongoing - Seeking Opportunity</h3>
+                        <p class="institution">Anywhere</p>
+                        <p class="timeline-year">2026 - XXXX</p>
+                        <p class="focus">XXXXX</p>
+                        <ul class="achievements">
+                            <li>Advanced control systems theory</li>
+                            <li>AI for autonomous systems</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications Section -->
+    <section id="publications" class="publications">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="accent-neon">&lt;</span> Publications <span class="accent-neon">/&gt;</span>
+            </h2>
+            
+            <div class="publications-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="2026">2026</button>
+                <button class="filter-btn" data-filter="2025">2025</button>
+                <button class="filter-btn" data-filter="2023">2023</button>
+                <button class="filter-btn" data-filter="2021">2021</button>
+            </div>
+
+            <div class="publications-grid" id="publications-container"></div>
+        </div>
+    </section>
+
+    <!-- Upcoming Research Section -->
+    <section id="upcoming" class="upcoming-research">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="accent-purple">&lt;</span> Ongoing Research <span class="accent-purple">/&gt;</span>
+            </h2>
+            
+            <div class="upcoming-grid" id="upcoming-container"></div>
+        </div>
+    </section>
+
+    <!-- News & Updates Section -->
+    <section id="news" class="news">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="accent-cyan">&lt;</span> News & Updates <span class="accent-cyan">/&gt;</span>
+            </h2>
+            
+            <div class="news-timeline" id="news-container"></div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="accent-neon">&lt;</span> Projects & Demos <span class="accent-neon">/&gt;</span>
+            </h2>
+            
+            <div class="projects-grid" id="projects-container"></div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="blog">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="accent-purple">&lt;</span> Technical Thoughts <span class="accent-purple">/&gt;</span>
+            </h2>
+            
+            <div class="blog-grid" id="blog-container"></div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="accent-neon">&lt;</span> Let's Connect <span class="accent-neon">/&gt;</span>
+            </h2>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h3>Email</h3>
+                        <a href="mailto:contact@foylix.com">contact@foylix.com</a>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h3>Phone</h3>
+                        <p>+88 01XXXXXXXXX</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h3>Location</h3>
+                        <p>Dhaka, Bangladesh</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h3>Research Interests</h3>
+                        <p>Medical Image Analysis • Computer Vision • Deep Learning • Hybrid Intelligence • AI Systems</p>
+                    </div>
+                    
+                    <div class="contact-socials">
+                        <a href="https://github.com/TripleTheGreatDali" target="_blank" class="social-link github">
+                            <span class="social-link-icon">🐙</span>
+                            <span class="social-link-text">GitHub</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/md-foysal-ahmed-80909917a" target="_blank" class="social-link linkedin">
+                            <span class="social-link-icon">💼</span>
+                            <span class="social-link-text">LinkedIn</span>
+                        </a>
+                        <a href="https://orcid.org/0000-0002-5933-8968" target="_blank" class="social-link orcid">
+                            <span class="social-link-icon">🔗</span>
+                            <span class="social-link-text">ORCID</span>
+                        </a>
+                        <a href="https://www.webofscience.com/wos/author/record/LGY-3964-2024" target="_blank" class="social-link webofscience">
+                            <span class="social-link-icon">📊</span>
+                            <span class="social-link-text">Web of Science</span>
+                        </a>
+                    </div>
+                    
+                    <p class="collaboration-note">
+                        <span class="accent-cyan">→</span> Open for collaboration on cutting-edge AI research 
+                    </p>
+                </div>
+
+                <form class="contact-form" id="contact-form" onsubmit="handleContactSubmit(event)">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" placeholder="Your Message" rows="6" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p><span class="accent-neon">&lt;</span> © 2026 Md Foysal Ahmed <span class="accent-neon">/&gt;</span></p>
+                <p>Built with passion for research and innovation</p>
+                <div class="footer-social-links">
+                    <a href="https://github.com/TripleTheGreatDali" target="_blank" title="GitHub">🐙</a>
+                    <a href="https://www.linkedin.com/in/md-foysal-ahmed-80909917a" target="_blank" title="LinkedIn">💼</a>
+                    <a href="https://orcid.org/0000-0002-5933-8968" target="_blank" title="ORCID">🔗</a>
+                    <a href="https://www.webofscience.com/wos/author/record/LGY-3964-2024" target="_blank" title="Web of Science">📊</a>
+                    <a href="mailto:contact@foylix.com" title="Email">✉️</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CORE INFRASTRUCTURE SCRIPTS (must load first) -->
+    <script src="js/init-safeguard.js"></script>
+    <script src="js/api-service.js"></script>
+    <script src="js/notification-system.js"></script>
+    <script src="js/loading-manager.js"></script>
+    <script src="js/enhanced-notifications.js"></script>
+    <script src="js/error-handler.js"></script>
+    <script src="js/form-validator.js"></script>
+    
+    <!-- ENHANCED DESIGN SYSTEM -->
+    <link rel="stylesheet" href="css/enhanced-design.css">
+    
+    <!-- PERFORMANCE OPTIMIZATION SCRIPTS -->
+    <!-- Performance Monitoring -->
+    <script src="js/performance-monitor.js" defer></script>
+    
+    <!-- Image Lazy Loading for faster page load -->
+    <script src="js/lazy-loader.js" defer></script>
+    
+    <!-- APPLICATION SCRIPTS -->
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/search-challenge.js"></script>
+    
+    <!-- Service Worker for GitHub Pages: Offline support & caching -->
+    <script>
+        // Register Service Worker for instant offline support and caching
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('✅ Service Worker registered successfully', registration);
+                    })
+                    .catch(error => {
+                        console.log('⚠️ Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // Performance optimization: Prefetch data files on idle
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+                const dataFiles = [
+                    'assets/data/blog.json',
+                    'assets/data/news.json',
+                    'assets/data/projects.json',
+                    'assets/data/publications.json',
+                    'assets/data/skills.json'
+                ];
+                dataFiles.forEach(file => {
+                    const link = document.createElement('link');
+                    link.rel = 'prefetch';
+                    link.href = file;
+                    document.head.appendChild(link);
+                });
+            });
+        }
+
+        // Report performance metrics when page is fully loaded
+        window.addEventListener('load', () => {
+            if (window.performanceMonitor) {
+                setTimeout(() => {
+                    const summary = window.performanceMonitor.logPerformanceSummary();
+                }, 0);
+            }
+        });
+    </script>
+</body>
+</html>

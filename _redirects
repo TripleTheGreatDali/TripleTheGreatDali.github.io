@@ -1,0 +1,9 @@
+# GitHub Pages URL Redirects Configuration
+# Note: GitHub Pages doesn't support _redirects like Netlify
+# Instead, redirect rules should be handled via meta refresh or JavaScript
+
+# For production use, consider using Netlify or Vercel instead of GitHub Pages
+# as they support automatic redirects
+
+# This is here for documentation purposes
+# GitHub Pages automatically serves index.html for 404s (configured in config.json)

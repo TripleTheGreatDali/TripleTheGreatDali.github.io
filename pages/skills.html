@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Skills - MD Foysal Ahmed">
+    <title>Skills | MD Foysal Ahmed</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/social-icons.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .page-container {
+            max-width: 900px;
+            margin: 100px auto;
+            padding: 20px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #1F4E79;
+        }
+
+        .page-header h1 {
+            font-size: 3em;
+            color: #1F4E79;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: #1F4E79;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .skills-container {
+            display: grid;
+            gap: 30px;
+        }
+
+        .skill-category {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 5px;
+            border-left: 4px solid #1F4E79;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            background: #f0f0f0;
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(31, 78, 121, 0.2);
+        }
+
+        .skill-category h3 {
+            color: #1F4E79;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .skill-item {
+            padding: 12px;
+            background: white;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .skill-item:hover {
+            border-color: #1F4E79;
+            color: #1F4E79;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-accent">&gt;</span> Md Foysal Ahmed
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../pages/education.html">Education</a></li>
+                <li><a href="../pages/publications.html">Publications</a></li>
+                <li><a href="../pages/research.html">Research</a></li>
+                <li><a href="../pages/projects.html">Projects</a></li>
+                <li><a href="../pages/news.html">News</a></li>
+                <li><a href="../pages/blog.html">Blog</a></li>
+                <li><a href="../pages/contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="particle" style="--x: 10%; --y: 20%;"></div>
+        <div class="particle" style="--x: 80%; --y: 60%;"></div>
+        <div class="particle" style="--x: 40%; --y: 80%;"></div>
+        <div class="particle" style="--x: 70%; --y: 30%;"></div>
+        <div class="particle" style="--x: 20%; --y: 70%;"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="page-container">
+        <a href="../index.html" class="back-link">← Back to Home</a>
+        
+        <div class="page-header">
+            <h1>Skills</h1>
+        </div>
+
+        <div class="skills-container" id="skillsContainer">
+            <!-- Skills will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p><span class="accent-neon">&lt;</span> © 2026 Md Foysal Ahmed <span class="accent-neon">/&gt;</span></p>
+                <p>Built with passion for research and innovation</p>
+                <div class="footer-social-links">
+                    <a href="https://github.com/TripleTheGreatDali" target="_blank" title="GitHub">🐙</a>
+                    <a href="https://www.linkedin.com/in/md-foysal-ahmed-80909917a" target="_blank" title="LinkedIn">💼</a>
+                    <a href="https://orcid.org/0000-0002-5933-8968" target="_blank" title="ORCID">🔗</a>
+                    <a href="https://www.webofscience.com/wos/author/record/LGY-3964-2024" target="_blank" title="Web of Science">📊</a>
+                    <a href="mailto:contact@foylix.com" title="Email">✉️</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CORE INFRASTRUCTURE SCRIPTS -->
+    <script src="../js/init-safeguard.js"></script>
+    <script src="../js/api-service.js"></script>
+    <script src="../js/notification-system.js"></script>
+    <script src="../js/loading-manager.js"></script>
+    <script src="../js/enhanced-notifications.js"></script>
+    <script src="../js/error-handler.js"></script>
+    <script src="../js/form-validator.js"></script>
+    
+    <!-- ENHANCED DESIGN SYSTEM -->
+    <link rel="stylesheet" href="../css/enhanced-design.css">
+
+    <script>
+        async function loadSkills() {
+            try {
+                const response = await fetch('../assets/data/skills.json');
+                const skillsData = await response.json();
+                const container = document.getElementById('skillsContainer');
+                
+                skillsData.forEach(category => {
+                    const categoryDiv = document.createElement('div');
+                    categoryDiv.className = 'skill-category';
+                    
+                    let skillsHTML = `<h3>${category.category}</h3><div class="skills-list">`;
+                    
+                    category.skills.forEach(skill => {
+                        skillsHTML += `<div class="skill-item">${skill}</div>`;
+                    });
+                    
+                    skillsHTML += '</div>';
+                    categoryDiv.innerHTML = skillsHTML;
+                    container.appendChild(categoryDiv);
+                });
+            } catch (error) {
+                console.error('Error loading skills:', error);
+                document.getElementById('skillsContainer').innerHTML = 
+                    '<p style="color: red;">Error loading skills. Please try again later.</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadSkills);
+    </script>
+</body>
+</html>
