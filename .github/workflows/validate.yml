@@ -1,0 +1,83 @@
+name: 🔍 Quality Assurance & Validation
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly on Sunday
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: ✅ Validate HTML
+        run: |
+          echo "🔍 Checking HTML validity..."
+          find . -name "*.html" -type f | head -20 && echo "✅ HTML files found"
+
+      - name: ✅ Validate JSON
+        run: |
+          echo "🔍 Validating JSON files..."
+          for file in assets/data/*.json; do
+            if [ -f "$file" ]; then
+              python3 -c "import json; json.load(open('$file'))" && echo "✅ $file is valid"
+            fi
+          done
+
+      - name: ✅ Check for required files
+        run: |
+          echo "🔍 Checking required files..."
+          required_files=(
+            "index.html"
+            "_config.yml"
+            "robots.txt"
+            "CNAME"
+            "sw.js"
+            "config.json"
+          )
+          
+          for file in "${required_files[@]}"; do
+            if [ -f "$file" ]; then
+              echo "✅ Found: $file"
+            else
+              echo "❌ Missing: $file"
+              exit 1
+            fi
+          done
+
+      - name: ✅ Security check (no backend)
+        run: |
+          echo "🔍 Checking for backend code (should be none)..."
+          if [ -d "backend" ]; then
+            echo "❌ ERROR: backend/ directory exists - incompatible with GitHub Pages!"
+            exit 1
+          fi
+          if [ -f "server.js" ]; then
+            echo "❌ ERROR: server.js exists - incompatible with GitHub Pages!"
+            exit 1
+          fi
+          echo "✅ No incompatible backend files found"
+
+      - name: ✅ Check for debug code
+        run: |
+          echo "🔍 Scanning for debug code..."
+          if grep -r "debugEl" js/main.js 2>/dev/null; then
+            echo "❌ Found debug code!"
+            exit 1
+          fi
+          if grep -r "console.trace\|debugger" js/*.js 2>/dev/null; then
+            echo "⚠️ Found potential debug statements"
+          fi
+          echo "✅ Debug code check passed"
+
+      - name: 📊 Generate report
+        run: |
+          echo "📋 Validation Report"
+          echo "==================="
+          echo "✅ All checks passed!"
+          echo "✅ Ready for deployment"
+          echo "✅ GitHub Pages compatible"

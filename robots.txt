@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+Disallow: /_*
+Disallow: /.git/
+Disallow: /assets/data/*.json
+
+# Specific rules
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Crawl delay to respect server resources
+Crawl-delay: 1
+
+# Sitemap
+Sitemap: https://TripleTheGreatDali.github.io/sitemap.xml

@@ -1,0 +1,61 @@
+# GitHub Pages Configuration for Optimal Performance
+
+title: "Md Foysal Ahmed | AI Research & Computer Vision"
+description: "AI researcher and computer vision expert specializing in deep learning, medical imaging, and hybrid intelligence"
+author: "Md Foysal Ahmed"
+url: "https://TripleTheGreatDali.github.io"
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+theme: jekyll-theme-minimal
+excerpt_separator: "\n\n"
+
+# Plugins for performance and SEO
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Collections
+collections:
+  - pages
+
+# Jekyll Compression & Optimization
+compress_html:
+  clippings: all
+  comments: []
+  endings: all
+  profile: false
+  blanklines: false
+
+# Exclude files from Jekyll processing
+exclude:
+  - CNAME
+  - LICENSE
+  - .git
+  - node_modules
+  - .env
+  - .env.example
+  - backend
+
+# Include specific files
+include:
+  - .htaccess
+
+# Build settings
+keep_files:
+  - assets
+  - js
+  - css
+  - pages
+  - components
+
+# SEO Settings
+social:
+  github: "TripleTheGreatDali"
+  orcid: "0000-0002-5933-8968"
+
+# Performance
+sass:
+  style: compressed

@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+npm-debug.log
+package-lock.json
+
+# Backend (not used on GitHub Pages)
+backend/
+server.js
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+*.swp
+*.swo
+*~
+*.tmp
+*.bak
+.vscode/
+.idea/
+
+# Build outputs
+dist/
+build/
+out/
+
+# Temporary documents
+New Text Document (2).txt
+*.log

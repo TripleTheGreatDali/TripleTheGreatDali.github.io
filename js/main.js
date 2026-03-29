@@ -16,44 +16,14 @@ const dataCache = {
 
 // Load all data and initialize the portfolio
 document.addEventListener('DOMContentLoaded', async () => {
-  // Add immediate debug output
-  const debugEl = document.createElement('div');
-  debugEl.id = 'debug-status';
-  debugEl.style.cssText = `
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    background: rgba(0,0,0,0.8);
-    color: #0d9;
-    padding: 10px 15px;
-    border-radius: 4px;
-    font-family: monospace;
-    font-size: 11px;
-    z-index: 10000;
-    max-width: 300px;
-    word-wrap: break-word;
-  `;
-  debugEl.textContent = '⏳ Loading...';
-  document.body.appendChild(debugEl);
-  
-  const updateDebug = (msg) => {
-    debugEl.textContent = msg;
-    console.log('[DEBUG]', msg);
-  };
-  
-  // Safety timeout - force show page after 5 seconds (reduced from 8)
+  // Safety timeout - force show page after 5 seconds
   const forceShowTimeout = setTimeout(() => {
     console.error('[App] TIMEOUT: Forcing page to show after 5 seconds');
-    updateDebug('✓ Page loaded (timeout)');
     loadingManager.hideAll();
   }, 5000);
   
   try {
     console.log('[App] Initializing application...');
-    console.log('[App] Window location:', window.location.href);
-    console.log('[App] Protocol:', window.location.protocol);
-    console.log('[App] API Base URL:', apiService.baseURL || 'direct fetch');
-    updateDebug('🚀 Initializing...');
     
     // Setup core functionality - these must not fail
     try {
@@ -61,16 +31,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       setupNavigation();
       setupContactForm();
       setupScrollAnimations();
-      updateDebug('✓ Core setup done');
     } catch (coreError) {
       console.warn('[App] Core setup had non-critical error:', coreError);
-      updateDebug('⚠️ Core setup issue (non-critical)');
     }
     
     // Setup API service listeners for global error handling
     try {
       setupAPIServiceListeners();
-      updateDebug('✓ API listeners ready');
     } catch (apiError) {
       console.warn('[App] API listener setup error:', apiError);
     }
@@ -80,21 +47,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     loadingManager.show('app-init', { 
       message: 'Loading portfolio data...' 
     });
-    updateDebug('⏳ Loading data files...');
     
     try {
       await loadAllData();
-      updateDebug('✓ Data loaded!');
       console.log('[App] Data loading completed successfully');
     } catch (loadError) {
       console.error('[App] Data loading failed:', loadError);
-      updateDebug('⚠️ Load issue (showing with cached data)');
-      // Continue anyway - show page with whatever data is available
     }
     
     clearTimeout(forceShowTimeout);
     loadingManager.hide('app-init');
-    updateDebug('✅ Ready!');
     
     console.log('[App] Application initialized successfully');
     
@@ -103,16 +65,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (notifError) {
       console.warn('[App] Notification error:', notifError);
     }
-    
-    // Remove debug after 3 seconds if successful
-    setTimeout(() => {
-      if (debugEl.textContent.includes('Ready') || debugEl.textContent.includes('✓')) {
-        debugEl.remove();
-      }
-    }, 3000);
   } catch (error) {
     console.error('[App] Fatal error during initialization:', error);
-    updateDebug('❌ ' + (error.message || 'Error'));
     clearTimeout(forceShowTimeout);
     loadingManager.hideAll();
     
