@@ -1,0 +1,68 @@
+name: Contact Form Handler
+
+on:
+  # Triggered by a webhook from the frontend when a form is submitted
+  repository_dispatch:
+    types: [form-submission]
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Sender Name'
+        required: true
+      email:
+        description: 'Sender Email'
+        required: true
+      message:
+        description: 'Message Content'
+        required: true
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  handle-contact:
+    name: Handle Contact Form Submission
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract Form Data
+        id: data
+        run: |
+          echo "name=${{ github.event.client_payload.name }}" >> $GITHUB_OUTPUT
+          echo "email=${{ github.event.client_payload.email }}" >> $GITHUB_OUTPUT
+          echo "message=${{ github.event.client_payload.message }}" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Issue for Contact
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const name = '${{ steps.data.outputs.name }}';
+            const email = '${{ steps.data.outputs.email }}';
+            const message = '${{ steps.data.outputs.message }}';
+            
+            const title = `📧 New Contact: ${name}`;
+            const body = `**From:** ${name} <${email}>
+            
+**Message:**
+${message}
+
+---
+*Submitted via portfolio contact form*
+*Date: ${new Date().toISOString()}*`;
+
+            const issue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              labels: ['contact-form', 'inbox']
+            });
+
+            console.log(`✅ Created issue #${issue.data.number}`);
+
+      - name: Verify Submission
+        if: success()
+        run: |
+          echo "✅ Contact form submitted successfully!"
+          echo "📧 From: ${{ steps.data.outputs.name }} <${{ steps.data.outputs.email }}>"
+          echo "💬 Message received and logged as GitHub issue"

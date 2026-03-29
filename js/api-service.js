@@ -1,33 +1,37 @@
 /**
- * CENTRALIZED API SERVICE LAYER
- * Provides unified API communication, error handling, caching, retry logic,
- * and loading state management for the entire application.
- * 
- * This is the single source of truth for all backend/data interactions.
+ * GITHUB-NATIVE API SERVICE LAYER
+ * Optimized for running entirely from GitHub Pages + GitHub Actions
+ * - No local backend server required
+ * - Uses GitHub raw content CDN for static files
+ * - Uses GitHub API + Actions for dynamic operations
+ * - Client-side caching with intelligent fallback
  */
 
-class APIService {
+class GitHubAPIService {
   constructor(config = {}) {
-    // Auto-detect environment
-    const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const protocol = window.location.protocol;
+    // GitHub repository config
+    this.owner = config.owner || 'TripleTheGreatDali';
+    this.repo = config.repo || 'TripleTheGreatDali.github.io';
+    this.branch = config.branch || 'master';
+    this.token = config.token || null; // Optional GitHub token for higher rate limits
     
-    // Configuration
-    this.baseURL = config.baseURL || (isDev ? 'http://localhost:5000' : '');
-    this.isProduction = !isDev;
-    this.timeout = config.timeout || 5000;  // Reduced from 10s to 5s for faster fail
-    this.retryAttempts = 1; // Disable retry for file requests
-    this.retryDelay = config.retryDelay || 500; // Reduced from 1s to 500ms
+    // GitHub API endpoints
+    this.githubAPI = 'https://api.github.com';
+    this.rawContentCDN = `https://raw.githubusercontent.com/${this.owner}/${this.repo}/${this.branch}`;
+    
+    // Request config
+    this.timeout = config.timeout || 8000;
+    this.cacheDuration = config.cacheDuration || 5 * 60 * 1000; // 5 minutes
+    this.retryAttempts = 1;
+    this.retryDelay = 500;
     
     // State management
     this.cache = new Map();
     this.cacheExpiry = new Map();
-    this.cacheDuration = config.cacheDuration || 5 * 60 * 1000; // 5 minutes default
     this.loadingState = new Map();
-    this.requestQueue = [];
-    this.rateLimitDelay = 100; // ms between requests
+    this.isOnline = navigator.onLine;
     
-    // Event listeners for global state
+    // Event listeners
     this.listeners = {
       loading: [],
       error: [],
@@ -38,18 +42,20 @@ class APIService {
     // Request tracking
     this.activeRequests = new Map();
     this.requestId = 0;
+    this.lastRequestTime = 0;
+    this.rateLimitDelay = 50;
     
     // Offline detection
-    this.isOnline = navigator.onLine;
     window.addEventListener('online', () => this._handleOnline());
     window.addEventListener('offline', () => this._handleOffline());
+    
+    console.log(`✅ GitHub API Service initialized`);
+    console.log(`   Repository: ${this.owner}/${this.repo}/${this.branch}`);
+    console.log(`   CDN: ${this.rawContentCDN}`);
   }
 
   /**
    * MAIN REQUEST METHOD - All API calls go through here
-   * @param {string} endpoint - API endpoint (e.g., '/api/blog')
-   * @param {object} options - Request options (method, body, headers, cache, retry)
-   * @returns {Promise} Response data
    */
   async request(endpoint, options = {}) {
     const {
@@ -59,34 +65,32 @@ class APIService {
       useCache = true,
       forceFresh = false,
       timeout = this.timeout,
-      retry = this.retryAttempts,
-      onLoadingChange = null
+      retry = this.retryAttempts
     } = options;
 
-    const cacheKey = `${method}:${endpoint}:${JSON.stringify(body)}`;
+    const cacheKey = `${method}:${endpoint}`;
     const requestId = ++this.requestId;
 
     try {
       // Check cache first (unless forceFresh)
       if (!forceFresh && useCache && method === 'GET' && this._isCacheValid(cacheKey)) {
-        console.log(`[API] Cache HIT for ${endpoint}`);
+        console.log(`[API] Cache HIT: ${endpoint}`);
         this._broadcastSuccess(endpoint, this.cache.get(cacheKey));
         return this.cache.get(cacheKey);
       }
 
-      // Check if already loading (prevent duplicate requests)
+      // Check if already loading
       if (this.loadingState.has(cacheKey)) {
-        console.log(`[API] Returning existing request for ${endpoint}`);
+        console.log(`[API] Returning existing request: ${endpoint}`);
         return this.activeRequests.get(cacheKey);
       }
 
-      // Rate limiting: wait if needed
+      // Rate limiting
       await this._rateLimit();
 
       // Mark as loading
       this.loadingState.set(cacheKey, true);
       this._broadcastLoading(endpoint, true);
-      if (onLoadingChange) onLoadingChange(true);
 
       // Make request with retry logic
       let lastError;
@@ -94,11 +98,10 @@ class APIService {
         try {
           const response = await this._makeRequest(
             endpoint,
-            { method, body, headers, timeout },
-            requestId
+            { method, body, headers, timeout }
           );
 
-          // Cache successful response
+          // Cache successful GET response
           if (method === 'GET') {
             this.cache.set(cacheKey, response.data);
             this.cacheExpiry.set(cacheKey, Date.now() + this.cacheDuration);
@@ -109,11 +112,8 @@ class APIService {
         } catch (error) {
           lastError = error;
           if (attempt < retry) {
-            const delay = this.retryDelay * Math.pow(2, attempt - 1); // Exponential backoff
-            console.warn(
-              `[API] Retry ${attempt}/${retry} for ${endpoint} after ${delay}ms`,
-              error.message
-            );
+            const delay = this.retryDelay * Math.pow(2, attempt - 1);
+            console.warn(`[API] Retry ${attempt}/${retry} for ${endpoint}`, error.message);
             this._broadcastRetry(endpoint, attempt, retry, error);
             await new Promise(resolve => setTimeout(resolve, delay));
           }
@@ -129,7 +129,6 @@ class APIService {
       this.loadingState.delete(cacheKey);
       this.activeRequests.delete(cacheKey);
       this._broadcastLoading(endpoint, false);
-      if (onLoadingChange) onLoadingChange(false);
     }
   }
 
@@ -138,22 +137,17 @@ class APIService {
    */
   async _makeRequest(endpoint, options, requestId) {
     const { method, body, headers, timeout } = options;
-    
-    // Determine URL:
-    // - Direct file paths (/assets/data/*) can be fetched directly
-    // - API endpoints (/api/*) use baseURL if available
+
+    // Build URL - use raw CDN for static files, GitHub API for dynamic operations
     let url;
-    if (endpoint.startsWith('/assets/')) {
-      url = endpoint;
-    } else if (this.baseURL) {
-      url = `${this.baseURL}${endpoint}`;
+    if (endpoint.startsWith('/api/')) {
+      url = `${this.githubAPI}/repos/${this.owner}/${this.repo}${endpoint}`;
     } else {
-      // No server available, try direct fetch
-      url = endpoint;
+      url = `${this.rawContentCDN}${endpoint}`;
     }
-    
-    console.log(`[API] Fetching from: ${url} (baseURL: ${this.baseURL || 'none'})`);
-    
+
+    console.log(`[API] ${method} ${url}`);
+
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeout);
 
@@ -162,37 +156,43 @@ class APIService {
         method,
         headers: {
           'Content-Type': 'application/json',
-          'X-Request-ID': requestId,
+          'Accept': 'application/vnd.github.v3+json',
           ...headers
         },
         signal: controller.signal
       };
 
-      if (body) config.body = JSON.stringify(body);
+      if (this.token) {
+        config.headers['Authorization'] = `token ${this.token}`;
+      }
 
-      console.log(`[API] Making ${method} request to: ${url}`);
+      if (body) {
+        config.body = JSON.stringify(body);
+      }
+
       const response = await fetch(url, config);
 
       if (!response.ok) {
-        // Attempt to parse error response
         let errorData;
         try {
-          errorData = await this._parseResponse(response);
+          errorData = await response.json();
         } catch {
           errorData = { message: `HTTP ${response.status}` };
         }
-        const error = new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
+        const error = new Error(errorData.message || `HTTP ${response.status}`);
         error.status = response.status;
         error.data = errorData;
-        console.error(`[API] HTTP Error: ${response.status} for ${url}`, errorData);
         throw error;
       }
 
-      const data = await this._parseResponse(response);
-      console.log(`[API] Successfully fetched: ${url}`, data);
+      const contentType = response.headers.get('content-type');
+      const data = contentType?.includes('application/json')
+        ? await response.json()
+        : await response.text();
+
+      console.log(`[API] ✓ ${url}`, data);
       return { status: response.status, data };
     } catch (error) {
-      console.error(`[API] Fetch error for ${url}:`, error);
       if (error.name === 'AbortError') {
         throw new APIError('Request timeout', 'TIMEOUT');
       }
@@ -203,18 +203,7 @@ class APIService {
   }
 
   /**
-   * Parse response (handle JSON and text)
-   */
-  async _parseResponse(response) {
-    const contentType = response.headers.get('content-type');
-    if (contentType && contentType.includes('application/json')) {
-      return await response.json();
-    }
-    return await response.text();
-  }
-
-  /**
-   * Normalize errors into consistent format
+   * ERROR NORMALIZATION
    */
   _normalizeError(error, endpoint) {
     if (error instanceof APIError) return error;
@@ -224,25 +213,27 @@ class APIService {
 
     if (error.name === 'AbortError') {
       code = 'TIMEOUT';
-      message = `Request timeout (${this.timeout}ms)`;
+      message = 'Request timeout - server may be slow or unavailable';
     } else if (!this.isOnline) {
       code = 'OFFLINE';
       message = 'You are currently offline';
     } else if (error.status === 404) {
       code = 'NOT_FOUND';
       message = `Resource not found: ${endpoint}`;
+    } else if (error.status === 429) {
+      code = 'RATE_LIMIT';
+      message = 'Rate limited - please try again later';
     } else if (error.status === 500) {
       code = 'SERVER_ERROR';
-      message = 'Server error. Please try again later';
+      message = 'GitHub server error - please try again later';
     }
 
     return new APIError(message, code, error.status);
   }
 
   /**
-   * CONVENIENCE METHODS for common operations
+   * CONVENIENCE METHODS
    */
-
   async get(endpoint, options = {}) {
     return this.request(endpoint, { ...options, method: 'GET' });
   }
@@ -251,19 +242,154 @@ class APIService {
     return this.request(endpoint, { ...options, method: 'POST', body });
   }
 
-  async put(endpoint, body, options = {}) {
-    return this.request(endpoint, { ...options, method: 'PUT', body });
-  }
-
-  async delete(endpoint, options = {}) {
-    return this.request(endpoint, { ...options, method: 'DELETE' });
+  async patch(endpoint, body, options = {}) {
+    return this.request(endpoint, { ...options, method: 'PATCH', body });
   }
 
   /**
-   * BATCH REQUEST - Execute multiple requests efficiently in PARALLEL
+   * GITHUB-SPECIFIC METHODS
+   */
+
+  /**
+   * Submit contact form via GitHub Actions webhook
+   */
+  async submitContactForm(name, email, message) {
+    console.log(`[API] Submitting contact form via GitHub Actions...`);
+    
+    try {
+      const response = await fetch(
+        `${this.githubAPI}/repos/${this.owner}/${this.repo}/dispatches`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.github.v3+json',
+            'Authorization': `token ${this.token || 'public'}`
+          },
+          body: JSON.stringify({
+            event_type: 'form-submission',
+            client_payload: {
+              name: String(name).substring(0, 100),
+              email: String(email).substring(0, 100),
+              message: String(message).substring(0, 5000)
+            }
+          })
+        }
+      );
+
+      if (!response.ok) {
+        console.warn('Using alternative contact submission method...');
+        return this._submitContactFormFallback(name, email, message);
+      }
+
+      console.log(`✅ Contact form submitted to GitHub Actions`);
+      return {
+        success: true,
+        message: 'Your message has been received! We will get back to you soon.',
+        submittedAt: new Date().toISOString()
+      };
+    } catch (error) {
+      console.error('Contact form submission failed:', error);
+      return this._submitContactFormFallback(name, email, message);
+    }
+  }
+
+  /**
+   * Fallback: Submit contact via GitHub Issue (no token required)
+   */
+  async _submitContactFormFallback(name, email, message) {
+    console.log(`[API] Using GitHub Issues as fallback...`);
+    
+    try {
+      const response = await fetch(
+        `${this.githubAPI}/repos/${this.owner}/${this.repo}/issues`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.github.v3+json'
+          },
+          body: JSON.stringify({
+            title: `📧 Contact: ${name}`,
+            body: `**From:** ${name} <${email}>\n\n**Message:**\n${message}\n\n---\n*Submitted via portfolio contact form*`,
+            labels: ['contact-form', 'auto']
+          })
+        }
+      );
+
+      if (response.ok) {
+        console.log(`✅ Contact form submitted via GitHub Issue`);
+        return {
+          success: true,
+          message: 'Your message has been received! We will get back to you soon.',
+          method: 'GitHub Issue',
+          submittedAt: new Date().toISOString()
+        };
+      } else {
+        throw new Error(`HTTP ${response.status}`);
+      }
+    } catch (error) {
+      console.error('All contact methods failed:', error);
+      throw new APIError('Failed to submit contact form', 'CONTACT_FAILED');
+    }
+  }
+
+  /**
+   * Submit data update (requires token)
+   */
+  async submitDataUpdate(dataType, newData) {
+    if (!this.token) {
+      throw new APIError('GitHub token required for data updates', 'NO_TOKEN');
+    }
+
+    console.log(`[API] Submitting ${dataType} update...`);
+
+    try {
+      const filePath = `assets/data/${dataType}.json`;
+      const fileResponse = await fetch(
+        `${this.githubAPI}/repos/${this.owner}/${this.repo}/contents/${filePath}`,
+        { headers: { 'Authorization': `token ${this.token}` } }
+      );
+      
+      if (!fileResponse.ok) {
+        throw new Error('Failed to fetch current file');
+      }
+
+      const fileData = await fileResponse.json();
+      const currentSha = fileData.sha;
+
+      const updateResponse = await fetch(
+        `${this.githubAPI}/repos/${this.owner}/${this.repo}/contents/${filePath}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${this.token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: `Update ${dataType}: ${new Date().toISOString()}`,
+            content: btoa(JSON.stringify(newData, null, 2)),
+            sha: currentSha
+          })
+        }
+      );
+
+      if (!updateResponse.ok) {
+        throw new Error('Failed to update file');
+      }
+
+      console.log(`✅ ${dataType} updated successfully`);
+      return await updateResponse.json();
+    } catch (error) {
+      console.error(`Failed to update ${dataType}:`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * BATCH REQUEST
    */
   async batch(requests) {
-    // Execute ALL requests in parallel using Promise.all with error handling
     const promises = requests.map(req =>
       this.request(req.endpoint, req.options)
         .then(data => ({ success: true, data, endpoint: req.endpoint }))
@@ -273,12 +399,8 @@ class APIService {
     const results = await Promise.all(promises);
     const errors = results.filter(r => !r.success);
 
-    if (errors.length > 0) {
-      console.warn(`[API] Batch request: ${errors.length}/${requests.length} requests failed`);
-    }
-
-    console.log(`[API] Batch complete: ${results.length - errors.length}/${requests.length} successful`);
-    return { results, errors, successful: requests.length - errors.length };
+    console.log(`[API] Batch: ${results.length - errors.length}/${requests.length} succeeded`);
+    return { results, errors };
   }
 
   /**
@@ -314,41 +436,20 @@ class APIService {
   }
 
   /**
-   * LOADING STATE TRACKING
+   * LOADING STATE
    */
-
   isLoading(endpoint = null) {
     if (!endpoint) return this.loadingState.size > 0;
     return Array.from(this.loadingState.keys()).some(key => key.includes(endpoint));
   }
 
-  getLoadingState() {
-    return {
-      isLoading: this.loadingState.size > 0,
-      endpoints: Array.from(this.loadingState.keys()),
-      count: this.loadingState.size
-    };
-  }
-
   /**
-   * EVENT LISTENERS - Global state observation
+   * EVENT LISTENERS
    */
-
-  onLoading(callback) {
-    this.listeners.loading.push(callback);
-  }
-
-  onError(callback) {
-    this.listeners.error.push(callback);
-  }
-
-  onSuccess(callback) {
-    this.listeners.success.push(callback);
-  }
-
-  onRetry(callback) {
-    this.listeners.retry.push(callback);
-  }
+  onLoading(callback) { this.listeners.loading.push(callback); }
+  onError(callback) { this.listeners.error.push(callback); }
+  onSuccess(callback) { this.listeners.success.push(callback); }
+  onRetry(callback) { this.listeners.retry.push(callback); }
 
   _broadcastLoading(endpoint, isLoading) {
     this.listeners.loading.forEach(cb => cb(endpoint, isLoading));
@@ -367,9 +468,8 @@ class APIService {
   }
 
   /**
-   * RATE LIMITING & THROTTLING
+   * RATE LIMITING
    */
-
   async _rateLimit() {
     const now = Date.now();
     if (this.lastRequestTime && now - this.lastRequestTime < this.rateLimitDelay) {
@@ -383,35 +483,32 @@ class APIService {
   /**
    * OFFLINE DETECTION
    */
-
   _handleOnline() {
     this.isOnline = true;
     console.log('[API] Network restored');
-    this.listeners.error.length > 0 && this._broadcastSuccess('network', 'restored');
+    this._broadcastSuccess('network', 'restored');
   }
 
   _handleOffline() {
     this.isOnline = false;
-    console.log('[API] Network lost');
+    console.log('[API] Network lost - using cache');
   }
 
   /**
-   * DEBUGGING & MONITORING
+   * DEBUGGING & STATS
    */
-
   getStats() {
     return {
       cacheSize: this.cache.size,
       loadingCount: this.loadingState.size,
       isOnline: this.isOnline,
-      cacheKeys: Array.from(this.cache.keys()),
-      loadingEndpoints: Array.from(this.loadingState.keys())
+      repository: `${this.owner}/${this.repo}`,
+      branch: this.branch
     };
   }
 
   logStats() {
-    const stats = this.getStats();
-    console.table(stats);
+    console.table(this.getStats());
   }
 }
 
@@ -436,16 +533,32 @@ class APIError extends Error {
   }
 }
 
-// Initialize global API service instance
-const apiService = new APIService({
-  // baseURL will be auto-detected in constructor
-  timeout: 5000, // Reduced timeout - fail fast to avoid long waits
-  retryAttempts: 0, // No retries for production - files should be there or not
-  cacheDuration: 5 * 60 * 1000, // 5 minutes
-  rateLimitDelay: 50 // Faster rate limiting
+// ==================== INITIALIZATION ====================
+
+// Initialize global GitHub API service
+const apiService = new GitHubAPIService({
+  owner: 'TripleTheGreatDali',
+  repo: 'TripleTheGreatDali.github.io',
+  branch: 'master',
+  timeout: 8000,
+  cacheDuration: 5 * 60 * 1000
 });
 
-// Add diagnostic info to window for debugging
+// Global error handler
+apiService.onError((endpoint, error) => {
+  console.error(`[API Error] ${endpoint}:`, error);
+  if (typeof showNotification === 'function') {
+    showNotification({
+      type: 'error',
+      title: 'Error',
+      message: error.message,
+      code: error.code,
+      duration: 5000
+    });
+  }
+});
+
+// Diagnostic tools
 window.apiDiagnostics = {
   testFetch: async function() {
     console.log('=== Testing Data File Access ===');
@@ -460,47 +573,17 @@ window.apiDiagnostics = {
     
     for (const file of files) {
       try {
-        console.log(`Testing: ${file}`);
         const response = await fetch(file);
-        console.log(`✓ ${file}: ${response.status} ${response.ok ? 'OK' : 'FAILED'}`);
-        if (!response.ok) {
-          console.log(`  Error: HTTP ${response.status}`);
-        }
+        console.log(`✓ ${file}: ${response.status}`);
       } catch (error) {
         console.error(`✗ ${file}: ${error.message}`);
       }
     }
   },
   showStatus: function() {
-    console.log('=== API Service Status ===');
-    console.log('Base URL:', this.baseURL);
-    console.log('Protocol:', window.location.protocol);
-    console.log('Host:', window.location.host);
-    console.log('API Online:', apiService.isOnline);
+    apiService.logStats();
   }
 };
 
-// Make it easily accessible in console
-console.log('Diagnostic tools available: window.apiDiagnostics.testFetch() and window.apiDiagnostics.showStatus()');
-
-/**
- * GLOBAL ERROR HANDLING
- */
-apiService.onError((endpoint, error) => {
-  console.error(`[API Error] ${endpoint}:`, error);
-  showNotification({
-    type: 'error',
-    title: 'Error',
-    message: error.message,
-    code: error.code,
-    duration: 5000
-  });
-});
-
-apiService.onRetry((endpoint, attempt, total, error) => {
-  console.warn(`[API Retry] ${endpoint} (${attempt}/${total})`);
-});
-
-// Export for use in other modules
-window.apiService = apiService;
-window.APIError = APIError;
+console.log('✅ GitHub-Native API Service loaded and ready');
+console.log('📍 Use window.apiDiagnostics.testFetch() to test data access');
