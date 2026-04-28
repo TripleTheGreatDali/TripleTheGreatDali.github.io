@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     apiService.get('education.json').then(d => (dataCache.education = d))
   ]).then(() => {
     // Render sections only when all data is ready
+    renderServices();
     renderPublications();
     renderProjects();
     renderBlog();
@@ -79,6 +80,53 @@ function setupScroll() {
 
 // ==== RENDER SECTIONS ====
 
+// Services data (hardcoded for instant rendering)
+const servicesData = [
+  {
+    icon: "🧠",
+    title: "AI Research & Development",
+    description: "Cutting-edge research in machine learning, deep learning, and computer vision. Transforming academic innovations into market-ready solutions."
+  },
+  {
+    icon: "🏥",
+    title: "Medical AI Solutions",
+    description: "Advanced AI systems for medical imaging, surgical tool detection, and healthcare automation. Precision-driven solutions for modern medicine."
+  },
+  {
+    icon: "🔍",
+    title: "Computer Vision Systems",
+    description: "State-of-the-art object detection, image segmentation, and visual recognition systems for industrial and commercial applications."
+  },
+  {
+    icon: "⚡",
+    title: "AI Consulting & Integration",
+    description: "Expert guidance on integrating AI into your business. From strategy to deployment, we help you leverage AI for growth."
+  },
+  {
+    icon: "📊",
+    title: "Custom AI Models",
+    description: "Tailored machine learning models designed specifically for your business needs. From concept to production-ready solutions."
+  },
+  {
+    icon: "🌐",
+    title: "International AI Solutions",
+    description: "Serving global markets with AI products and research. Delivering world-class AI technology across borders."
+  }
+];
+
+function renderServices() {
+  const container = document.getElementById('services-container');
+  if (!container) return;
+  
+  container.innerHTML = servicesData.map(service => `
+    <div class="service-card">
+      <div class="service-icon">${service.icon}</div>
+      <h3>${esc(service.title)}</h3>
+      <p>${esc(service.description)}</p>
+    </div>
+  `).join('');
+}
+
 function renderPublications() {
   if (!dataCache.publications) return;
   const container = document.getElementById('publications-container');
@@ -103,7 +151,8 @@ function renderProjects() {
     <div class="card">
       <h3>${esc(proj.title)}</h3>
       <p>${esc(proj.description)}</p>
-      ${proj.link ? `<a href="${proj.link}" target="_blank">View</a>` : ''}
+      ${proj.technologies ? `<div class="tech-tags">${proj.technologies.slice(0, 4).map(t => `<span class="tech-tag">${esc(t)}</span>`).join('')}</div>` : ''}
+      ${proj.github ? `<a href="${proj.github}" target="_blank">View Project</a>` : ''}
     </div>
   `).join('');
 }

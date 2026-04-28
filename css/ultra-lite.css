@@ -85,9 +85,22 @@ body {
   text-align: center;
 }
 
+.company-badge {
+  display: inline-block;
+  background: rgba(0, 217, 255, 0.1);
+  border: 1px solid rgba(0, 217, 255, 0.3);
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 .hero h1 {
   font-size: 3.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   background: linear-gradient(135deg, #00d9ff, #b026ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -214,10 +227,164 @@ section {
 #projects-container,
 #blog-container,
 #news-container,
-#upcoming-container {
+#upcoming-container,
+#services-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
+}
+
+/* ABOUT SECTION */
+#about {
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.02), rgba(176, 38, 255, 0.02));
+}
+
+.about-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.founder-card {
+  background: rgba(31, 78, 121, 0.1);
+  border: 1px solid rgba(0, 217, 255, 0.15);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.founder-info h3 {
+  color: var(--accent);
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+}
+
+.founder-title {
+  color: var(--accent-p);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.founder-bio {
+  color: rgba(224, 224, 255, 0.85);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.founder-stats {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: rgba(224, 224, 255, 0.6);
+}
+
+/* SERVICES SECTION */
+#services {
+  background: linear-gradient(135deg, rgba(176, 38, 255, 0.02), rgba(0, 217, 255, 0.02));
+}
+
+.section-subtitle {
+  text-align: center;
+  color: rgba(224, 224, 255, 0.6);
+  margin-top: -1.5rem;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+/* SERVICE CARDS */
+.service-card {
+  background: rgba(31, 78, 121, 0.08);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 217, 255, 0.1);
+  transition: all 0.25s;
+}
+
+.service-card:hover {
+  border-color: rgba(176, 38, 255, 0.4);
+  transform: translateY(-4px);
+  background: rgba(31, 78, 121, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.service-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.service-card h3 {
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  font-size: 1.15rem;
+}
+
+.service-card p {
+  color: rgba(224, 224, 255, 0.75);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* RESEARCH SECTION */
+#research {
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.02), rgba(176, 38, 255, 0.02));
+}
+
+/* PRODUCTS SECTION */
+#products {
+  background: linear-gradient(135deg, rgba(176, 38, 255, 0.02), rgba(0, 217, 255, 0.02));
+}
+
+/* TECH TAGS */
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.8rem 0;
+}
+
+.tech-tag {
+  background: rgba(0, 217, 255, 0.1);
+  border: 1px solid rgba(0, 217, 255, 0.2);
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+
+/* FOOTER */
+.footer {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2rem 0;
+  text-align: center;
+  border-top: 1px solid rgba(0, 217, 255, 0.1);
+}
+
+.footer p {
+  color: rgba(224, 224, 255, 0.7);
+  margin: 0.3rem 0;
+}
+
+.footer strong {
+  color: var(--accent);
+}
+
+.footer-tagline {
+  font-size: 0.85rem;
+  color: rgba(224, 224, 255, 0.5) !important;
 }
 
 /* CONTACT */
