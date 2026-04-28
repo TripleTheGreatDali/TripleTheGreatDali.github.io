@@ -153,16 +153,76 @@ function renderPublications() {
 }
 
 function renderProjects() {
-  if (!dataCache.projects) return;
   const container = document.getElementById('projects-container');
   if (!container) return;
   
+  // Use cached data if available, otherwise show fallback
+  if (!dataCache.projects || dataCache.projects.length === 0) {
+    // Fallback products data
+    const fallbackProducts = [
+      {
+        title: "Medical Image Segmentation",
+        description: "Advanced CNN-based system for automated segmentation of medical images including CT scans, MRI, and X-ray images.",
+        icon: "🏥",
+        technologies: ["PyTorch", "U-Net", "Computer Vision"],
+        github: "https://github.com/TripleTheGreatDali"
+      },
+      {
+        title: "Hybrid Intelligence System",
+        description: "Innovative approach combining symbolic AI reasoning with deep learning models for improved interpretability.",
+        icon: "🧠",
+        technologies: ["PyTorch", "Symbolic AI", "Deep Learning"],
+        github: "https://github.com/TripleTheGreatDali"
+      },
+      {
+        title: "Real-time Object Detection",
+        description: "High-performance object detection system using YOLO for real-time applications with optimized edge inference.",
+        icon: "🎯",
+        technologies: ["YOLO", "TensorFlow", "Computer Vision"],
+        github: "https://github.com/TripleTheGreatDali"
+      },
+      {
+        title: "AI Model Benchmark Suite",
+        description: "Automated benchmarking framework for comparing deep learning models across architectures and datasets.",
+        icon: "📊",
+        technologies: ["PyTorch", "TensorFlow", "Benchmarking"],
+        github: "https://github.com/TripleTheGreatDali"
+      },
+      {
+        title: "Transfer Learning Framework",
+        description: "Comprehensive framework for leveraging pre-trained models with efficient fine-tuning strategies.",
+        icon: "🔄",
+        technologies: ["PyTorch", "Transfer Learning", "ResNet"],
+        github: "https://github.com/TripleTheGreatDali"
+      },
+      {
+        title: "Surgical Tool Detection",
+        description: "Real-time YOLO-based detection system for surgical instruments in laparoscopic videos.",
+        icon: "🔬",
+        technologies: ["YOLO", "Medical Imaging", "Computer Vision"],
+        github: "https://github.com/TripleTheGreatDali"
+      }
+    ];
+    
+    container.innerHTML = fallbackProducts.map(proj => `
+      <div class="card product-card">
+        <div class="product-icon">${proj.icon}</div>
+        <h3>${esc(proj.title)}</h3>
+        <p>${esc(proj.description)}</p>
+        ${proj.technologies ? `<div class="tech-tags">${proj.technologies.map(t => `<span class="tech-tag">${esc(t)}</span>`).join('')}</div>` : ''}
+        ${proj.github ? `<a href="${proj.github}" target="_blank"><i class="fab fa-github"></i> View Project</a>` : ''}
+      </div>
+    `).join('');
+    return;
+  }
+  
   container.innerHTML = dataCache.projects.map(proj => `
-    <div class="card">
+    <div class="card product-card">
+      <div class="product-icon">${proj.icon || '📦'}</div>
       <h3>${esc(proj.title)}</h3>
       <p>${esc(proj.description)}</p>
       ${proj.technologies ? `<div class="tech-tags">${proj.technologies.slice(0, 4).map(t => `<span class="tech-tag">${esc(t)}</span>`).join('')}</div>` : ''}
-      ${proj.github ? `<a href="${proj.github}" target="_blank">View Project</a>` : ''}
+      ${proj.github ? `<a href="${proj.github}" target="_blank"><i class="fab fa-github"></i> View Project</a>` : ''}
     </div>
   `).join('');
 }

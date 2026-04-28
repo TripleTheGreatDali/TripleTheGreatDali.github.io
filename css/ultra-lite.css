@@ -207,7 +207,9 @@ section {
 }
 
 .card a {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   margin-top: 0.8rem;
   color: var(--accent);
   text-decoration: none;
@@ -237,6 +239,9 @@ section {
 @media (min-width: 1024px) {
   #services-container {
     grid-template-columns: repeat(4, 1fr);
+  }
+  #projects-container {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -362,6 +367,27 @@ section {
 /* PRODUCTS SECTION */
 #products {
   background: linear-gradient(135deg, rgba(176, 38, 255, 0.02), rgba(0, 217, 255, 0.02));
+}
+
+/* PRODUCT CARDS */
+.product-card {
+  position: relative;
+  padding-top: 2rem;
+}
+
+.product-icon {
+  position: absolute;
+  top: -1rem;
+  left: 1.5rem;
+  font-size: 2rem;
+  background: var(--bg);
+  padding: 0.3rem 0.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 217, 255, 0.2);
+}
+
+.product-card h3 {
+  margin-top: 0.5rem;
 }
 
 /* TECH TAGS */
