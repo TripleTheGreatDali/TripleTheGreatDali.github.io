@@ -83,34 +83,44 @@ function setupScroll() {
 // Services data (hardcoded for instant rendering)
 const servicesData = [
   {
-    icon: "🧠",
-    title: "AI Research & Development",
-    description: "Cutting-edge research in machine learning, deep learning, and computer vision. Transforming academic innovations into market-ready solutions."
+    icon: "⚙️",
+    title: "AI-Powered Operations",
+    description: "Streamline and automate your business processes with intelligent AI systems. From workflow optimization to predictive maintenance."
   },
   {
-    icon: "🏥",
-    title: "Medical AI Solutions",
-    description: "Advanced AI systems for medical imaging, surgical tool detection, and healthcare automation. Precision-driven solutions for modern medicine."
+    icon: "🤖",
+    title: "Intelligent Automation",
+    description: "Transform manual workflows into automated intelligent processes. Reduce costs and increase efficiency with AI-driven automation."
   },
   {
-    icon: "🔍",
-    title: "Computer Vision Systems",
-    description: "State-of-the-art object detection, image segmentation, and visual recognition systems for industrial and commercial applications."
-  },
-  {
-    icon: "⚡",
-    title: "AI Consulting & Integration",
-    description: "Expert guidance on integrating AI into your business. From strategy to deployment, we help you leverage AI for growth."
+    icon: "👁️",
+    title: "Computer Vision Solutions",
+    description: "State-of-the-art visual recognition, object detection, and image analysis systems for industrial, medical, and commercial applications."
   },
   {
     icon: "📊",
-    title: "Custom AI Models",
-    description: "Tailored machine learning models designed specifically for your business needs. From concept to production-ready solutions."
+    title: "Personal AI Analytics",
+    description: "Custom AI-powered analytics dashboards and insights tailored to your business. Data-driven decisions made simple."
+  },
+  {
+    icon: "🧠",
+    title: "Deep Learning Systems",
+    description: "Advanced neural network solutions for complex problem-solving. From pattern recognition to predictive modeling."
+  },
+  {
+    icon: "🏥",
+    title: "Medical AI Systems",
+    description: "AI-powered medical imaging, surgical tool detection, and healthcare automation solutions for modern medicine."
+  },
+  {
+    icon: "🔬",
+    title: "Research & Development",
+    description: "Cutting-edge AI research translating into market-ready products. Innovation backed by peer-reviewed publications."
   },
   {
     icon: "🌐",
-    title: "International AI Solutions",
-    description: "Serving global markets with AI products and research. Delivering world-class AI technology across borders."
+    title: "Global AI Consulting",
+    description: "Expert guidance on AI strategy, implementation, and integration. Serving clients worldwide with tailored solutions."
   }
 ];
 
