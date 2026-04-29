@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "name": "Premium AI Solution Package",
+    "category": "AI Services",
+    "description": "Enterprise-grade AI solution package including machine learning models, deployment infrastructure, and ongoing support. Perfect for businesses looking to integrate AI into their operations.",
+    "price": "$2,999",
+    "priceNote": "Starting from",
+    "features": ["Custom ML Models", "API Integration", "24/7 Support", "Training Data Processing"],
+    "image": "products/1.png",
+    "badge": "Popular",
+    "inStock": true,
+    "orderLink": "#contact"
+  },
+  {
+    "id": 2,
+    "name": "Computer Vision System",
+    "category": "AI Products",
+    "description": "Advanced computer vision system for object detection, facial recognition, and visual analysis. Ready-to-deploy solution for security and automation needs.",
+    "price": "$1,499",
+    "priceNote": "Starting from",
+    "features": ["Real-time Detection", "Multi-camera Support", "Custom Training", "Analytics Dashboard"],
+    "image": "products/2.png",
+    "badge": "Best Seller",
+    "inStock": true,
+    "orderLink": "#contact"
+  },
+  {
+    "id": 3,
+    "name": "Deep Learning Framework",
+    "category": "Development Tools",
+    "description": "Comprehensive deep learning framework with pre-trained models, transfer learning capabilities, and optimized inference engine for production deployment.",
+    "price": "$899",
+    "priceNote": "Starting from",
+    "features": ["Pre-trained Models", "Transfer Learning", "GPU Optimization", "Documentation"],
+    "image": "products/3.png",
+    "badge": "New",
+    "inStock": true,
+    "orderLink": "#contact"
+  },
+  {
+    "id": 4,
+    "name": "AI Consulting Package",
+    "category": "Consulting",
+    "description": "Professional AI consulting services including strategy development, implementation roadmap, and technical architecture design for your business.",
+    "price": "$499",
+    "priceNote": "Per Hour",
+    "features": ["Strategy Planning", "Technical Audit", "Implementation Roadmap", "Team Training"],
+    "image": "products/4.png",
+    "badge": null,
+    "inStock": true,
+    "orderLink": "#contact"
+  },
+  {
+    "id": 5,
+    "name": "Medical AI Suite",
+    "category": "Healthcare AI",
+    "description": "Specialized AI suite for medical imaging analysis, diagnostic assistance, and healthcare automation. Compliant with medical standards and regulations.",
+    "price": "$4,999",
+    "priceNote": "Starting from",
+    "features": ["Image Analysis", "Diagnostic Tools", "HIPAA Compliant", "Clinical Integration"],
+    "image": "products/5.png",
+    "badge": "Premium",
+    "inStock": true,
+    "orderLink": "#contact"
+  }
+]

@@ -6,6 +6,7 @@
 
 // ==== GLOBAL CACHE ====
 const dataCache = {};
+let productsData = [];
 
 // ==== INSTANT INITIALIZATION ====
 document.addEventListener('DOMContentLoaded', async () => {
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupNav();
   setupMobile();
   setupScroll();
+  setupProductGallery();
   
   // Load data in parallel - fail gracefully
   Promise.all([
@@ -22,12 +24,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     apiService.get('news.json').then(d => (dataCache.news = d)),
     apiService.get('skills.json').then(d => (dataCache.skills = d)),
     apiService.get('upcoming.json').then(d => (dataCache.upcoming = d)),
-    apiService.get('education.json').then(d => (dataCache.education = d))
+    apiService.get('education.json').then(d => (dataCache.education = d)),
+    apiService.get('products.json').then(d => {
+      productsData = d || [];
+      return productsData;
+    })
   ]).then(() => {
     // Render sections only when all data is ready
     renderServices();
     renderPublications();
     renderProjects();
+    renderProductGallery();
     renderBlog();
     renderNews();
     renderUpcoming();
@@ -273,4 +280,174 @@ function esc(str) {
   const div = document.createElement('div');
   div.textContent = str;
   return div.innerHTML;
+}
+
+// ==== PRODUCT GALLERY FUNCTIONALITY ====
+function setupProductGallery() {
+  // Filter buttons
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      filterProducts(filter);
+    });
+  });
+  
+  // Modal close
+  const modal = document.getElementById('product-modal');
+  const closeBtn = document.querySelector('.modal-close');
+  
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeModal);
+  }
+  
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+  }
+  
+  // Close on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  });
+}
+
+function filterProducts(category) {
+  const container = document.getElementById('product-gallery');
+  if (!container) return;
+  
+  let filtered = productsData;
+  if (category !== 'all') {
+    filtered = productsData.filter(p => p.category === category);
+  }
+  
+  renderProductCards(filtered);
+}
+
+function renderProductGallery() {
+  renderProductCards(productsData);
+}
+
+function renderProductCards(products) {
+  const container = document.getElementById('product-gallery');
+  if (!container) return;
+  
+  if (!products || products.length === 0) {
+    container.innerHTML = '<p style="text-align:center;color:rgba(224,224,255,0.6);grid-column:1/-1;">No products available at the moment.</p>';
+    return;
+  }
+  
+  container.innerHTML = products.map(product => {
+    const hasImage = product.image && product.image !== 'products/.png';
+    const imageHtml = hasImage 
+      ? `<img src="${product.image}" alt="${esc(product.name)}" onerror="this.parentElement.innerHTML='<div class=\\'product-image-placeholder\\'><i class=\\'fas fa-box\\'></i></div>'">`
+      : `<div class="product-image-placeholder"><i class="fas fa-box"></i></div>`;
+    
+    const badgeHtml = product.badge 
+      ? `<span class="product-badge">${esc(product.badge)}</span>` 
+      : '';
+    
+    const featuresHtml = product.features 
+      ? product.features.slice(0, 3).map(f => `<span class="feature-tag">${esc(f)}</span>`).join('')
+      : '';
+    
+    const stockHtml = product.inStock 
+      ? `<div class="stock-status in-stock"><i class="fas fa-check-circle"></i> In Stock</div>`
+      : `<div class="stock-status out-of-stock"><i class="fas fa-times-circle"></i> Out of Stock</div>`;
+    
+    return `
+      <div class="product-card-new" onclick="openProductModal(${product.id})">
+        ${badgeHtml}
+        <div class="product-image-wrapper">
+          ${imageHtml}
+        </div>
+        <div class="card-content">
+          <p class="product-category">${esc(product.category)}</p>
+          <h3>${esc(product.name)}</h3>
+          <p class="product-description">${esc(product.description)}</p>
+          <div class="product-features-preview">${featuresHtml}</div>
+          <div class="product-footer">
+            <div>
+              <span class="product-price">${esc(product.price)}</span>
+              <span class="product-price-note">${esc(product.priceNote || '')}</span>
+              ${stockHtml}
+            </div>
+            <button class="view-details-btn" onclick="event.stopPropagation();openProductModal(${product.id})">
+              View Details
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openProductModal(productId) {
+  const product = productsData.find(p => p.id === productId);
+  if (!product) return;
+  
+  const modal = document.getElementById('product-modal');
+  if (!modal) return;
+  
+  // Populate modal
+  const hasImage = product.image && product.image !== 'products/.png';
+  const imgEl = document.getElementById('modal-product-image');
+  if (hasImage) {
+    imgEl.src = product.image;
+    imgEl.style.display = 'block';
+    imgEl.onerror = function() {
+      this.style.display = 'none';
+      this.parentElement.innerHTML = '<div class="modal-image-placeholder"><i class="fas fa-box"></i><span>No Image Available</span></div>';
+    };
+  } else {
+    imgEl.style.display = 'none';
+    const wrapper = imgEl.parentElement;
+    wrapper.innerHTML = '<div class="modal-image-placeholder"><i class="fas fa-box"></i><span>No Image Available</span></div>';
+  }
+  
+  document.getElementById('modal-product-badge').textContent = product.badge || '';
+  document.getElementById('modal-product-badge').style.display = product.badge ? 'inline-block' : 'none';
+  document.getElementById('modal-product-name').textContent = product.name;
+  document.getElementById('modal-product-category').textContent = product.category;
+  document.getElementById('modal-product-description').textContent = product.description;
+  
+  const featuresList = document.getElementById('modal-product-features');
+  if (product.features && product.features.length > 0) {
+    featuresList.innerHTML = product.features.map(f => `<li>${esc(f)}</li>`).join('');
+  } else {
+    featuresList.innerHTML = '<li>Custom features available</li>';
+  }
+  
+  document.getElementById('modal-product-price').textContent = product.price;
+  document.getElementById('modal-product-price-note').textContent = product.priceNote || '';
+  
+  const linkEl = document.getElementById('modal-product-link');
+  linkEl.href = product.orderLink || '#contact';
+  
+  // Show modal
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  const modal = document.getElementById('product-modal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+// ==== NEWSLETTER HANDLER ====
+function handleNewsletter(e) {
+  e.preventDefault();
+  const email = e.target.querySelector('input').value;
+  alert(`Thank you for subscribing with ${email}! We'll keep you updated.`);
+  e.target.reset();
 }
